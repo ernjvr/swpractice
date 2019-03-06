@@ -3,15 +3,13 @@ package org.swpractice.validation.practice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.swpractice.model.practice.PracticeCategory;
 import org.swpractice.repository.practice.PracticeCategoryRepository;
-import org.swpractice.validation.Unique;
+import org.swpractice.validation.constraints.annotations.Unique;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.List;
 
-public class PracticeCategoryValidator implements ConstraintValidator<Unique, String> {
+public class PracticeValidator implements ConstraintValidator<Unique, String> {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -30,8 +28,8 @@ public class PracticeCategoryValidator implements ConstraintValidator<Unique, St
 
 //        if (repository != null && repository.findByName(value).isEmpty()) {
         if (repository != null) {
-            List<PracticeCategory> names = repository.findByName(value);
-            System.out.println("isValid JPA result size " + names.size() );
+//            List<PracticeCategory> names = repository.findByName(value);
+//            System.out.println("isValid JPA result size " + names.size() );
             return true;
         }
         return false;

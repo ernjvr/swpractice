@@ -13,11 +13,11 @@
 		<version>2.1.3.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>org.serl</groupId>
-	<artifactId>serler</artifactId>
+	<groupId>org.swpractice</groupId>
+	<artifactId>swpractice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>serler</name>
-	<description> Software Engineering Laboratory  Evidence Repository </description>
+	<name>swpractice</name>
+	<description>Software Practice</description>
 
 	<properties>
 		<main.basedir>${project.basedir}</main.basedir>

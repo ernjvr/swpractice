@@ -1,6 +1,7 @@
-package org.swpractice.validation.constraints;
+package org.swpractice.validation.constraints.annotations;
 
-import org.swpractice.validation.practice.PracticeCategoryValidator;
+import org.swpractice.validation.constraints.validators.UniqueValidator;
+import org.swpractice.validation.practice.PracticeCategoryValidatorServiceImpl;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -13,7 +14,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
 @Target({ElementType.METHOD, ElementType.FIELD})
-@Constraint(validatedBy = PracticeCategoryValidator.class)
+@Constraint(validatedBy = UniqueValidator.class)
 @Retention(RUNTIME)
 public @interface Unique2 {
     String message();

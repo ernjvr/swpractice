@@ -1,4 +1,4 @@
-package org.swpractice.service;
+package org.swpractice.service.practice;
 
 //import org.serler.model.PracticeCategory;
 //import org.springframework.web.bind.annotation.GetMapping;

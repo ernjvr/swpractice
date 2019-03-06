@@ -33,7 +33,7 @@ export default [
         props: true
     },
     {
-        path: '/',
+        path: '/*',
         redirect: '/home',
     },
 ];

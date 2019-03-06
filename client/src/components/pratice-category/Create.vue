@@ -4,7 +4,7 @@
             <panel title="Add Practice Category">
                 <v-card-text>
                     <v-form ref="form">
-                        <v-text-field v-model="name" prepend-icon="person" name="name" label="Name" type="text" required :rules="required"></v-text-field>
+                        <v-text-field v-model="name" v-on:keyup="keyEvent" prepend-icon="person" name="name" label="Name" type="text" required :rules="required"></v-text-field>
                         <v-alert :value="validationerror" color="error" v-html="error"></v-alert>
                     </v-form>
                 </v-card-text>
@@ -53,7 +53,8 @@
 </template>
 
 <script>
-    import PracticeCategoryService from '@/services/PracticeCategoryService';
+    // import PracticeCategoryService from '@/services/PracticeCategoryService';
+    import api from '../../services/api';
     import Panel from '@/components/Panel';
 
     export default {
@@ -70,23 +71,53 @@
             async create() {
                 try {
                     if (this.$refs.form.validate()) {
-                        const response = await PracticeCategoryService.create({
+                        console.log('Edit Practice Category');
+                        let data = {
                             name: this.name
+                        };
+                        api.post('practice-category', data)
+                            .then(response => {
+                                this.validationerror = false;
+                                console.log(response.data);
+                                let category = response.data;
+                                console.log(category);
+                                this.$store.dispatch('addPracticeCategory', response.data);
+                                this.$router.push('/practice-category');
+                            }).catch(e => {
+                            console.log('error adding practice category: ' + e);
+                            console.log(e.response);
+                            if (e.response.data.message) {
+                                if (e.response.data.message.includes("Constraint")) {
+                                    this.error = 'Practice Category already exists.';
+                                } else {
+                                    this.error = e.response.data.message;
+                                }
+                            }
+                            this.validationerror = true;
                         });
-                        this.validationerror = false;
-                        console.log(response.data);
-                        let category = response.data;
-                        console.log(category);
-                        this.$store.dispatch('addPracticeCategory', response.data);
-                        this.$router.push('/practice-category');
+                        // const response = await PracticeCategoryService.create({
+                        //     name: this.name
+                        // });
+                        // this.validationerror = false;
+                        // console.log(response.data);
+                        // let category = response.data;
+                        // console.log(category);
+                        // this.$store.dispatch('addPracticeCategory', response.data);
+                        // this.$router.push('/practice-category');
                     }
                 } catch (e) {
-                    this.error = e.response.data.error;
+                    console.log('catch error adding practice category: ' + e)
+                    this.error = e;
                     this.validationerror = true;
                 }
             },
             navigateTo(route) {
                 this.$router.push(route);
+            },
+            keyEvent() {
+                if (this.validationerror) {
+                    this.validationerror = false;
+                }
             }
         },
         components: {

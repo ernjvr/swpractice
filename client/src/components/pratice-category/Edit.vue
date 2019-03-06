@@ -4,7 +4,7 @@
             <panel title="Edit Practice Category">
                 <v-card-text>
                     <v-form ref="form">
-                        <v-text-field v-model="category.name" prepend-icon="person" name="name" label="Name" type="text" required :rules="required"></v-text-field>
+                        <v-text-field v-model="category.name" v-on:keyup="keyEvent" prepend-icon="person" name="name" label="Name" type="text" required :rules="required"></v-text-field>
                         <v-alert :value="validationerror" color="error" v-html="error"></v-alert>
                     </v-form>
                 </v-card-text>
@@ -56,9 +56,9 @@
                     if (this.$refs.form.validate()) {
                         console.log('Edit Practice Category');
                         console.log(this.category);
-                        let data = {
-                            name: this.category.name
-                        };
+                            let data = {
+                                name: this.category.name
+                            };
 
                         api.put(this.category._links.self.href, data)
                             .then(response => {
@@ -71,7 +71,13 @@
                                 this.$router.push('/practice-category/' + encoded);
                             }).catch(e => {
                             console.log(e);
-                            this.error = e.response.data.error;
+                            if (e.response.data.message) {
+                                if (e.response.data.message.includes("Constraint")) {
+                                    this.error = 'Practice Category already exists.';
+                                } else {
+                                    this.error = e.response.data.message;
+                                }
+                            }
                             this.validationerror = true;
                         });
                         // const response = await PracticeCategoryService.create({
@@ -93,6 +99,11 @@
                 let encoded = this.category._links.self.href.replace(/\//g, "%2F");
                 console.log(encoded);
                 this.$router.push('/practice-category/' + encoded);
+            },
+            keyEvent() {
+                if (this.validationerror) {
+                    this.validationerror = false;
+                }
             }
         },
         components: {

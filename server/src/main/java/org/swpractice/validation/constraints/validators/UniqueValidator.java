@@ -1,7 +1,8 @@
-package org.swpractice.validation.constraints;
+package org.swpractice.validation.constraints.validators;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.swpractice.validation.constraints.annotations.Unique;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -16,7 +17,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, Object> {
 
     @Override
     public void initialize(Unique constraintAnnotation) {
-        Class<? extends ColumnValueExists> clazz = constraintAnnotation.validatorService();
+        Class<? extends ColumnValueExists> clazz = constraintAnnotation.service();
         fieldName = constraintAnnotation.fieldName();
         final String qualifier = constraintAnnotation.serviceQualifier();
 
