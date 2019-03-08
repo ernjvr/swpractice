@@ -4,16 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.swpractice.model.practice.PracticeCategory;
+import org.swpractice.model.practice.Practice;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.util.List;
 
 import static org.swpractice.util.Constants.*;
 
 @Service
-public class PracticeCategoryValidationServiceImpl implements PracticeCategoryValidationService {
+public class PracticeValidationServiceImpl implements PracticeValidationService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -23,13 +22,13 @@ public class PracticeCategoryValidationServiceImpl implements PracticeCategoryVa
     @Override
     public boolean columnValueExists(String fieldName, Object value) throws UnsupportedOperationException {
         logger.debug(String.format("columnValueExists: field name '%s', value %s", fieldName, value));
-        final TypedQuery<PracticeCategory> namedQuery = createNamedQuery(fieldName);
+        final TypedQuery<Practice> namedQuery = createNamedQuery(fieldName);
         return verify(namedQuery, fieldName, value);
     }
 
-    private TypedQuery<PracticeCategory> createNamedQuery(String fieldName) {
-        if (PRACTICE_CATEGORY_FIELD_NAME.equals(fieldName)) {
-            return entityManager.createNamedQuery(PRACTICE_CATEGORY_FIND_BY_NAME, PracticeCategory.class);
+    private TypedQuery<Practice> createNamedQuery(String fieldName) {
+        if (PRACTICE_FIELD_NAME.equals(fieldName)) {
+            return entityManager.createNamedQuery(PRACTICE_FIND_BY_NAME, Practice.class);
         } else {
             final String errorMessage = String.format(FIELD_NAME_NOT_SUPPORTED, fieldName);
             logger.error(errorMessage);
