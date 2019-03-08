@@ -1,29 +1,30 @@
 package org.swpractice.model.practice;
 
 import lombok.Data;
-import org.swpractice.validation.constraints.annotations.Unique;
-import org.swpractice.validation.practice.PracticeCategoryValidatorService;
+import org.swpractice.util.Constants;
+import org.swpractice.validation.constraint.annotation.Unique;
+import org.swpractice.validation.service.practice.PracticeCategoryValidationService;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import static org.swpractice.util.Constants.*;
+
 @Data
 @Entity
-//@Table(uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+@NamedQuery(name = Constants.PRACTICE_CATEGORY_FIND_BY_NAME, query = Constants.PRACTICE_CATEGORY_FIND_BY_NAME_QUERY)
 public class PracticeCategory {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = PRACTICE_CATEGORY_FIELD_NAME_REQUIRED_MESSAGE)
+    @Size(min = 1, max = 255, message = PRACTICE_CATEGORY_FIELD_NAME_LENGTH_MESSAGE)
     @Column(unique = true)
-    @Unique(service = PracticeCategoryValidatorService.class, fieldName = "name",
-            message = "{unique.practice.category.name}")
+    @Unique(service = PracticeCategoryValidationService.class,
+            fieldName = PRACTICE_CATEGORY_FIELD_NAME,
+            message = PRACTICE_CATEGORY_FIELD_NAME_UNIQUE_MESSAGE)
     private String name;
 }

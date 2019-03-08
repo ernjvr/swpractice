@@ -14,7 +14,7 @@
                                 name: 'practice-category.edit',
                                 params: {id: category._links.self.href}
                             })">Edit</v-btn>
-                            <v-btn color="indigo" dark @click="deleteCategory">Delete</v-btn>
+                            <v-btn color="indigo" dark @click="deleteConfirmationVisibility=true">Delete</v-btn>
                             <v-btn color="indigo" dark @click="navigateTo({
                                 name: 'practice-category.index'
                             })">Return</v-btn>
@@ -23,25 +23,33 @@
                 </panel>
             </v-flex>
         </v-layout>
+        <confirm-dialog :confirm-visibility="deleteConfirmationVisibility"
+                        @confirmCancel="deleteConfirmationVisibility=false"
+                        @confirmAccept="deleteCategory">
+            <template slot="title">Confirm Delete</template>
+            <template slot="text">Are you sure you want to delete?</template>
+            <template slot="confirmButton">Delete</template>
+        </confirm-dialog>
     </v-container>
 </template>
 
 <script>
     import api from '../../services/api';
     import Panel from "../Panel";
+    import ConfirmDialog from '../ConfirmDialog'
     export default {
         components: {
-            Panel
+            Panel,
+            ConfirmDialog
         },
         data() {
             return {
-                category: {}
+                category: {},
+                deleteConfirmationVisibility: false
             }
         },
         async mounted() {
             console.log(this.$route.params);
-            // console.log(this.$route.params.category);
-            // this.category = this.$route.params.category;
             api.get(this.$route.params.id)
                 .then(response => {
                     this.category = response.data;
@@ -63,7 +71,6 @@
                         this.$router.push('/practice-category/');
                     }).catch(e => {
                     console.log(e);
-                    // console.log(e.response.data.error);
                 });
             }
         }

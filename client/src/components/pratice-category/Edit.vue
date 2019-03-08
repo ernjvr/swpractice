@@ -15,12 +15,6 @@
                 </v-card-actions>
             </panel>
         </v-flex>
-        <!--<v-flex xs8>-->
-        <!--<v-card-actions>-->
-        <!--<v-spacer></v-spacer>-->
-        <!--<v-btn color="indigo" dark @click="create">Add</v-btn>-->
-        <!--</v-card-actions>-->
-        <!--</v-flex>-->
     </v-layout>
 </template>
 
@@ -40,8 +34,6 @@
         },
         async mounted() {
             console.log(this.$route.params);
-            // console.log(this.$route.params.category);
-            // this.category = this.$route.params.category;
             api.get(this.$route.params.id)
                 .then(response => {
                     this.category = response.data;
@@ -70,25 +62,12 @@
                                 console.log(encoded);
                                 this.$router.push('/practice-category/' + encoded);
                             }).catch(e => {
-                            console.log(e);
-                            if (e.response.data.message) {
-                                if (e.response.data.message.includes("Constraint")) {
-                                    this.error = 'Practice Category already exists.';
-                                } else {
-                                    this.error = e.response.data.message;
-                                }
+                            console.log('error adding practice category: ' + e);
+                            if (e.response.data) {
+                                this.error = e.response.data;
                             }
                             this.validationerror = true;
                         });
-                        // const response = await PracticeCategoryService.create({
-                        //     name: this.name
-                        // });
-                        // this.validationerror = false;
-                        // console.log(response.data);
-                        // let category = response.data;
-                        // console.log(category);
-                        // this.$store.dispatch('addPracticeCategory', response.data);
-                        // this.$router.push('/practice-category');
                     }
                 } catch (e) {
                     this.error = e.response.data.error;
