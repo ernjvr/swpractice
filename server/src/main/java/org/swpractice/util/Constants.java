@@ -2,7 +2,7 @@ package org.swpractice.util;
 
 public class Constants {
 
-    public static final String CATEGORY = "category";
+    public static final String PRACTICE_CATEGORY = "practiceCategory";
     public static final String FIELD_NAME_NOT_SUPPORTED = "Field name '%s' not supported.";
 
     public static final String PRACTICE_CATEGORY_FIND_BY_NAME = "PracticeCategory.find_by_name";

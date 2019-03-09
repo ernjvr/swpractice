@@ -30,6 +30,6 @@ public class PracticeCategory {
             message = PRACTICE_CATEGORY_FIELD_NAME_UNIQUE_MESSAGE)
     private String name;
 
-    @OneToMany(mappedBy = CATEGORY)
+    @OneToMany(mappedBy = PRACTICE_CATEGORY)
     private List<Practice> practice;
 }

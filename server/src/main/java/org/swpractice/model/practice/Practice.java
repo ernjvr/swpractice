@@ -32,6 +32,5 @@ public class Practice {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = CATEGORY)
-    private PracticeCategory category;
+    private PracticeCategory practiceCategory;
 }
