@@ -27,10 +27,10 @@ export default new Vuex.Store({
     },
     actions: {
         addPracticeCategory({ commit }, category) {
-            PracticeCategoryActions.addPracticeCategory({ commit }, category);
+            return PracticeCategoryActions.addPracticeCategory({ commit }, category);
         },
-        editPracticeCategory({ commit }, category) {
-            PracticeCategoryActions.editPracticeCategory({ commit }, category);
+        editPracticeCategory({ commit }, data) {
+            return PracticeCategoryActions.editPracticeCategory({ commit }, data);
         },
         getAllPracticeCategories({ commit }) {
             return PracticeCategoryActions.getAllPracticeCategories({ commit });

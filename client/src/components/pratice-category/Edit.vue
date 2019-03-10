@@ -4,8 +4,9 @@
             <panel title="Edit Practice Category">
                 <v-card-text>
                     <v-form ref="form">
-                        <v-text-field v-model="category.name" v-on:keyup="keyEvent" prepend-icon="person" name="name" label="Name" type="text" required :rules="required"></v-text-field>
-                        <v-alert :value="validationerror" color="error" v-html="error"></v-alert>
+                        <v-text-field v-model="category.name" v-on:keyup="keyEvent" prepend-icon="person" name="name"
+                                      label="Name" type="text" required :rules="required"></v-text-field>
+                        <v-alert :value="validationError" color="error" v-html="error"></v-alert>
                     </v-form>
                 </v-card-text>
                 <v-card-actions>
@@ -20,6 +21,7 @@
 
 <script>
     import api from '../../services/api';
+    import Util from '../../common/Util';
     import Panel from '@/components/Panel';
 
     export default {
@@ -27,62 +29,56 @@
             return {
                 category: {},
                 error: null,
-                validationerror: false,
+                validationError: false,
                 // check if value exists or return required message
-                required: [ (v) => !!v || 'This field is required']
+                required: [(v) => !!v || 'This field is required']
             }
         },
         async mounted() {
-            console.log(this.$route.params);
-            api.get(this.$route.params.id)
+            let href = this.$route.params.id;
+            api.get(href)
                 .then(response => {
+                    console.log(href + ' get success: ' + response.data);
                     this.category = response.data;
-                    console.log(response.data);
                 }).catch(e => {
-                console.log(e);
+                console.log(href + ' get error: ' + e);
             });
         },
         methods: {
             async edit() {
                 try {
                     if (this.$refs.form.validate()) {
-                        console.log('Edit Practice Category');
-                        console.log(this.category);
-                            let data = {
+                        let data = {
+                            href: this.category._links.self.href,
+                            category: {
                                 name: this.category.name
-                            };
-
-                        api.put(this.category._links.self.href, data)
-                            .then(response => {
-                                this.category.name = response.data.name;
-                                console.log('Practice Category Edit: response: ' + response.data);
-                                this.$store.dispatch('editPracticeCategory', this.category);
-
-                                let encoded = this.category._links.self.href.replace(/\//g, "%2F");
-                                console.log(encoded);
-                                this.$router.push('/practice-category/' + encoded);
-                            }).catch(e => {
-                            console.log('error adding practice category: ' + e);
-                            if (e.response.data) {
-                                this.error = e.response.data;
                             }
-                            this.validationerror = true;
+                        };
+                        this.$store.dispatch('editPracticeCategory', data).then(response => {
+                            console.log('received data from store editPracticeCategory: ' + response);
+                            this.category.name = response.name;
+                            this.navigateToSingleView();
+                        }, error => {
+                            console.log('received error from store editPracticeCategory: ' + error);
+                            this.error = error;
+                            this.validationError = true;
                         });
                     }
                 } catch (e) {
                     this.error = e.response.data.error;
-                    this.validationerror = true;
+                    this.validationError = true;
                 }
             },
             cancel() {
-                let encoded = this.category._links.self.href.replace(/\//g, "%2F");
-                console.log(encoded);
-                this.$router.push('/practice-category/' + encoded);
+                this.navigateToSingleView();
             },
             keyEvent() {
-                if (this.validationerror) {
-                    this.validationerror = false;
+                if (this.validationError) {
+                    this.validationError = false;
                 }
+            },
+            navigateToSingleView() {
+                this.$router.push('/practice-category/' + Util.encode(this.category._links.self.href));
             }
         },
         components: {

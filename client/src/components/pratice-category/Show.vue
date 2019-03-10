@@ -35,8 +35,8 @@
 
 <script>
     import api from '../../services/api';
-    import Panel from "../Panel";
-    import ConfirmDialog from '../ConfirmDialog'
+    import Panel from "@/components/Panel";
+    import ConfirmDialog from '@/components/ConfirmDialog'
     export default {
         components: {
             Panel,
@@ -49,13 +49,13 @@
             }
         },
         async mounted() {
-            console.log(this.$route.params);
-            api.get(this.$route.params.id)
+            let href = this.$route.params.id;
+            api.get(href)
                 .then(response => {
+                    console.log(href + ' get success: ' + response.data);
                     this.category = response.data;
-                    console.log(response.data);
                 }).catch(e => {
-                console.log(e);
+                console.log(href + ' get error: ' + e);
             });
         },
         methods: {
@@ -63,14 +63,13 @@
                 this.$router.push(route);
             },
             async deleteCategory() {
-                console.log("delete");
-                api.delete(this.category._links.self.href)
+                let href = this.category._links.self.href;
+                api.delete(href)
                     .then(response => {
-                        console.log(response);
-                        // this.$store.dispatch('removePracticeCategory', response.data);
-                        this.$router.push('/practice-category/');
+                        console.log(href + ' delete success: ' + response);
+                        this.navigateTo('/practice-category/');
                     }).catch(e => {
-                    console.log(e);
+                    console.log(href + ' delete error: ' + e);
                 });
             }
         }

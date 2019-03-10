@@ -1,23 +1,44 @@
 import api from "../../services/api";
 
 export default {
-    addPracticeCategory({ commit }, category) {
-        commit('addPracticeCategory', category);
+    addPracticeCategory({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            api.post('practice-category', data)
+                .then(response => {
+                    let category = response.data;
+                    console.log('practice-category post success: ' + category);
+                    commit('addPracticeCategory', category);
+                    resolve(category);
+                }, error => {
+                    console.log('practice-category post error:' + error.response.data);
+                    reject(error.response.data);
+                });
+        });
     },
-    editPracticeCategory({ commit }, category) {
-        commit('editPracticeCategory', category);
+    editPracticeCategory({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            api.put(data.href, data.category)
+                .then(response => {
+                    let category = response.data;
+                    console.log('practice-category put success: ' + category);
+                    commit('editPracticeCategory', category);
+                    resolve(category);
+                }, error => {
+                    console.log('practice-category put error:' + error.response.data);
+                    reject(error.response.data);
+                });
+        });
     },
     getAllPracticeCategories({ commit }) {
-        console.log('store: getAllPracticeCategories');
         return new Promise((resolve, reject) => {
-            console.log('promise');
             api.get('/practice-category')
                 .then(response => {
-                    commit('addPracticeCategories', response.data._embedded.practiceCategories);
-                    resolve(response.data._embedded.practiceCategories);
-                    console.log(response.data._embedded.practiceCategories);
+                    let practiceCategories = response.data._embedded.practiceCategories;
+                    console.log('practice-category get success' + practiceCategories);
+                    commit('addPracticeCategories', practiceCategories);
+                    resolve(practiceCategories);
                 }, error => {
-                    console.log('error: ' + error);
+                    console.log('practice-category get error: ' + error);
                     reject(error);
                 });
         });
