@@ -21,7 +21,7 @@
 
 <script>
     import api from '../../services/api';
-    import Util from '../../common/Util';
+    import Util from '../../common/util';
     import Panel from '@/components/Panel';
 
     export default {

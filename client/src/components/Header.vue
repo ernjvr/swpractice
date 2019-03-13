@@ -5,7 +5,6 @@
                             })">Home</v-toolbar-title>
 
         <v-toolbar-items>
-            <!--<v-btn flat dark router to="/practice-category">Practice Category</v-btn>-->
             <v-menu open-on-hover transition="slide-y-transition" bottom>
                 <template v-slot:activator="{ on }">
                     <v-btn class="purple" color="primary" dark v-on="on">
@@ -28,7 +27,7 @@
     export default {
         data: () => ({
             items: [
-                { title: 'PRACTICE', name: 'practice-category.index' },
+                { title: 'PRACTICE', name: 'practice.index' },
                 { title: 'PRACTICE CATEGORY', name: 'practice-category.index' },
             ]
         }),

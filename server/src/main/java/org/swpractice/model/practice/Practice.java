@@ -21,16 +21,21 @@ public class Practice {
     private Long id;
 
     @NotNull(message = PRACTICE_FIELD_NAME_REQUIRED_MESSAGE)
-    @Size(min = 1, max = 50, message = PRACTICE_FIELD_NAME_LENGTH_MESSAGE)
+    @Size(min = 1, max = 100, message = PRACTICE_FIELD_NAME_LENGTH_MESSAGE)
     @Column(unique = true)
     @Unique(service = PracticeValidationService.class,
             fieldName = PRACTICE_FIELD_NAME,
             message = PRACTICE_FIELD_NAME_UNIQUE_MESSAGE)
     private String name;
 
-    @Size(min = 1, max = 255, message = PRACTICE_FIELD_DESCRIPTION_LENGTH_MESSAGE)
+    @Size(max = 500, message = PRACTICE_FIELD_DESCRIPTION_LENGTH_MESSAGE)
     private String description;
 
+    @NotNull(message = PRACTICE_FIELD_PRACTICE_CATEGORY_REQUIRED_MESSAGE)
     @ManyToOne
     private PracticeCategory practiceCategory;
+
+    public Long getId() {
+        return id;
+    }
 }

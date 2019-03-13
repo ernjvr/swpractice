@@ -1,8 +1,14 @@
 import Home from './components/Home.vue';
+
 import PracticeCategoryIndex from './components/pratice-category/Index.vue';
 import PracticeCategoryCreate from './components/pratice-category/Create.vue';
 import PracticeCategoryShow from './components/pratice-category/Show.vue';
 import PracticeCategoryEdit from './components/pratice-category/Edit.vue';
+
+import PracticeIndex from './components/practice/Index.vue';
+import PracticeCreate from './components/practice/Create.vue';
+import PracticeShow from './components/practice/Show.vue';
+import PracticeEdit from './components/practice/Edit.vue';
 
 export default [
     {
@@ -30,6 +36,28 @@ export default [
         path: '/practice-category/:id/edit',
         name: 'practice-category.edit',
         component: PracticeCategoryEdit,
+        props: true
+    },
+    {
+        path: '/practice',
+        name: 'practice.index',
+        component: PracticeIndex
+    },
+    {
+        path: '/practice/:id',
+        name: 'practice.show',
+        component: PracticeShow,
+        props: true
+    },
+    {
+        path: '/practice/create',
+        name: 'practice.create',
+        component: PracticeCreate
+    },
+    {
+        path: '/practice/:id/edit',
+        name: 'practice.edit',
+        component: PracticeEdit,
         props: true
     },
     {

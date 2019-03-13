@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import PracticeCategoryMutations from './mutations/PracticeCategoryMutations';
+import PracticeMutations from './mutations/PracticeMutations';
 import PracticeCategoryActions from './actions/PracticeCategoryActions';
+import PracticeActions from './actions/PracticeActions';
 
 Vue.use(Vuex);
 
@@ -9,7 +11,8 @@ export default new Vuex.Store({
     strict: true,
     state: {
         practiceCategories: [],
-        practices: []
+        practices: [],
+        selectedPractice: {}
     },
     mutations: {
         addPracticeCategories(state, categories) {
@@ -24,6 +27,21 @@ export default new Vuex.Store({
         removePracticeCategory(state, category) {
             PracticeCategoryMutations.removePracticeCategory(state, category);
         },
+        addPractices(state, practices) {
+            PracticeMutations.addPractices(state, practices);
+        },
+        addPractice(state, practice) {
+            PracticeMutations.addPractice(state, practice);
+        },
+        setSelectedPractice(state, practice) {
+            PracticeMutations.setSelectedPractice(state, practice);
+        },
+        editPractice(state, practice) {
+            PracticeMutations.editPractice(state, practice);
+        },
+        removePractice(state, practice) {
+            PracticeMutations.removePractice(state, practice);
+        },
     },
     actions: {
         addPracticeCategory({ commit }, category) {
@@ -34,6 +52,21 @@ export default new Vuex.Store({
         },
         getAllPracticeCategories({ commit }) {
             return PracticeCategoryActions.getAllPracticeCategories({ commit });
-        }
+        },
+        getPracticeCategory({ commit }, data) {
+            return PracticeCategoryActions.getPracticeCategory({ commit }, data);
+        },
+        addPractice({ commit }, practice) {
+            return PracticeActions.addPractice({ commit }, practice);
+        },
+        setSelectedPractice({ commit }, practice) {
+            PracticeActions.setSelectedPractice({ commit }, practice);
+        },
+        editPractice({ commit }, data) {
+            return PracticeActions.editPractice({ commit }, data);
+        },
+        getAllPractices({ commit }) {
+            return PracticeActions.getAllPractices({ commit });
+        },
     }
 });

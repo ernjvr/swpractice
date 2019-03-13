@@ -17,6 +17,7 @@ public class Constants {
     public static final String PRACTICE_FIND_BY_NAME_QUERY = "select p from Practice p where p.name = :name";
     public static final String PRACTICE_FIELD_NAME_UNIQUE_MESSAGE = "{practice.name.unique}";
     public static final String PRACTICE_FIELD_NAME_REQUIRED_MESSAGE = "{practice.name.required}";
+    public static final String PRACTICE_FIELD_PRACTICE_CATEGORY_REQUIRED_MESSAGE = "{practice.practice-category.required}";
     public static final String PRACTICE_FIELD_NAME_LENGTH_MESSAGE = "{practice.name.length}";
     public static final String PRACTICE_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{practice.description.length}";
     public static final String PRACTICE_PATH = "/practice";
