@@ -31,9 +31,9 @@ public class Practice {
     @Size(max = 500, message = PRACTICE_FIELD_DESCRIPTION_LENGTH_MESSAGE)
     private String description;
 
-    @NotNull(message = PRACTICE_FIELD_PRACTICE_CATEGORY_REQUIRED_MESSAGE)
+    @NotNull(message = PRACTICE_FIELD_PRACTICE_SUB_CATEGORY_REQUIRED_MESSAGE)
     @ManyToOne
-    private PracticeCategory practiceCategory;
+    private PracticeSubCategory practiceSubCategory;
 
     public Long getId() {
         return id;

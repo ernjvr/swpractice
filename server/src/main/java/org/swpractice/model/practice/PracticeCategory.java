@@ -31,5 +31,5 @@ public class PracticeCategory {
     private String name;
 
     @OneToMany(mappedBy = PRACTICE_CATEGORY)
-    private List<Practice> practice;
+    private List<PracticeSubCategory> practiceSubCategory;
 }
