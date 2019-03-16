@@ -5,10 +5,12 @@
 </template>
 
 <script>
+    import { il8n } from '../il8n';
+
     export default {
         data() {
             return {
-                name: "Home"
+                name: il8n.tc('home')
             }
         }
     }

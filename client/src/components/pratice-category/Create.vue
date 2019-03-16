@@ -1,21 +1,20 @@
 <template>
     <v-layout>
         <v-flex xs4>
-            <panel title="Add Practice Category">
+            <panel :title="$t('add_practice_category')">
                 <v-card-text>
                     <v-form ref="form">
                         <v-text-field v-model="name" v-on:keyup="keyEvent" prepend-icon="person" name="name"
-                                      label="Name" type="text" required :rules="required"></v-text-field>
+                                      :label="$t('name')" type="text" required :rules="required"></v-text-field>
                         <v-alert :value="validationError" color="error" v-html="error"></v-alert>
                     </v-form>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="indigo" dark @click="create">Add</v-btn>
+                    <v-btn color="indigo" dark @click="create">{{ $t('add') }}</v-btn>
                     <v-btn color="indigo" dark @click="navigateTo({
                                 name: 'practice-category.index'
-                            })">Cancel
-                    </v-btn>
+                            })">{{ $t('cancel') }}</v-btn>
                 </v-card-actions>
             </panel>
         </v-flex>
@@ -24,6 +23,7 @@
 
 <script>
     import Panel from '@/components/Panel';
+    import { il8n } from '../../il8n';
 
     export default {
         data() {
@@ -32,7 +32,7 @@
                 error: null,
                 validationError: false,
                 // check if value exists or return required message
-                required: [(v) => !!v || 'This field is required']
+                required: [(v) => !!v || il8n.tc('field_required')]
             }
         },
         methods: {

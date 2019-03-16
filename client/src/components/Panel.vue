@@ -7,7 +7,7 @@
 
         <div class="pl-4 pr-4 pt-2 pb-2">
             <slot>
-                No Slot content defined
+                {{ $t('no_slot_content') }}
             </slot>
         </div>
     </div>

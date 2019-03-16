@@ -2,14 +2,14 @@
     <v-container fluid grid-list-xl>
         <v-layout row>
             <v-flex xs6>
-                <panel title="Edit Practice">
+                <panel :title="$t('edit_practice')">
                     <v-card-text>
                         <v-form ref="form">
                             <v-text-field v-model="editPractice.name" v-on:keyup="keyEvent" prepend-icon="person" name="name"
-                                          label="Name" type="text" required :rules="required"></v-text-field>
+                                          :label="$t('name')" type="text" required :rules="required"></v-text-field>
                             <v-text-field v-model="editPractice.description" v-on:keyup="keyEvent" prepend-icon="person" name="description"
-                                          label="Description" type="text"></v-text-field>
-                            <v-select label="Practice Category"
+                                          :label="$t('description')" type="text"></v-text-field>
+                            <v-select :label="$t('practice_category')"
                                       :items="practiceCategories"
                                       item-text="name" item-value="_links.self.href"
                                       v-model="selectedPracticeCategory"
@@ -20,8 +20,8 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="indigo" dark @click="edit">Save</v-btn>
-                        <v-btn color="indigo" dark @click="navigateTo({name: 'practice.show'})">Cancel</v-btn>
+                        <v-btn color="indigo" dark @click="edit">{{ $t('save') }}</v-btn>
+                        <v-btn color="indigo" dark @click="navigateTo({name: 'practice.show'})">{{ $t('cancel') }}</v-btn>
                     </v-card-actions>
                 </panel>
             </v-flex>
@@ -31,6 +31,8 @@
 
 <script>
     import Panel from '@/components/Panel';
+    import util from '../../common/util';
+    import { il8n } from '../../il8n';
 
     export default {
         data() {
@@ -48,11 +50,10 @@
                     practiceCategory: ''
                 },
                 selectedPracticeCategory: '',
-                items: ['one', 'two'],
                 error: null,
                 validationError: false,
                 // check if value exists or return required message
-                required: [(v) => !!v || 'This field is required']
+                required: [(v) => !!v || il8n.tc('field_required')]
             }
         },
         computed: {
@@ -111,10 +112,7 @@
                 }
             },
             getSelectedPracticeCategory() {
-              let category = this.practiceCategories.find(category => { return category._links.self.href === this.selectedPracticeCategory});
-              console.log('getSelectedPracticeCategory');
-              console.log(category);
-              return category;
+              return util.getSelectedPracticeCategory(this.selectedPracticeCategory);
             },
             keyEvent() {
                 if (this.validationError) {

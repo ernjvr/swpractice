@@ -6,7 +6,7 @@
                 <v-card-text><slot name="text"></slot></v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn class="bold" color="indigo" flat @click="confirmCancel">Cancel</v-btn>
+                    <v-btn class="bold" color="indigo" flat @click="confirmCancel">{{ $t('cancel')}}</v-btn>
                     <v-btn class="bold" color="indigo" flat @click="confirmAccept"><slot name="confirmButton"></slot></v-btn>
                 </v-card-actions>
             </v-card>

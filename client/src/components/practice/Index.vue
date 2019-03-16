@@ -1,35 +1,13 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-layout column>
         <v-flex xs8>
-            <panel title="Practice">
+            <panel :title="$t('practice')">
                 <v-btn slot="action" class="indigo accent-2" light medium absolute
                        right middle fab @click="navigateTo({
                                 name: 'practice.create'
                             })">
                     <v-icon>add</v-icon>
                 </v-btn>
-                <!--<v-dialog v-model="dialog" max-width="500px">-->
-                    <!--<template  v-slot:activator="{ on }">-->
-                        <!--<v-btn slot="action"  class="indigo accent-2" light medium absolute-->
-                               <!--right middle fab v-on="on">-->
-                            <!--<v-icon>add</v-icon>-->
-                        <!--</v-btn>-->
-                    <!--</template>-->
-                <!--</v-dialog>-->
-                <!--<div v-for="practice in practices" :key="practice._links.self.href">-->
-                    <!--<v-layout>-->
-                        <!--<v-flex xs6>-->
-                            <!--<div class="title">-->
-                                <!--{{ practice.name }}-->
-                            <!--</div>-->
-                            <!--<v-btn color="indigo" dark @click="navigateTo({-->
-                                <!--name: 'practice.show',-->
-                                <!--params: {id: practice._links.self.href}-->
-                            <!--})">View-->
-                            <!--</v-btn>-->
-                        <!--</v-flex>-->
-                    <!--</v-layout>-->
-                <!--</div>-->
                 <v-data-table :headers="headers" :items="practices" class="elevation-1">
                     <template v-slot:items="props">
                         <td>{{ props.item.name }}</td>
@@ -39,11 +17,9 @@
                             <v-btn color="indigo" dark @click="navigateToView({
                                 name: 'practice.show',
                                 params: {id: props.item.name}
-                            })">View</v-btn>
+                            })">{{ $t('view')}}</v-btn>
                         </td>
                     </template>
-
-
                 </v-data-table>
             </panel>
         </v-flex>

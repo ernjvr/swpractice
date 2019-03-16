@@ -2,14 +2,12 @@
     <v-toolbar fixed class="indigo" dark>
         <v-toolbar-title class="mr-4" dark @click="navigateTo({
                                 name: 'home'
-                            })">Home</v-toolbar-title>
+                            })">{{ $t('home') }}</v-toolbar-title>
 
         <v-toolbar-items>
             <v-menu open-on-hover transition="slide-y-transition" bottom>
                 <template v-slot:activator="{ on }">
-                    <v-btn class="purple" color="primary" dark v-on="on">
-                        Practice
-                    </v-btn>
+                    <v-btn class="purple" color="primary" dark v-on="on">{{ $t('practice') }}</v-btn>
                 </template>
                 <v-list>
                     <v-list-tile class="menu" v-for="item in items" :key="item.name" @click="navigateTo({ name: item.name })">
@@ -24,11 +22,13 @@
 </template>
 
 <script>
+    import { il8n } from '../il8n';
+
     export default {
         data: () => ({
             items: [
-                { title: 'PRACTICE', name: 'practice.index' },
-                { title: 'PRACTICE CATEGORY', name: 'practice-category.index' },
+                { title: il8n.tc('practice'), name: 'practice.index' },
+                { title: il8n.tc('practice_category'), name: 'practice-category.index' },
             ]
         }),
         methods: {

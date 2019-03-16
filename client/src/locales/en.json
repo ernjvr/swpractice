@@ -1,0 +1,23 @@
+{
+  "home": "Home",
+  "practice": "Practice",
+  "edit_practice": "Edit Practice",
+  "add_practice": "Add Practice",
+  "practice_category": "Practice Category",
+  "edit_practice_category": "Edit Practice Category",
+  "add_practice_category": "Add Practice Category",
+  "name": "Name",
+  "description": "Description",
+  "add": "Add",
+  "edit": "Edit",
+  "delete": "Delete",
+  "return": "Return",
+  "view": "View",
+  "cancel": "Cancel",
+  "action": "Action",
+  "save": "Save",
+  "confirm_delete_title": "Confirm Delete",
+  "confirm_delete_text": "Are you sure you want to delete?",
+  "no_slot_content": "No slot content defined",
+  "field_required": "This field is required"
+}
