@@ -11,4 +11,10 @@ export default {
         console.log(category);
         return category;
     },
+    getSelectedPracticeSubCategory(selectedPracticeSubCategory) {
+        let subcategory = store.state.practiceSubCategories.find(subcategory => { return subcategory._links.self.href === selectedPracticeSubCategory});
+        console.log('util getSelectedPracticeSubCategory');
+        console.log(subcategory);
+        return subcategory;
+    },
 }

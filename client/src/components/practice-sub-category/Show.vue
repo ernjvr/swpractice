@@ -2,29 +2,29 @@
     <v-container fluid grid-list-xl>
         <v-layout row>
             <v-flex xs6>
-                <panel :title="$t('practice')">
+                <panel :title="$t('practice_sub_category')">
                     <v-card-text>
                         <v-form ref="form">
-                            <v-text-field v-model="practice.name" readonly prepend-icon="person" name="name"
+                            <v-text-field v-model="practiceSubCategory.name" readonly prepend-icon="person" name="name"
                                           :label="$t('name')" type="text"></v-text-field>
-                            <v-text-field v-model="practice.description" readonly prepend-icon="person" name="description"
-                                          :label="$t('description')" type="text"></v-text-field>
-                            <v-text-field v-model="practice.practiceCategory.name" readonly prepend-icon="person" name="practiceCategory"
+                            <v-textarea v-model="practiceSubCategory.description" readonly prepend-icon="person" name="description"
+                                          :label="$t('description')" type="text"></v-textarea>
+                            <v-text-field v-model="practiceSubCategory.practiceCategory.name" readonly prepend-icon="person" name="practiceCategory"
                                           :label="$t('practice_category')" type="text"></v-text-field>
                         </v-form>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="indigo" dark @click="navigateTo({name: 'practice.edit'})">{{ $t('edit')}}</v-btn>
+                        <v-btn color="indigo" dark @click="navigateTo({name: 'practice-sub-category.edit'})">{{ $t('edit')}}</v-btn>
                         <v-btn color="indigo" dark @click="deleteConfirmationVisibility=true">{{ $t('delete')}}</v-btn>
-                        <v-btn color="indigo" dark @click="navigateTo({name: 'practice.index'})">{{ $t('return')}}</v-btn>
+                        <v-btn color="indigo" dark @click="navigateTo({name: 'practice-sub-category.index'})">{{ $t('return')}}</v-btn>
                     </v-card-actions>
                 </panel>
             </v-flex>
         </v-layout>
         <confirm-dialog :confirm-visibility="deleteConfirmationVisibility"
                         @confirmCancel="deleteConfirmationVisibility=false"
-                        @confirmAccept="deletePractice">
+                        @confirmAccept="deletePracticeSubCategory">
             <template slot="title">{{ $t('confirm_delete_title')}}</template>
             <template slot="text">{{ $t('confirm_delete_text')}}</template>
             <template slot="confirmButton">{{ $t('delete')}}</template>
@@ -43,7 +43,7 @@
         },
         data() {
             return {
-                practice: {
+                practiceSubCategory: {
                     name: '',
                     description: '',
                     _links: '',
@@ -53,25 +53,25 @@
             }
         },
     mounted() {
-            let practice = this.$store.state.practice;
+            let practiceSubCategory = this.$store.state.selectedPracticeSubCategory;
 
-            if(practice.name) {
-                this.practice = practice;
+            if(practiceSubCategory.name) {
+                this.practiceSubCategory = practiceSubCategory;
             } else {
-                console.log('selected practice not found');
-                this.navigateTo('/practice/');
+                console.log('selected practice sub category not found');
+                this.navigateTo('/practice-sub-category/');
             }
         },
         methods: {
             navigateTo(route) {
                 this.$router.push(route);
             },
-            async deletePractice() {
-                let href = this.practice._links.self.href;
+            async deletePracticeSubCategory() {
+                let href = this.practiceSubCategory._links.self.href;
                 api.delete(href)
                     .then(response => {
                         console.log(href + ' delete success: ' + response);
-                        this.navigateTo('/practice/');
+                        this.navigateTo('/practice-sub-category/');
                     }).catch(e => {
                     console.log(href + ' delete error: ' + e);
                 });

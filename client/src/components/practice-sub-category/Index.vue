@@ -1,21 +1,21 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-layout column>
         <v-flex xs8>
-            <panel :title="$t('practice')">
+            <panel :title="$t('practice_sub_category')">
                 <v-btn slot="action" class="indigo accent-2" light medium absolute
                        right middle fab @click="navigateTo({
-                                name: 'practice.create'
+                                name: 'practice-sub-category.create'
                             })">
                     <v-icon>add</v-icon>
                 </v-btn>
-                <v-data-table :headers="headers" :items="practices" class="elevation-1">
+                <v-data-table :headers="headers" :items="practiceSubCategories" class="elevation-1">
                     <template v-slot:items="props">
                         <td>{{ props.item.name }}</td>
                         <td>{{ props.item.description }}</td>
                         <td>{{ props.item.practiceCategory.name }}</td>
                         <td>
                             <v-btn color="indigo" dark @click="navigateToView({
-                                name: 'practice.show',
+                                name: 'practice-sub-category.show',
                                 params: {id: props.item.name}
                             })">{{ $t('view')}}</v-btn>
                         </td>
@@ -38,26 +38,26 @@
         },
         data() {
             return {
-                practices: [],
-                headers: constants.practice_headers
+                practiceSubCategories: [],
+                headers: constants.practice_sub_category_headers
             }
         },
         async mounted() {
-            await api.get('/practice')
+            await api.get('/practice-sub-category')
                 .then(response => {
-                    this.practices = response.data._embedded.practices.map(practice => ({
-                        name: practice.name,
-                        description: practice.description,
-                        _links: practice._links,
+                    this.practiceSubCategories = response.data._embedded.practiceSubCategories.map(subCategory => ({
+                        name: subCategory.name,
+                        description: subCategory.description,
+                        _links: subCategory._links,
                         practiceCategory: ''
                     }));
                 }, error => {
-                    console.log('practice get error: ' + error);
+                    console.log('practice-sub-category get error: ' + error);
                 })
                 .then(response => {
                     console.log(response);
                 });
-            this.resolvePracticeCategoryForEachPractice();
+            this.resolvePracticeCategoryForEachPracticeSubCategory();
             this.initPracticeCategories();
         },
         methods: {
@@ -65,34 +65,34 @@
                 this.$router.push(route);
             },
             navigateToView(route) {
-                let practice = this.$store.state.practices.find(practice => { return practice.name === route.params.id});
-                this.$store.dispatch('setSelectedPractice', practice).then(_ => {
+                let subCategory = this.$store.state.practiceSubCategories.find(subCategory => { return subCategory.name === route.params.id});
+                this.$store.dispatch('setSelectedPracticeSubCategory', subCategory).then(_ => {
                     this.$router.push(route);
-                }, error => {
-                    console.log('setSelectedPractice error: ' + error);
+                    } , error => {
+                    console.log('setSelectedSubCategory error: ' + error);
                 });
             },
-            async resolvePracticeCategoryForEachPractice() {
+            async resolvePracticeCategoryForEachPracticeSubCategory() {
                 let practiceCategories = [];
-                for(let i = 0; i < this.practices.length; i++) {
-                    let practice = this.practices[i];
-                    practiceCategories.push(api.get(practice._links.practiceCategory.href));
+                for(let i = 0; i < this.practiceSubCategories.length; i++) {
+                    let subCategory = this.practiceSubCategories[i];
+                    practiceCategories.push(api.get(subCategory._links.practiceCategory.href));
                 }
 
                 let result = await axios.all(practiceCategories);
-                console.log('get practice category for each practice result: ');
+                console.log('get practice category for each practice sub category result: ');
                 console.log(result);
                 for(let i = 0; i < result.length; i++) {
                     let res = result[i];
-                    let practice = this.practices[i];
+                    let subCategory = this.practiceSubCategories[i];
                     let practiceCategory = {
                         name: res.data.name,
                         _links: res.data._links
                     };
-                    practice['practiceCategory'] = practiceCategory;
-                    this.practices[i] = practice;
+                    subCategory['practiceCategory'] = practiceCategory;
+                    this.practiceSubCategories[i] = subCategory;
                 }
-                this.$store.commit('addPractices', this.practices);
+                this.$store.commit('addPracticeSubCategories', this.practiceSubCategories);
             },
             async initPracticeCategories() {
                 this.$store.dispatch('getAllPracticeCategories').then(response => {

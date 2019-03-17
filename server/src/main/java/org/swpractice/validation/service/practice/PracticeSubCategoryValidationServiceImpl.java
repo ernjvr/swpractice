@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.handler.MappedInterceptor;
-import org.swpractice.model.practice.Practice;
 import org.swpractice.model.practice.PracticeSubCategory;
 import org.swpractice.util.ApiRequestInterceptor;
 
@@ -16,7 +15,7 @@ import java.util.List;
 import static org.swpractice.util.Constants.*;
 
 @Service
-public class PracticeSubCategoryValidationServiceImpl implements PracticeValidationService {
+public class PracticeSubCategoryValidationServiceImpl implements PracticeSubCategoryValidationService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 

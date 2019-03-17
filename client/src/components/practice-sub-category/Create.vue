@@ -2,13 +2,13 @@
     <v-container fluid grid-list-xl>
         <v-layout row>
             <v-flex xs4>
-                <panel :title="$t('add_practice')">
+                <panel :title="$t('add_practice_sub_category')">
                     <v-card-text>
                         <v-form ref="form">
                             <v-text-field v-model="data.name" v-on:keyup="keyEvent" prepend-icon="person" name="name"
                                           :label="$t('name')" type="text" required :rules="required"></v-text-field>
-                            <v-text-field v-model="data.description" v-on:keyup="keyEvent" prepend-icon="person" name="description"
-                                          :label="$t('description')" type="text"></v-text-field>
+                            <v-textarea v-model="data.description" v-on:keyup="keyEvent" prepend-icon="person" name="description"
+                                          :label="$t('description')" type="text"></v-textarea>
                             <v-select :label="$t('practice_category')"
                                       :items="practiceCategories"
                                       item-text="name" item-value="_links.self.href"
@@ -22,7 +22,7 @@
                         <v-spacer></v-spacer>
                         <v-btn color="indigo" dark @click="create">{{ $t('add') }}</v-btn>
                         <v-btn color="indigo" dark @click="navigateTo({
-                                    name: 'practice.index'
+                                    name: 'practice-sub-category.index'
                                 })">{{ $t('cancel') }}</v-btn>
                     </v-card-actions>
                 </panel>
@@ -61,18 +61,18 @@
                 try {
                     if (this.$refs.form.validate()) {
                         this.data.practiceCategory = this.getSelectedPracticeCategory()._links.self.href;
-                        this.$store.dispatch('addPractice', this.data).then(response => {
-                            console.log('received data from store addPractice: ' + response);
+                        this.$store.dispatch('addPracticeSubCategory', this.data).then(response => {
+                            console.log('received data from store addPracticeSubCategory: ' + response);
                             this.validationError = false;
-                            this.navigateTo('/practice');
+                            this.navigateTo('/practice-sub-category');
                         }, error => {
-                            console.log('received error from store addPractice: ' + error);
+                            console.log('received error from store addPracticeSubCategory: ' + error);
                             this.error = error;
                             this.validationError = true;
                         });
                     }
                 } catch (e) {
-                    console.log('catch error adding practice: ' + e);
+                    console.log('catch error adding practice sub category: ' + e);
                     this.error = e;
                     this.validationError = true;
                 }

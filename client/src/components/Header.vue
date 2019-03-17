@@ -29,6 +29,7 @@
             items: [
                 { title: il8n.tc('practice'), name: 'practice.index' },
                 { title: il8n.tc('practice_category'), name: 'practice-category.index' },
+                { title: il8n.tc('practice_sub_category'), name: 'practice-sub-category.index' },
             ]
         }),
         methods: {
@@ -45,6 +46,7 @@
     }
     .mr-4:hover {
         color: black;
+        background-color: white;
     }
     .menu {
         color: white;
