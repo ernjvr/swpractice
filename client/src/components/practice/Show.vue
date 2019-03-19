@@ -11,6 +11,8 @@
                                           :label="$t('description')" type="text"></v-text-field>
                             <v-text-field v-model="practice.practiceCategory.name" readonly prepend-icon="person" name="practiceCategory"
                                           :label="$t('practice_category')" type="text"></v-text-field>
+                            <v-text-field v-model="practice.practiceSubCategory.name" readonly prepend-icon="person" name="practiceCategory"
+                                          :label="$t('practice_sub_category')" type="text"></v-text-field>
                         </v-form>
                     </v-card-text>
                     <v-card-actions>
@@ -47,13 +49,14 @@
                     name: '',
                     description: '',
                     _links: '',
-                    practiceCategory: ''
+                    practiceCategory: '',
+                    practiceSubCategory: ''
                 },
                 deleteConfirmationVisibility: false
             }
         },
     mounted() {
-            let practice = this.$store.state.practice;
+            let practice = this.$store.state.selectedPractice;
 
             if(practice.name) {
                 this.practice = practice;

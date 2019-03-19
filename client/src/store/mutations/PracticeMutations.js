@@ -9,7 +9,7 @@ export default {
     setSelectedPractice(state, practice) {
         console.log('mutation: setSelectedPractice');
         console.log(practice);
-        state.practice = practice;
+        state.selectedPractice = practice;
     },
     editPractice(state, practice) {
         let index = state.practices.map(cat => cat._links.self.href).indexOf(practice._links.self.href);

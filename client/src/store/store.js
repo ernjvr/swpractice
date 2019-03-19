@@ -15,9 +15,7 @@ export default new Vuex.Store({
         practiceCategories: [],
         practiceSubCategories: [],
         practices: [],
-        // is this used?
-        selectedPractice: {},
-        selectedPracticeSubCategory: {}
+        selectedPractice: {}
     },
     mutations: {
         addPracticeCategories(state, categories) {

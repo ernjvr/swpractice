@@ -21,6 +21,12 @@ export default {
             value: 'view'
         },
         {
+            text: il8n.tc('practice_sub_category'),
+            align: 'left',
+            sortable: false,
+            value: 'view'
+        },
+        {
             text: il8n.tc('action'),
             align: 'left',
             sortable: false,
@@ -55,7 +61,6 @@ export default {
     ],
     practice_category_headers: [
         {
-            // text: 'Name',
             text: il8n.tc('name'),
             align: 'left',
             sortable: false,

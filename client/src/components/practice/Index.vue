@@ -13,6 +13,7 @@
                         <td>{{ props.item.name }}</td>
                         <td>{{ props.item.description }}</td>
                         <td>{{ props.item.practiceCategory.name }}</td>
+                        <td>{{ props.item.practiceSubCategory.name }}</td>
                         <td>
                             <v-btn color="indigo" dark @click="navigateToView({
                                 name: 'practice.show',
@@ -49,7 +50,8 @@
                         name: practice.name,
                         description: practice.description,
                         _links: practice._links,
-                        practiceCategory: ''
+                        practiceSubCategory: '',
+                        practiceCategory: '',
                     }));
                 }, error => {
                     console.log('practice get error: ' + error);
@@ -57,8 +59,9 @@
                 .then(response => {
                     console.log(response);
                 });
-            this.resolvePracticeCategoryForEachPractice();
+            this.resolveCategoryForEachPractice();
             this.initPracticeCategories();
+            this.initPracticeSubCategories();
         },
         methods: {
             navigateTo(route) {
@@ -72,23 +75,35 @@
                     console.log('setSelectedPractice error: ' + error);
                 });
             },
-            async resolvePracticeCategoryForEachPractice() {
+            async resolveCategoryForEachPractice() {
+                let practiceSubCategories = [];
                 let practiceCategories = [];
+
                 for(let i = 0; i < this.practices.length; i++) {
                     let practice = this.practices[i];
-                    practiceCategories.push(api.get(practice._links.practiceCategory.href));
+                    practiceSubCategories.push(api.get(practice._links.practiceSubCategory.href));
                 }
+                let subCatResult = await axios.all(practiceSubCategories);
 
-                let result = await axios.all(practiceCategories);
-                console.log('get practice category for each practice result: ');
-                console.log(result);
-                for(let i = 0; i < result.length; i++) {
-                    let res = result[i];
+                for(let i = 0; i < subCatResult.length; i++) {
+                    let res = subCatResult[i];
+                    practiceCategories.push(api.get(res.data._links.practiceCategory.href));
+                }
+                let catResult = await axios.all(practiceCategories);
+
+                for(let i = 0; i < subCatResult.length; i++) {
+                    let subCatRes = subCatResult[i];
+                    let catRes = catResult[i];
                     let practice = this.practices[i];
-                    let practiceCategory = {
-                        name: res.data.name,
-                        _links: res.data._links
+                    let practiceSubCategory = {
+                        name: subCatRes.data.name,
+                        _links: subCatRes.data._links
                     };
+                    let practiceCategory = {
+                        name: catRes.data.name,
+                        _links: catRes.data._links
+                    };
+                    practice['practiceSubCategory'] = practiceSubCategory;
                     practice['practiceCategory'] = practiceCategory;
                     this.practices[i] = practice;
                 }
@@ -96,6 +111,14 @@
             },
             async initPracticeCategories() {
                 this.$store.dispatch('getAllPracticeCategories').then(response => {
+                    console.log('received data from store getAllPracticeCategories: ' + response);
+                    console.log(response);
+                }, error => {
+                    console.log('received error from store getAllPracticeCategories: ' + error);
+                });
+            },
+            async initPracticeSubCategories() {
+                this.$store.dispatch('getAllPracticeSubCategories').then(response => {
                     console.log('received data from store getAllPracticeCategories: ' + response);
                     console.log(response);
                 }, error => {

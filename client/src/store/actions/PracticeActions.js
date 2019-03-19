@@ -28,7 +28,6 @@ export default {
                 .then(response => {
                     let practice = response.data;
                     console.log('practice patch success: ' + practice);
-                    // commit('editPractice', practice);
                     resolve(practice);
                 }, error => {
                     console.log('practice patch error:' + error.response.data);
@@ -43,10 +42,8 @@ export default {
                 practices = response.data._embedded.practices;
                 console.log('practice get success' + practices);
                 commit('addPractices', practices);
-                // resolve(practices);
             }, error => {
                 console.log('practice get error: ' + error);
-                // reject(error);
             });
         return practices;
     }

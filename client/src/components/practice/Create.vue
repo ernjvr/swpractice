@@ -9,11 +9,11 @@
                                           :label="$t('name')" type="text" required :rules="required"></v-text-field>
                             <v-text-field v-model="data.description" v-on:keyup="keyEvent" prepend-icon="person" name="description"
                                           :label="$t('description')" type="text"></v-text-field>
-                            <v-select :label="$t('practice_category')"
-                                      :items="practiceCategories"
+                            <v-select :label="$t('practice_sub_category')"
+                                      :items="practiceSubCategories"
                                       item-text="name" item-value="_links.self.href"
-                                      v-model="selectedPracticeCategory"
-                                      prepend-icon="person" name="practiceCategory" required :rules="required">
+                                      v-model="selectedPracticeSubCategory"
+                                      prepend-icon="person" name="practiceSubCategory" required :rules="required">
                             </v-select>
                             <v-alert :value="validationError" color="error" v-html="error"></v-alert>
                         </v-form>
@@ -42,9 +42,9 @@
                 data: {
                     name: '',
                     description: '',
-                    practiceCategory: ''
+                    practiceSubCategory: ''
                 },
-                selectedPracticeCategory: '',
+                selectedPracticeSubCategory: '',
                 error: null,
                 validationError: false,
                 // check if value exists or return required message
@@ -52,17 +52,16 @@
             }
         },
         computed: {
-            practiceCategories(){
-                return this.$store.state.practiceCategories;
+            practiceSubCategories(){
+                return this.$store.state.practiceSubCategories;
             }
         },
         methods: {
             async create() {
                 try {
                     if (this.$refs.form.validate()) {
-                        this.data.practiceCategory = this.getSelectedPracticeCategory()._links.self.href;
+                        this.data.practiceSubCategory = this.getSelectedPracticeSubCategory()._links.self.href;
                         this.$store.dispatch('addPractice', this.data).then(response => {
-                            console.log('received data from store addPractice: ' + response);
                             this.validationError = false;
                             this.navigateTo('/practice');
                         }, error => {
@@ -77,8 +76,8 @@
                     this.validationError = true;
                 }
             },
-            getSelectedPracticeCategory() {
-                return util.getSelectedPracticeCategory(this.selectedPracticeCategory);
+            getSelectedPracticeSubCategory() {
+                return util.getSelectedPracticeSubCategory(this.selectedPracticeSubCategory);
             },
             navigateTo(route) {
                 this.$router.push(route);

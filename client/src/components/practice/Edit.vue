@@ -9,11 +9,11 @@
                                           :label="$t('name')" type="text" required :rules="required"></v-text-field>
                             <v-text-field v-model="editPractice.description" v-on:keyup="keyEvent" prepend-icon="person" name="description"
                                           :label="$t('description')" type="text"></v-text-field>
-                            <v-select :label="$t('practice_category')"
-                                      :items="practiceCategories"
+                            <v-select :label="$t('practice_sub_category')"
+                                      :items="practiceSubCategories"
                                       item-text="name" item-value="_links.self.href"
-                                      v-model="selectedPracticeCategory"
-                                      prepend-icon="person" name="practiceCategory">
+                                      v-model="selectedPracticeSubCategory"
+                                      prepend-icon="person" name="practiceSubCategory">
                             </v-select>
                             <v-alert :value="validationError" color="error" v-html="error"></v-alert>
                         </v-form>
@@ -32,6 +32,7 @@
 <script>
     import Panel from '@/components/Panel';
     import util from '../../common/util';
+    import api from '../../services/api';
     import { il8n } from '../../il8n';
 
     export default {
@@ -41,15 +42,17 @@
                     name: '',
                     description: '',
                     _links: '',
-                    practiceCategory: ''
+                    practiceCategory: '',
+                    practiceSubCategory: ''
                 },
                 editPractice: {
                     name: '',
                     description: '',
                     _links: '',
-                    practiceCategory: ''
+                    practiceCategory: '',
+                    practiceSubCategory: ''
                 },
-                selectedPracticeCategory: '',
+                selectedPracticeSubCategory: '',
                 error: null,
                 validationError: false,
                 // check if value exists or return required message
@@ -57,12 +60,12 @@
             }
         },
         computed: {
-          practiceCategories() {
-              return this.$store.state.practiceCategories;
+          practiceSubCategories() {
+              return this.$store.state.practiceSubCategories;
           }
         },
         mounted() {
-            let practice = this.$store.state.practice;
+            let practice = this.$store.state.selectedPractice;
 
             if(practice.name) {
                 this.practice = practice;
@@ -70,9 +73,10 @@
                     name: this.practice.name,
                     description: this.practice.description,
                     _links: this.practice._links,
+                    practiceSubCategory: this.practice.practiceSubCategory,
                     practiceCategory: this.practice.practiceCategory
                 };
-                this.selectedPracticeCategory = this.practice.practiceCategory._links.self.href;
+                this.selectedPracticeSubCategory = this.practice.practiceSubCategory._links.self.href;
             } else {
                 console.log('selected practice not found');
                 this.navigateTo('/practice/');
@@ -82,22 +86,22 @@
             async edit() {
                 try {
                     if (this.$refs.form.validate()) {
+                        let practiceCat;
+                        await this.getPracticeCategory().then(response => {
+                            practiceCat = response;
+                        });
+
                         let data = {
                             href: this.practice._links.self.href,
                             practice: {
                                 name: this.editPractice.name,
                                 description: this.editPractice.description,
-                                practiceCategory: this.getSelectedPracticeCategory()._links.self.href
+                                practiceSubCategory: this.getSelectedPracticeSubCategory()._links.self.href
                             }
                         };
-                        console.log('dispatching to editPractice data:');
-                        console.log(data);
-                        this.$store.dispatch('editPractice', data).then(response => {
-                            console.log('received data from store editPractice: ');
-                            console.log(response);
-                            this.editPractice.practiceCategory = this.getSelectedPracticeCategory();
-                            console.log('updated practice category of editPractice:');
-                            console.log(this.editPractice);
+                        this.$store.dispatch('editPractice', data).then(_ => {
+                            this.editPractice.practiceSubCategory = this.getSelectedPracticeSubCategory();
+                            this.editPractice.practiceCategory = practiceCat;
                             this.$store.commit('setSelectedPractice', this.editPractice);
                             this.$store.commit('editPractice', this.editPractice);
                             this.navigateTo({name: 'practice.show'});
@@ -112,8 +116,27 @@
                     this.validationError = true;
                 }
             },
-            getSelectedPracticeCategory() {
-              return util.getSelectedPracticeCategory(this.selectedPracticeCategory);
+            getSelectedPracticeSubCategory() {
+              return util.getSelectedPracticeSubCategory(this.selectedPracticeSubCategory);
+            },
+            async getPracticeCategory() {
+                let practiceCat;
+                let practiceSubCat;
+                let href = this.selectedPracticeSubCategory;
+
+                await api.get(href)
+                    .then(response => {
+                        practiceSubCat = response.data;
+                    }).catch(e => {
+                        console.log(href + ' get error: ' + e);
+                    });
+                await api.get(practiceSubCat._links.practiceCategory.href)
+                    .then(response => {
+                        practiceCat = response.data;
+                    }).catch(e => {
+                        console.log(href + ' get error: ' + e);
+                    });
+                return practiceCat;
             },
             keyEvent() {
                 if (this.validationError) {
