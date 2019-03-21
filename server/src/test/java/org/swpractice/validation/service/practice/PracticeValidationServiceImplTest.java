@@ -18,7 +18,7 @@ public class PracticeValidationServiceImplTest {
 
     @Test
     public void columnValueExistsExpectTrue() {
-        boolean exists = service.columnValueExists("name", "scope");
+        boolean exists = service.columnValueExists("name", "Planning Game");
         assertTrue(exists);
     }
 
