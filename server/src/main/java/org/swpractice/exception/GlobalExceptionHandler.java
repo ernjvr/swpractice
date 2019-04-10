@@ -24,12 +24,12 @@ public class GlobalExceptionHandler {
         logger.debug(String.format("handleTransactionSystemException: %s", e.getRootCause()));
 
         if (e.getRootCause() instanceof ConstraintViolationException) {
-            ConstraintViolationException ex = (ConstraintViolationException) e.getRootCause();
-            Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
-            String errors = constraintViolations.stream().map(v -> v.getMessage()).collect(Collectors.joining(", "));
+            final ConstraintViolationException ex = (ConstraintViolationException) e.getRootCause();
+            final Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
+            final String errors = constraintViolations.stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(", "));
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(e.getRootCause().getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(e.getRootCause() == null? e.getMessage(): e.getRootCause().getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler

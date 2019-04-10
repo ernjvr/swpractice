@@ -21,11 +21,11 @@ INSERT INTO PRACTICE_SUB_CATEGORY (ID, NAME, DESCRIPTION, PRACTICE_CATEGORY_ID)
 VALUES(2007, 'Support', 'The phase of the project where software bugs, security and usability errors are resolved and delivered in the form of updates and patches. http://www.businessdictionary.com/definition/software-support.html', 1003);
 
 INSERT INTO PRACTICE (ID, NAME, DESCRIPTION, PRACTICE_SUB_CATEGORY_ID)
-VALUES(3001, 'Planning Game', 'The prediction of what features will be accomplished by the target date and analyzing what requirements to do next. https://ronjeffries.com/xprog/what-is-extreme-programming/', 2001);
+VALUES(3001, 'Planning Game', 'The prediction of what features will be accomplished by the target date and analyzing what requirements to do next. https://ronjeffries.com/xprog/what-is-extreme-programming/', 2002);
 INSERT INTO PRACTICE (ID, NAME, DESCRIPTION, PRACTICE_SUB_CATEGORY_ID)
 VALUES(3002, 'Metaphor', 'An agreed upon idea of how the software application functions. https://ronjeffries.com/xprog/what-is-extreme-programming/', 2001);
 INSERT INTO PRACTICE (ID, NAME, DESCRIPTION, PRACTICE_SUB_CATEGORY_ID)
-VALUES(3003, 'Simple Deign', 'Construct software according to a simple yet sufficient design. https://ronjeffries.com/xprog/what-is-extreme-programming/', 2004);
+VALUES(3003, 'Simple Design', 'Construct software according to a simple yet sufficient design. https://ronjeffries.com/xprog/what-is-extreme-programming/', 2004);
 INSERT INTO PRACTICE (ID, NAME, DESCRIPTION, PRACTICE_SUB_CATEGORY_ID)
 VALUES(3004, 'Pair Programming', 'The software application is coded by two programmers sitting together at the same time and same machine. https://ronjeffries.com/xprog/what-is-extreme-programming/', 2004);
 INSERT INTO PRACTICE (ID, NAME, DESCRIPTION, PRACTICE_SUB_CATEGORY_ID)

@@ -1,13 +1,11 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-toolbar fixed class="indigo" dark>
-        <v-toolbar-title class="mr-4" dark @click="navigateTo({
-                                name: 'home'
-                            })">{{ $t('home') }}</v-toolbar-title>
+        <v-toolbar-title class="mr-4" dark @click="navigateTo({ name: 'home' })">{{ $t('home') }}</v-toolbar-title>
 
         <v-toolbar-items>
             <v-menu open-on-hover transition="slide-y-transition" bottom>
                 <template v-slot:activator="{ on }">
-                    <v-btn class="purple" color="primary" dark v-on="on">{{ $t('practice') }}</v-btn>
+                    <v-btn class="menu" color="primary" dark v-on="on">{{ $t('practice') }}</v-btn>
                 </template>
                 <v-list>
                     <v-list-tile class="menu" v-for="item in items" :key="item.name" @click="navigateTo({ name: item.name })">

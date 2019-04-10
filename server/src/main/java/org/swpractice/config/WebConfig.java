@@ -10,6 +10,8 @@ import org.swpractice.util.ApiRequestInterceptor;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+import static org.swpractice.util.Constants.API_ROOT_PATTERN;
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
@@ -22,6 +24,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public MappedInterceptor requestInterceptor() {
-        return new MappedInterceptor(new String[]{"/api/**"}, new ApiRequestInterceptor());
+        return new MappedInterceptor(new String[]{API_ROOT_PATTERN}, new ApiRequestInterceptor());
     }
 }

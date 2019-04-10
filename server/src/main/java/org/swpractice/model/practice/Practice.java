@@ -1,10 +1,17 @@
 package org.swpractice.model.practice;
 
 import lombok.Data;
+import org.swpractice.model.Identifier;
 import org.swpractice.validation.constraint.annotation.Unique;
 import org.swpractice.validation.service.practice.PracticeValidationService;
 
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.ManyToOne;
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -14,7 +21,7 @@ import static org.swpractice.util.Constants.*;
 @Data
 @Entity
 @NamedQuery(name = PRACTICE_FIND_BY_NAME, query = PRACTICE_FIND_BY_NAME_QUERY)
-public class Practice {
+public class Practice implements Identifier {
 
     @Id
     @GeneratedValue
@@ -35,6 +42,7 @@ public class Practice {
     @ManyToOne
     private PracticeSubCategory practiceSubCategory;
 
+    @Override
     public Long getId() {
         return id;
     }

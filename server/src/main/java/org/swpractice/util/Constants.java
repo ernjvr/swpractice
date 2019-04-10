@@ -2,6 +2,10 @@ package org.swpractice.util;
 
 public class Constants {
 
+    public static final String API_ROOT_PATTERN = "/api/**";
+    public static final String LOCAL_ORIGIN = "http://localhost:8081";
+    public static final String PATCH = "PATCH";
+
     public static final String PRACTICE_CATEGORY = "practiceCategory";
     public static final String PRACTICE_SUB_CATEGORY = "practiceSubCategory";
     public static final String FIELD_NAME_NOT_SUPPORTED = "Field name '%s' not supported.";

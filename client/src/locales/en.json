@@ -1,5 +1,9 @@
 {
   "home": "Home",
+  "home_title": "Welcome to the Software Practices Evidence application",
+  "home_description": "You may want to use this application if you are interested in an evidence-based approach to selecting software practices that are appropriate for your specific project. <br><br>RESEARCHERS can contribute to the creation of an evidence base for situated software practices by recording evidence concerning a specific software practice within a specific context. <br><br>PRACTITIONERS can use the application for decision support, by finding available evidence about practices-in-context.",
+  "background_title": "Background",
+  "background_description": "Many software development methodologies have been proposed for the development of computer software. These include the more traditional models, for example, Waterfall and Spiral, and the more recent agile approaches, for example, XP and Scrum. An original belief common to all was that the selected approach must be followed exactly to achieve the benefits claimed. <br><br>It is now generally accepted that practitioners do not follow any methodology to the letter, but instead tailor according to the project's environment. But there are dangers inherent in ad-hoc tailoring. How do we know whether implementing or tailoring a practice will be effective, or will cause unexpected issues? <br><br>The vision for this application is to provide support for practitioners who want to know which practices might be effective for their project and which to avoid. This represents a long term goal - we must first build and grow an evidence repository linking specific software practices with elements of context. As a new initiative, this application at present is not yet ready for decision support. Rather, the application provides a vehicle for evidence accumulation on situated software practices.",
   "practice": "Practice",
   "edit_practice": "Edit Practice",
   "add_practice": "Add Practice",

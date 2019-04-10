@@ -70,7 +70,7 @@
             navigateToView(route) {
                 let practice = this.$store.state.practices.find(practice => { return practice.name === route.params.id});
                 this.$store.dispatch('setSelectedPractice', practice).then(_ => {
-                    this.$router.push(route);
+                    this.navigateTo(route);
                 }, error => {
                     console.log('setSelectedPractice error: ' + error);
                 });

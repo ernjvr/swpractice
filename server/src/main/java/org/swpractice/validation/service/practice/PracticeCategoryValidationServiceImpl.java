@@ -8,7 +8,6 @@ import org.swpractice.model.practice.PracticeCategory;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import java.util.List;
 
 import static org.swpractice.util.Constants.*;
 
@@ -23,11 +22,10 @@ public class PracticeCategoryValidationServiceImpl implements PracticeCategoryVa
     @Override
     public boolean columnValueExists(String fieldName, Object value) throws UnsupportedOperationException {
         logger.debug(String.format("columnValueExists: field name '%s', value %s", fieldName, value));
-        final TypedQuery<PracticeCategory> namedQuery = createNamedQuery(fieldName);
-        return verify(namedQuery, fieldName, value);
+        return verify(fieldName, value);
     }
 
-    private TypedQuery<PracticeCategory> createNamedQuery(String fieldName) {
+    public TypedQuery<PracticeCategory> createNamedQuery(String fieldName) {
         if (PRACTICE_CATEGORY_FIELD_NAME.equals(fieldName)) {
             return entityManager.createNamedQuery(PRACTICE_CATEGORY_FIND_BY_NAME, PracticeCategory.class);
         } else {
