@@ -73,4 +73,7 @@ export default {
             value: 'view'
         },
     ],
+    practice_url: 'practices',
+    practice_category_url: 'practice-categories',
+    practice_sub_category_url: 'practice-sub-categories',
 }

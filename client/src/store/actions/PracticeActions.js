@@ -1,9 +1,10 @@
 import api from "../../services/api";
+import constants from "../../common/constants";
 
 export default {
     addPractice({ commit }, data) {
         return new Promise((resolve, reject) => {
-            api.post('practice', data)
+            api.post(constants.practice_url, data)
                 .then(response => {
                     let practice = response.data;
                     console.log('practice post success: ' + practice);
@@ -37,7 +38,7 @@ export default {
     },
     getAllPractices({ commit }) {
         let practices = [];
-        api.get('/practice')
+        api.get(constants.practice_url)
             .then(response => {
                 practices = response.data._embedded.practices;
                 console.log('practice get success' + practices);

@@ -1,9 +1,10 @@
 import api from "../../services/api";
+import constants from "../../common/constants";
 
 export default {
     addPracticeCategory({ commit }, data) {
         return new Promise((resolve, reject) => {
-            api.post('practice-category', data)
+            api.post(constants.practice_category_url, data)
                 .then(response => {
                     let category = response.data;
                     console.log('practice-category post success: ' + category);
@@ -31,7 +32,7 @@ export default {
     },
     getAllPracticeCategories({ commit }) {
         return new Promise((resolve, reject) => {
-            api.get('/practice-category')
+            api.get(constants.practice_category_url)
                 .then(response => {
                     let practiceCategories = response.data._embedded.practiceCategories;
                     console.log('practice-category get success' + practiceCategories);

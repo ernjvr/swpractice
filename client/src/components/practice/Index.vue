@@ -44,7 +44,7 @@
             }
         },
         async mounted() {
-            await api.get('/practice')
+            await api.get(constants.practice_url)
                 .then(response => {
                     this.practices = response.data._embedded.practices.map(practice => ({
                         name: practice.name,

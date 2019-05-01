@@ -33,6 +33,7 @@ public class Practice implements Identifier {
     @Unique(service = PracticeValidationService.class,
             fieldName = PRACTICE_FIELD_NAME,
             message = PRACTICE_FIELD_NAME_UNIQUE_MESSAGE)
+    // index this column
     private String name;
 
     @Size(max = 500, message = PRACTICE_FIELD_DESCRIPTION_LENGTH_MESSAGE)

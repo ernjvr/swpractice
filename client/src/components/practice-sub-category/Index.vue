@@ -43,7 +43,7 @@
             }
         },
         async mounted() {
-            await api.get('/practice-sub-category')
+            await api.get(constants.practice_sub_category_url)
                 .then(response => {
                     this.practiceSubCategories = response.data._embedded.practiceSubCategories.map(subCategory => ({
                         name: subCategory.name,
