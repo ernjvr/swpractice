@@ -3,7 +3,6 @@ package org.swpractice.model.reference;
 import lombok.Data;
 import org.swpractice.model.Identifier;
 import org.swpractice.validation.constraint.annotation.Unique;
-import org.swpractice.validation.service.context.ContextDimensionValidationService;
 import org.swpractice.validation.service.reference.ReferenceTypeValidationService;
 
 import javax.persistence.*;
