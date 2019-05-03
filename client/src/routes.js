@@ -1,5 +1,10 @@
 import Home from './components/Home.vue';
 
+import ContextDimensionIndex from './components/context-dimension/Index.vue';
+import ContextDimensionCreate from './components/context-dimension/Create.vue';
+import ContextDimensionShow from './components/context-dimension/Show.vue';
+import ContextDimensionEdit from './components/context-dimension/Edit.vue';
+
 import PracticeCategoryIndex from './components/pratice-category/Index.vue';
 import PracticeCategoryCreate from './components/pratice-category/Create.vue';
 import PracticeCategoryShow from './components/pratice-category/Show.vue';
@@ -20,6 +25,28 @@ export default [
         path: '/home',
         name: 'home',
         component: Home
+    },
+    {
+        path: '/context-dimension',
+        name: 'context-dimension.index',
+        component: ContextDimensionIndex
+    },
+    {
+        path: '/context-dimension/:id',
+        name: 'context-dimension.show',
+        component: ContextDimensionShow,
+        props: true
+    },
+    {
+        path: '/context-dimension/create',
+        name: 'context-dimension.create',
+        component: ContextDimensionCreate
+    },
+    {
+        path: '/context-dimension/:id/edit',
+        name: 'context-dimension.edit',
+        component: ContextDimensionEdit,
+        props: true
     },
     {
         path: '/practice-category',

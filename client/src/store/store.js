@@ -1,23 +1,38 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import PracticeCategoryMutations from './mutations/PracticeCategoryMutations';
-import PracticeSubCategoryMutations from './mutations/PracticeSubCategoryMutations';
-import PracticeMutations from './mutations/PracticeMutations';
-import PracticeCategoryActions from './actions/PracticeCategoryActions';
-import PracticeSubCategoryActions from './actions/PracticeSubCategoryActions';
-import PracticeActions from './actions/PracticeActions';
+import PracticeCategoryMutations from './mutations/practice/PracticeCategoryMutations';
+import PracticeSubCategoryMutations from './mutations/practice/PracticeSubCategoryMutations';
+import PracticeMutations from './mutations/practice/PracticeMutations';
+import PracticeCategoryActions from './actions/practice/PracticeCategoryActions';
+import PracticeSubCategoryActions from './actions/practice/PracticeSubCategoryActions';
+import PracticeActions from './actions/practice/PracticeActions';
+import ContextDimensionMutations from "./mutations/context/ContextDimensionMutations";
+import ContextDimensionActions from "./actions/context/ContextDimensionActions";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     strict: true,
     state: {
+        contextDimensions: [],
         practiceCategories: [],
         practiceSubCategories: [],
         practices: [],
         selectedPractice: {}
     },
     mutations: {
+        addContextDimensions(state, dimensions) {
+            ContextDimensionMutations.addContextDimensions(state, dimensions);
+        },
+        addContextDimension(state, dimension) {
+            ContextDimensionMutations.addContextDimension(state, dimension);
+        },
+        editContextDimension(state, dimension) {
+            ContextDimensionMutations.editContextDimension(state, dimension);
+        },
+        removeContextDimension(state, dimension) {
+            ContextDimensionMutations.removeContextDimension(state, dimension);
+        },
         addPracticeCategories(state, categories) {
             PracticeCategoryMutations.addPracticeCategories(state, categories);
         },
@@ -62,6 +77,15 @@ export default new Vuex.Store({
         },
     },
     actions: {
+        addContextDimension({ commit }, category) {
+            return ContextDimensionActions.addContextDimension({ commit }, category);
+        },
+        editContextDimension({ commit }, data) {
+            return ContextDimensionActions.editContextDimension({ commit }, data);
+        },
+        getAllContextDimensions({ commit }) {
+            return ContextDimensionActions.getAllContextDimensions({ commit });
+        },
         addPracticeCategory({ commit }, category) {
             return PracticeCategoryActions.addPracticeCategory({ commit }, category);
         },

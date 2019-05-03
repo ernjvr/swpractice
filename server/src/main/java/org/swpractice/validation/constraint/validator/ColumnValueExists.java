@@ -27,7 +27,7 @@ public interface ColumnValueExists {
 
     default <T> boolean verify(String fieldName, Object value) {
         final TypedQuery<T> namedQuery = createNamedQuery(fieldName);
-        namedQuery.setParameter(fieldName, value);
+        namedQuery.setParameter(fieldName, value.toString().strip());
         return !namedQuery.getResultList().isEmpty();
     }
 

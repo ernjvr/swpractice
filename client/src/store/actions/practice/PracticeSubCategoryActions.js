@@ -1,5 +1,5 @@
-import api from "../../services/api";
-import constants from "../../common/constants";
+import api from "../../../services/api";
+import constants from "../../../common/constants";
 
 export default {
     addPracticeSubCategory({ commit }, data) {

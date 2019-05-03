@@ -36,3 +36,12 @@ INSERT INTO PRACTICE (ID, NAME, DESCRIPTION, PRACTICE_SUB_CATEGORY_ID)
 VALUES(3007, 'Continuous Integration', 'Continually keeping the system integrated at all times. The team typically builds the system multiple times a day instead of only once a day. https://ronjeffries.com/xprog/what-is-extreme-programming/', 2005);
 INSERT INTO PRACTICE (ID, NAME, DESCRIPTION, PRACTICE_SUB_CATEGORY_ID)
 VALUES(3008, 'Ten-minute Build', 'All the tests of the code base must finish running within a ten minute time limit. https://explainagile.com/agile/xp-extreme-programming/practices/10-minute-build/', 2005);
+
+INSERT INTO CONTEXT_DIMENSION (ID, NAME)
+VALUES (4001, 'People' );
+INSERT INTO CONTEXT_DIMENSION (ID, NAME)
+VALUES (4002, 'Place' );
+INSERT INTO CONTEXT_DIMENSION (ID, NAME)
+VALUES (4003, 'Product');
+INSERT INTO CONTEXT_DIMENSION (ID, NAME)
+VALUES (4004, 'Process');

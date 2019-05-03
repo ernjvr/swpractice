@@ -26,6 +26,14 @@ public class Constants {
     public static final String PRACTICE_SUB_CATEGORY = "practiceSubCategory";
     public static final String FIELD_NAME_NOT_SUPPORTED = "Field name '%s' not supported.";
 
+    public static final String CONTEXT_DIMENSION_FIND_BY_NAME = "ContextDimension.find_by_name";
+    public static final String CONTEXT_DIMENSION_FIND_BY_NAME_QUERY = "select d from ContextDimension d where lower(d.name) = lower(:name)";
+    public static final String CONTEXT_DIMENSION_FIELD_NAME_UNIQUE_MESSAGE = "{context.dimension.name.unique}";
+    public static final String CONTEXT_DIMENSION_FIELD_NAME_REQUIRED_MESSAGE = "{context.dimension.name.required}";
+    public static final String CONTEXT_DIMENSION_FIELD_NAME_LENGTH_MESSAGE = "{context.dimension.name.length}";
+    public static final String CONTEXT_DIMENSION_PATH = "/context-dimensions";
+    public static final String CONTEXT_DIMENSION_FIELD_NAME = "name";
+
     public static final String PRACTICE_CATEGORY_FIND_BY_NAME = "PracticeCategory.find_by_name";
     public static final String PRACTICE_CATEGORY_FIND_BY_NAME_QUERY = "select p from PracticeCategory p where lower(p.name) = lower(:name)";
     public static final String PRACTICE_CATEGORY_FIELD_NAME_UNIQUE_MESSAGE = "{practice.category.name.unique}";
