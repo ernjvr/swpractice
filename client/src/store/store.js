@@ -8,12 +8,15 @@ import PracticeSubCategoryActions from './actions/practice/PracticeSubCategoryAc
 import PracticeActions from './actions/practice/PracticeActions';
 import ContextDimensionMutations from "./mutations/context/ContextDimensionMutations";
 import ContextDimensionActions from "./actions/context/ContextDimensionActions";
+import ReferenceTypeMutations from "./mutations/reference/ReferenceTypeMutations";
+import ReferenceTypeActions from "./actions/reference/ReferenceTypeActions";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     strict: true,
     state: {
+        referenceTypes: [],
         contextDimensions: [],
         practiceCategories: [],
         practiceSubCategories: [],
@@ -21,6 +24,18 @@ export default new Vuex.Store({
         selectedPractice: {}
     },
     mutations: {
+        addReferenceTypes(state, types) {
+            ReferenceTypeMutations.addReferenceTypes(state, types);
+        },
+        addReferenceType(state, type) {
+            ReferenceTypeMutations.addReferenceType(state, type);
+        },
+        editReferenceType(state, type) {
+            ReferenceTypeMutations.editReferenceType(state, type);
+        },
+        removeReferenceType(state, type) {
+            ReferenceTypeMutations.removeReferenceType(state, type);
+        },
         addContextDimensions(state, dimensions) {
             ContextDimensionMutations.addContextDimensions(state, dimensions);
         },
@@ -77,8 +92,17 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        addContextDimension({ commit }, category) {
-            return ContextDimensionActions.addContextDimension({ commit }, category);
+        addReferenceType({ commit }, type) {
+            return ReferenceTypeActions.addReferenceType({ commit }, type);
+        },
+        editReferenceType({ commit }, data) {
+            return ReferenceTypeActions.editReferenceType({ commit }, data);
+        },
+        getAllReferenceTypes({ commit }) {
+            return ReferenceTypeActions.getAllReferenceTypes({ commit });
+        },
+        addContextDimension({ commit }, dimension) {
+            return ContextDimensionActions.addContextDimension({ commit }, dimension);
         },
         editContextDimension({ commit }, data) {
             return ContextDimensionActions.editContextDimension({ commit }, data);

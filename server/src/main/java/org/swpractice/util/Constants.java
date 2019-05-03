@@ -34,6 +34,14 @@ public class Constants {
     public static final String CONTEXT_DIMENSION_PATH = "/context-dimensions";
     public static final String CONTEXT_DIMENSION_FIELD_NAME = "name";
 
+    public static final String REFERENCE_TYPE_FIND_BY_NAME = "ReferenceType.find_by_name";
+    public static final String REFERENCE_TYPE_FIND_BY_NAME_QUERY = "select t from ReferenceType t where lower(t.name) = lower(:name)";
+    public static final String REFERENCE_TYPE_FIELD_NAME_UNIQUE_MESSAGE = "{reference.type.name.unique}";
+    public static final String REFERENCE_TYPE_FIELD_NAME_REQUIRED_MESSAGE = "{reference.type.name.required}";
+    public static final String REFERENCE_TYPE_FIELD_NAME_LENGTH_MESSAGE = "{reference.type.name.length}";
+    public static final String REFERENCE_TYPE_PATH = "/reference-types";
+    public static final String REFERENCE_TYPE_FIELD_NAME = "name";
+
     public static final String PRACTICE_CATEGORY_FIND_BY_NAME = "PracticeCategory.find_by_name";
     public static final String PRACTICE_CATEGORY_FIND_BY_NAME_QUERY = "select p from PracticeCategory p where lower(p.name) = lower(:name)";
     public static final String PRACTICE_CATEGORY_FIELD_NAME_UNIQUE_MESSAGE = "{practice.category.name.unique}";

@@ -1,5 +1,10 @@
 import Home from './components/Home.vue';
 
+import ReferenceTypeIndex from './components/reference-type/Index.vue';
+import ReferenceTypeCreate from './components/reference-type/Create.vue';
+import ReferenceTypeShow from './components/reference-type/Show.vue';
+import ReferenceTypeEdit from './components/reference-type/Edit.vue';
+
 import ContextDimensionIndex from './components/context-dimension/Index.vue';
 import ContextDimensionCreate from './components/context-dimension/Create.vue';
 import ContextDimensionShow from './components/context-dimension/Show.vue';
@@ -25,6 +30,28 @@ export default [
         path: '/home',
         name: 'home',
         component: Home
+    },
+    {
+        path: '/reference-type',
+        name: 'reference-type.index',
+        component: ReferenceTypeIndex
+    },
+    {
+        path: '/reference-type/:id',
+        name: 'reference-type.show',
+        component: ReferenceTypeShow,
+        props: true
+    },
+    {
+        path: '/reference-type/create',
+        name: 'reference-type.create',
+        component: ReferenceTypeCreate
+    },
+    {
+        path: '/reference-type/:id/edit',
+        name: 'reference-type.edit',
+        component: ReferenceTypeEdit,
+        props: true
     },
     {
         path: '/context-dimension',

@@ -15,7 +15,17 @@
             </v-menu>
             <v-menu open-on-hover transition="slide-y-transition" bottom>
                 <template v-slot:activator="{ on }">
-                    <v-btn class="menu" color="primary" dark v-on="on">{{ $t('context_dimension') }}</v-btn>
+                    <v-btn class="menu" color="primary" dark v-on="on">{{ $t('reference') }}</v-btn>
+                </template>
+                <v-list>
+                    <v-list-tile class="menu" v-for="item in reference_items" :key="item.name" @click="navigateTo({ name: item.name })">
+                        <v-list-tile-title class="menu-item mr-4">{{ item.title }}</v-list-tile-title>
+                    </v-list-tile>
+                </v-list>
+            </v-menu>
+            <v-menu open-on-hover transition="slide-y-transition" bottom>
+                <template v-slot:activator="{ on }">
+                    <v-btn class="menu" color="primary" dark v-on="on">{{ $t('context') }}</v-btn>
                 </template>
                 <v-list>
                     <v-list-tile class="menu" v-for="item in context_items" :key="item.name" @click="navigateTo({ name: item.name })">
@@ -38,6 +48,9 @@
                 { title: il8n.tc('practice'), name: 'practice.index' },
                 { title: il8n.tc('practice_category'), name: 'practice-category.index' },
                 { title: il8n.tc('practice_sub_category'), name: 'practice-sub-category.index' },
+            ],
+            reference_items: [
+                { title: il8n.tc('reference_type'), name: 'reference-type.index' }
             ],
             context_items: [
                 { title: il8n.tc('context_dimension'), name: 'context-dimension.index' }

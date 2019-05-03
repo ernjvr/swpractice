@@ -87,8 +87,23 @@ export default {
             value: 'view'
         },
     ],
+    reference_type_headers: [
+        {
+            text: il8n.tc('name'),
+            align: 'left',
+            sortable: false,
+            value: 'name'
+        },
+        {
+            text: il8n.tc('action'),
+            align: 'left',
+            sortable: false,
+            value: 'view'
+        },
+    ],
     practice_url: 'practices',
     practice_category_url: 'practice-categories',
     practice_sub_category_url: 'practice-sub-categories',
     context_dimension_url: 'context-dimensions',
+    reference_type_url: 'reference-types',
 }
