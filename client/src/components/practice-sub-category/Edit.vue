@@ -6,14 +6,14 @@
                     <v-card-text>
                         <v-form ref="form">
                             <v-text-field v-model="editPracticeSubCategory.name" v-on:keyup="keyEvent" prepend-icon="person" name="name"
-                                          :label="$t('name')" type="text" required :rules="required"></v-text-field>
+                                          :label="$t('name')" type="text" required :rules="required" :maxlength="100"></v-text-field>
                             <v-textarea v-model="editPracticeSubCategory.description" v-on:keyup="keyEvent" prepend-icon="person" name="description"
-                                          :label="$t('description')" type="text"></v-textarea>
+                                          :label="$t('description')" type="text" :maxlength="500"></v-textarea>
                             <v-select :label="$t('practice_category')"
                                       :items="practiceCategories"
                                       item-text="name" item-value="_links.self.href"
                                       v-model="selectedPracticeCategory"
-                                      prepend-icon="person" name="practiceCategory">
+                                      prepend-icon="person" name="practiceCategory" autocomplete>
                             </v-select>
                             <v-alert :value="validationError" color="error" v-html="error"></v-alert>
                         </v-form>

@@ -6,7 +6,22 @@
                        right middle fab @click="navigateTo({name: 'reference-type.create'})">
                     <v-icon>add</v-icon>
                 </v-btn>
-                <v-data-table :headers="headers" :items="types" class="elevation-1">
+                <v-card-title>
+                    <v-spacer></v-spacer>
+                    <v-text-field v-model="search" append-icon="search" :label="$t('search')" single-line hide-details></v-text-field>
+                </v-card-title>
+                <v-data-table :headers="headers" :items="types" item-key="name" :pagination.sync="pagination"
+                              :search="search" class="elevation-1">
+                    <template slot="headers" slot-scope="props">
+                        <tr>
+                            <th v-for="header in props.headers" :key="header.text"
+                                :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+                                @click="changeSort(header.value)">
+                                <v-icon small>arrow_upward</v-icon>
+                                {{ header.text }}
+                            </th>
+                        </tr>
+                    </template>
                     <template v-slot:items="props">
                         <td>{{ props.item.name }}</td>
                         <td>
@@ -25,6 +40,7 @@
 <script>
     import Panel from "@/components/Panel";
     import constants from '../../common/constants';
+    import util from '../../common/util';
 
     export default {
         components: {
@@ -33,7 +49,9 @@
         data() {
             return {
                 types: [],
-                headers: constants.reference_type_headers
+                headers: constants.reference_type_headers,
+                pagination: util.pagination,
+                search: ''
             }
         },
         async mounted() {
@@ -45,6 +63,7 @@
             });
         },
         methods: {
+            changeSort: util.changeSort,
             navigateTo(route) {
                 this.$router.push(route);
             }

@@ -5,7 +5,7 @@
                 <v-card-text>
                     <v-form ref="form">
                         <v-text-field v-model="type.name" v-on:keyup="keyEvent" prepend-icon="person" name="name"
-                                      :label="$t('name')" type="text" required :rules="required"></v-text-field>
+                                      :label="$t('name')" type="text" required :rules="required" :maxlength="100"></v-text-field>
                         <v-alert :value="validationError" color="error" v-html="error"></v-alert>
                     </v-form>
                 </v-card-text>

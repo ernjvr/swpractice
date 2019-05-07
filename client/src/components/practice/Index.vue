@@ -8,12 +8,28 @@
                             })">
                     <v-icon>add</v-icon>
                 </v-btn>
-                <v-data-table :headers="headers" :items="practices" class="elevation-1">
+                <v-card-title>
+                    <v-spacer></v-spacer>
+                    <v-text-field v-model="search" append-icon="search" :label="$t('search')" single-line hide-details></v-text-field>
+                </v-card-title>
+                <v-data-table :headers="headers" :items="practices" item-key="name" :pagination.sync="pagination"
+                              :search="search" class="elevation-1">
+                    <template slot="headers" slot-scope="props">
+                        <tr>
+                            <th v-for="header in props.headers" :key="header.text"
+                                :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+                                @click="changeSort(header.value)">
+                                <v-icon small>arrow_upward</v-icon>
+                                {{ header.text }}
+                            </th>
+                        </tr>
+                    </template>
                     <template v-slot:items="props">
                         <td>{{ props.item.name }}</td>
                         <td>{{ props.item.description }}</td>
                         <td>{{ props.item.practiceCategory.name }}</td>
                         <td>{{ props.item.practiceSubCategory.name }}</td>
+                        <td>{{ props.item.reference.reference }}</td>
                         <td>
                             <v-btn color="indigo" dark @click="navigateToView({
                                 name: 'practice.show',
@@ -32,6 +48,7 @@
     import api from '../../services/api'
     import axios from 'axios';
     import constants from '../../common/constants';
+    import util from '../../common/util';
 
     export default {
         components: {
@@ -40,7 +57,9 @@
         data() {
             return {
                 practices: [],
-                headers: constants.practice_headers
+                headers: constants.practice_headers,
+                pagination: util.pagination,
+                search: ''
             }
         },
         async mounted() {
@@ -52,6 +71,7 @@
                         _links: practice._links,
                         practiceSubCategory: '',
                         practiceCategory: '',
+                        reference: '',
                     }));
                 }, error => {
                     console.log('practice get error: ' + error);
@@ -62,8 +82,10 @@
             this.resolveCategoryForEachPractice();
             this.initPracticeCategories();
             this.initPracticeSubCategories();
+            this.initReferences();
         },
         methods: {
+            changeSort: util.changeSort,
             navigateTo(route) {
                 this.$router.push(route);
             },
@@ -82,6 +104,7 @@
                 for(let i = 0; i < this.practices.length; i++) {
                     let practice = this.practices[i];
                     practiceSubCategories.push(api.get(practice._links.practiceSubCategory.href));
+                    this.resolveReference(practice._links.reference.href, practice, i);
                 }
                 let subCatResult = await axios.all(practiceSubCategories);
 
@@ -124,6 +147,31 @@
                 }, error => {
                     console.log('received error from store getAllPracticeCategories: ' + error);
                 });
+            },
+            async initReferences() {
+                this.$store.dispatch('getAllReferences').then(response => {
+                    console.log('received data from store getAllReferences: ' + response);
+                    console.log(response);
+                }, error => {
+                    console.log('received error from store getAllReferences: ' + error);
+                });
+            },
+            async resolveReference(url, practice, index) {
+                await api.get(url)
+                    .then(response => {
+                        practice['reference'] = {
+                            reference: response.data.reference,
+                            _links: response.data._links
+                        };
+                    }, error => {
+                        // since practices may optionally have a reference ignore 404 but log anything else
+                        if (!error.toString().includes('404')) {
+                            console.log('reference get error: ' + error);
+                        }
+                    })
+                    .then(response => {
+                        console.log(response);
+                    });
             }
         },
     }

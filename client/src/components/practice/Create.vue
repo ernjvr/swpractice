@@ -6,14 +6,20 @@
                     <v-card-text>
                         <v-form ref="form">
                             <v-text-field v-model="data.name" v-on:keyup="keyEvent" prepend-icon="person" name="name"
-                                          :label="$t('name')" type="text" required :rules="required"></v-text-field>
-                            <v-text-field v-model="data.description" v-on:keyup="keyEvent" prepend-icon="person" name="description"
-                                          :label="$t('description')" type="text"></v-text-field>
+                                          :label="$t('name')" type="text" required :rules="required" :maxlength="100"></v-text-field>
+                            <v-textarea v-model="data.description" v-on:keyup="keyEvent" prepend-icon="person" name="description"
+                                          :label="$t('description')" type="text" :maxlength="500"></v-textarea>
                             <v-select :label="$t('practice_sub_category')"
                                       :items="practiceSubCategories"
                                       item-text="name" item-value="_links.self.href"
                                       v-model="selectedPracticeSubCategory"
-                                      prepend-icon="person" name="practiceSubCategory" required :rules="required">
+                                      prepend-icon="person" name="practiceSubCategory" required :rules="required" autocomplete>
+                            </v-select>
+                            <v-select :label="$t('reference')"
+                                      :items="references"
+                                      item-text="reference" item-value="_links.self.href"
+                                      v-model="selectedReference"
+                                      prepend-icon="person" name="reference" autocomplete>
                             </v-select>
                             <v-alert :value="validationError" color="error" v-html="error"></v-alert>
                         </v-form>
@@ -42,9 +48,11 @@
                 data: {
                     name: '',
                     description: '',
-                    practiceSubCategory: ''
+                    practiceSubCategory: '',
+                    reference: '',
                 },
                 selectedPracticeSubCategory: '',
+                selectedReference: '',
                 error: null,
                 validationError: false,
                 // check if value exists or return required message
@@ -52,6 +60,9 @@
             }
         },
         computed: {
+            references() {
+                return this.$store.state.references;
+            },
             practiceSubCategories(){
                 return this.$store.state.practiceSubCategories;
             }
@@ -61,6 +72,7 @@
                 try {
                     if (this.$refs.form.validate()) {
                         this.data.practiceSubCategory = this.getSelectedPracticeSubCategory()._links.self.href;
+                        this.data.reference = this.selectedReference === '' ? '' : this.getSelectedReference()._links.self.href;
                         this.$store.dispatch('addPractice', this.data).then(response => {
                             this.validationError = false;
                             this.navigateTo('/practice');
@@ -78,6 +90,9 @@
             },
             getSelectedPracticeSubCategory() {
                 return util.getSelectedPracticeSubCategory(this.selectedPracticeSubCategory);
+            },
+            getSelectedReference() {
+                return util.getSelectedReference(this.selectedReference);
             },
             navigateTo(route) {
                 this.$router.push(route);

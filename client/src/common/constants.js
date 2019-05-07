@@ -18,13 +18,19 @@ export default {
             text: il8n.tc('practice_category'),
             align: 'left',
             sortable: false,
-            value: 'view'
+            value: 'practiceCategory.name'
         },
         {
             text: il8n.tc('practice_sub_category'),
             align: 'left',
             sortable: false,
-            value: 'view'
+            value: 'practiceSubCategory.name'
+        },
+        {
+            text: il8n.tc('reference'),
+            align: 'left',
+            sortable: false,
+            value: 'reference.reference'
         },
         {
             text: il8n.tc('action'),
@@ -50,7 +56,7 @@ export default {
             text: il8n.tc('practice_category'),
             align: 'left',
             sortable: false,
-            value: 'view'
+            value: 'practiceCategory.name'
         },
         {
             text: il8n.tc('action'),
@@ -87,6 +93,38 @@ export default {
             value: 'view'
         },
     ],
+    reference_headers: [
+        {
+            text: il8n.tc('author'),
+            align: 'left',
+            sortable: false,
+            value: 'author'
+        },
+        {
+            text: il8n.tc('year'),
+            align: 'left',
+            sortable: false,
+            value: 'year'
+        },
+        {
+            text: il8n.tc('reference'),
+            align: 'left',
+            sortable: false,
+            value: 'reference'
+        },
+        {
+            text: il8n.tc('reference_type'),
+            align: 'left',
+            sortable: false,
+            value: 'referenceType.name'
+        },
+        {
+            text: il8n.tc('action'),
+            align: 'left',
+            sortable: false,
+            value: 'view'
+        },
+    ],
     reference_type_headers: [
         {
             text: il8n.tc('name'),
@@ -106,4 +144,5 @@ export default {
     practice_sub_category_url: 'practice-sub-categories',
     context_dimension_url: 'context-dimensions',
     reference_type_url: 'reference-types',
+    reference_url: 'references',
 }

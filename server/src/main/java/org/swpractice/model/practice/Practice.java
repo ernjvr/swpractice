@@ -2,6 +2,7 @@ package org.swpractice.model.practice;
 
 import lombok.Data;
 import org.swpractice.model.Identifier;
+import org.swpractice.model.reference.Reference;
 import org.swpractice.validation.constraint.annotation.Unique;
 import org.swpractice.validation.service.practice.PracticeValidationService;
 
@@ -42,6 +43,9 @@ public class Practice implements Identifier {
     @NotNull(message = PRACTICE_FIELD_PRACTICE_SUB_CATEGORY_REQUIRED_MESSAGE)
     @ManyToOne
     private PracticeSubCategory practiceSubCategory;
+
+    @ManyToOne
+    private Reference reference;
 
     @Override
     public Long getId() {

@@ -10,20 +10,39 @@ import ContextDimensionMutations from "./mutations/context/ContextDimensionMutat
 import ContextDimensionActions from "./actions/context/ContextDimensionActions";
 import ReferenceTypeMutations from "./mutations/reference/ReferenceTypeMutations";
 import ReferenceTypeActions from "./actions/reference/ReferenceTypeActions";
+import ReferenceMutations from "./mutations/reference/ReferenceMutations";
+import ReferenceActions from "./actions/reference/ReferenceActions";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     strict: true,
     state: {
+        references: [],
         referenceTypes: [],
         contextDimensions: [],
         practiceCategories: [],
         practiceSubCategories: [],
         practices: [],
-        selectedPractice: {}
+        selectedPractice: {},
+        selectedReference: {}
     },
     mutations: {
+        addReferences(state, references) {
+            ReferenceMutations.addReferences(state, references);
+        },
+        addReference(state, reference) {
+            ReferenceMutations.addReference(state, reference);
+        },
+        editReference(state, reference) {
+            ReferenceMutations.editReference(state, reference);
+        },
+        removeReference(state, reference) {
+            ReferenceMutations.removeReference(state, reference);
+        },
+        setSelectedReference(state, reference) {
+           ReferenceMutations.setSelectedReference(state, reference);
+        },
         addReferenceTypes(state, types) {
             ReferenceTypeMutations.addReferenceTypes(state, types);
         },
@@ -92,6 +111,18 @@ export default new Vuex.Store({
         },
     },
     actions: {
+        addReference({ commit }, reference) {
+            return ReferenceActions.addReference({ commit }, reference);
+        },
+        setSelectedReference({ commit }, reference) {
+            ReferenceActions.setSelectedReference({ commit }, reference);
+        },
+        editReference({ commit }, data) {
+            return ReferenceActions.editReference({ commit }, data);
+        },
+        getAllReferences({ commit }) {
+            return ReferenceActions.getAllReferences({ commit });
+        },
         addReferenceType({ commit }, type) {
             return ReferenceTypeActions.addReferenceType({ commit }, type);
         },

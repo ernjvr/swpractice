@@ -15,12 +15,16 @@
   "add_practice_sub_category": "Add Sub Practice Category",
   "reference": "Reference",
   "reference_type": "Reference Type",
+  "edit_reference": "Edit Reference",
+  "add_reference": "Add Reference",
   "edit_reference_type": "Edit Reference Type",
   "add_reference_type": "Add Reference Type",
   "context": "Context",
   "context_dimension": "Context Dimension",
   "edit_context_dimension": "Edit Context Dimension",
   "add_context_dimension": "Add Context Dimension",
+  "author": "Author",
+  "year": "Year",
   "name": "Name",
   "description": "Description",
   "add": "Add",
@@ -34,5 +38,6 @@
   "confirm_delete_title": "Confirm Delete",
   "confirm_delete_text": "Are you sure you want to delete?",
   "no_slot_content": "No slot content defined",
-  "field_required": "This field is required"
+  "field_required": "This field is required",
+  "search": "Search"
 }

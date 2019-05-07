@@ -1,5 +1,10 @@
 import Home from './components/Home.vue';
 
+import ReferenceIndex from './components/reference/Index.vue';
+import ReferenceCreate from './components/reference/Create.vue';
+import ReferenceShow from './components/reference/Show.vue';
+import ReferenceEdit from './components/reference/Edit.vue';
+
 import ReferenceTypeIndex from './components/reference-type/Index.vue';
 import ReferenceTypeCreate from './components/reference-type/Create.vue';
 import ReferenceTypeShow from './components/reference-type/Show.vue';
@@ -30,6 +35,28 @@ export default [
         path: '/home',
         name: 'home',
         component: Home
+    },
+    {
+        path: '/reference',
+        name: 'reference.index',
+        component: ReferenceIndex
+    },
+    {
+        path: '/reference/:id',
+        name: 'reference.show',
+        component: ReferenceShow,
+        props: true
+    },
+    {
+        path: '/reference/create',
+        name: 'reference.create',
+        component: ReferenceCreate
+    },
+    {
+        path: '/reference/:id/edit',
+        name: 'reference.edit',
+        component: ReferenceEdit,
+        props: true
     },
     {
         path: '/reference-type',

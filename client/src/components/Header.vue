@@ -50,6 +50,7 @@
                 { title: il8n.tc('practice_sub_category'), name: 'practice-sub-category.index' },
             ],
             reference_items: [
+                { title: il8n.tc('reference'), name: 'reference.index' },
                 { title: il8n.tc('reference_type'), name: 'reference-type.index' }
             ],
             context_items: [

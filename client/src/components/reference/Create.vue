@@ -2,18 +2,20 @@
     <v-container fluid grid-list-xl>
         <v-layout row>
             <v-flex xs4>
-                <panel :title="$t('add_practice_sub_category')">
+                <panel :title="$t('add_reference')">
                     <v-card-text>
                         <v-form ref="form">
-                            <v-text-field v-model="data.name" v-on:keyup="keyEvent" prepend-icon="person" name="name"
-                                          :label="$t('name')" type="text" required :rules="required" :maxlength="100"></v-text-field>
-                            <v-textarea v-model="data.description" v-on:keyup="keyEvent" prepend-icon="person" name="description"
-                                          :label="$t('description')" type="text" :maxlength="500"></v-textarea>
-                            <v-select :label="$t('practice_category')"
-                                      :items="practiceCategories"
+                            <v-text-field v-model="data.author" v-on:keyup="keyEvent" prepend-icon="person" name="author"
+                                          :label="$t('author')" type="text" :maxlength="100"></v-text-field>
+                            <v-text-field v-model="data.year" v-on:keyup="keyEvent" prepend-icon="person" name="year"
+                                          :label="$t('year')" :mask="yearMask"></v-text-field>
+                            <v-textarea v-model="data.reference" v-on:keyup="keyEvent" prepend-icon="person" name="reference"
+                                          :label="$t('reference')" type="text" required :rules="required" :maxlength="2500"></v-textarea>
+                            <v-select :label="$t('reference_type')"
+                                      :items="referenceTypes"
                                       item-text="name" item-value="_links.self.href"
-                                      v-model="selectedPracticeCategory"
-                                      prepend-icon="person" name="practiceCategory" required :rules="required" autocomplete>
+                                      v-model="selectedReferenceType"
+                                      prepend-icon="person" name="referenceType" required :rules="required" autocomplete>
                             </v-select>
                             <v-alert :value="validationError" color="error" v-html="error"></v-alert>
                         </v-form>
@@ -21,9 +23,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="indigo" dark @click="create">{{ $t('add') }}</v-btn>
-                        <v-btn color="indigo" dark @click="navigateTo({
-                                    name: 'practice-sub-category.index'
-                                })">{{ $t('cancel') }}</v-btn>
+                        <v-btn color="indigo" dark @click="navigateTo({name: 'reference.index'})">{{ $t('cancel') }}</v-btn>
                     </v-card-actions>
                 </panel>
             </v-flex>
@@ -40,11 +40,14 @@
         data() {
             return {
                 data: {
-                    name: '',
-                    description: '',
-                    practiceCategory: ''
+                    author: '',
+                    year: '',
+                    reference: '',
+                    _links: '',
+                    referenceType: ''
                 },
-                selectedPracticeCategory: '',
+                selectedReferenceType: '',
+                yearMask: '####',
                 error: null,
                 validationError: false,
                 // check if value exists or return required message
@@ -52,33 +55,32 @@
             }
         },
         computed: {
-            practiceCategories(){
-                return this.$store.state.practiceCategories;
+            referenceTypes(){
+                return this.$store.state.referenceTypes;
             }
         },
         methods: {
             async create() {
                 try {
                     if (this.$refs.form.validate()) {
-                        this.data.practiceCategory = this.getSelectedPracticeCategory()._links.self.href;
-                        this.$store.dispatch('addPracticeSubCategory', this.data).then(response => {
-                            console.log('received data from store addPracticeSubCategory: ' + response);
+                        this.data.referenceType = this.getSelectedReferenceType()._links.self.href;
+                        this.$store.dispatch('addReference', this.data).then(response => {
                             this.validationError = false;
-                            this.navigateTo('/practice-sub-category');
+                            this.navigateTo('/reference');
                         }, error => {
-                            console.log('received error from store addPracticeSubCategory: ' + error);
+                            console.log('received error from store addReference: ' + error);
                             this.error = error;
                             this.validationError = true;
                         });
                     }
                 } catch (e) {
-                    console.log('catch error adding practice sub category: ' + e);
+                    console.log('catch error adding reference: ' + e);
                     this.error = e;
                     this.validationError = true;
                 }
             },
-            getSelectedPracticeCategory() {
-                return util.getSelectedPracticeCategory(this.selectedPracticeCategory);
+            getSelectedReferenceType() {
+                return util.getSelectedReferenceType(this.selectedReferenceType);
             },
             navigateTo(route) {
                 this.$router.push(route);

@@ -22,8 +22,6 @@ public class Constants {
     public static final String API_INFO_LICENCE_URL = "http://www.apache.org/licenses/LICENSE-2.0";
     public static final Set<String> API_DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<>(Collections.singletonList("application/json"));
 
-    public static final String PRACTICE_CATEGORY = "practiceCategory";
-    public static final String PRACTICE_SUB_CATEGORY = "practiceSubCategory";
     public static final String FIELD_NAME_NOT_SUPPORTED = "Field name '%s' not supported.";
 
     public static final String CONTEXT_DIMENSION_FIND_BY_NAME = "ContextDimension.find_by_name";
@@ -42,6 +40,7 @@ public class Constants {
     public static final String REFERENCE_TYPE_PATH = "/reference-types";
     public static final String REFERENCE_TYPE_FIELD_NAME = "name";
 
+    public static final String PRACTICE_CATEGORY = "practiceCategory";
     public static final String PRACTICE_CATEGORY_FIND_BY_NAME = "PracticeCategory.find_by_name";
     public static final String PRACTICE_CATEGORY_FIND_BY_NAME_QUERY = "select p from PracticeCategory p where lower(p.name) = lower(:name)";
     public static final String PRACTICE_CATEGORY_FIELD_NAME_UNIQUE_MESSAGE = "{practice.category.name.unique}";
@@ -60,6 +59,7 @@ public class Constants {
     public static final String PRACTICE_PATH = "/practices";
     public static final String PRACTICE_FIELD_NAME = "name";
 
+    public static final String PRACTICE_SUB_CATEGORY = "practiceSubCategory";
     public static final String PRACTICE_SUB_CATEGORY_FIND_BY_NAME = "PracticeSubCategory.find_by_name";
     public static final String PRACTICE_SUB_CATEGORY_FIND_BY_NAME_QUERY = "select p from PracticeSubCategory p where lower(p.name) = lower(:name)";
     public static final String PRACTICE_SUB_CATEGORY_FIELD_NAME_UNIQUE_MESSAGE = "{practice.sub.category.name.unique}";
@@ -69,4 +69,13 @@ public class Constants {
     public static final String PRACTICE_SUB_CATEGORY_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{practice.sub.category.description.length}";
     public static final String PRACTICE_SUB_CATEGORY_PATH = "/practice-sub-categories";
     public static final String PRACTICE_SUB_CATEGORY_FIELD_NAME = "name";
+
+    public static final String REFERENCE = "reference";
+    public static final String REFERENCE_FIELD_REFERENCE_TYPE_REQUIRED_MESSAGE = "{reference.reference-type.required}";
+    public static final String REFERENCE_FIELD_REFERENCE_REQUIRED_MESSAGE = "{reference.reference.required}";
+    public static final String REFERENCE_FIELD_AUTHOR_LENGTH_MESSAGE = "{reference.author.length}";
+    public static final String REFERENCE_FIELD_YEAR_MIN_MESSAGE = "{reference.year.min}";
+    public static final String REFERENCE_FIELD_YEAR_MAX_MESSAGE = "{reference.year.max}";
+    public static final String REFERENCE_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{reference.description.length}";
+    public static final String REFERENCE_PATH = "/references";
 }

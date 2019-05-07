@@ -6,14 +6,20 @@
                     <v-card-text>
                         <v-form ref="form">
                             <v-text-field v-model="editPractice.name" v-on:keyup="keyEvent" prepend-icon="person" name="name"
-                                          :label="$t('name')" type="text" required :rules="required"></v-text-field>
-                            <v-text-field v-model="editPractice.description" v-on:keyup="keyEvent" prepend-icon="person" name="description"
-                                          :label="$t('description')" type="text"></v-text-field>
+                                          :label="$t('name')" type="text" required :rules="required" :maxlength="100"></v-text-field>
+                            <v-textarea v-model="editPractice.description" v-on:keyup="keyEvent" prepend-icon="person" name="description"
+                                          :label="$t('description')" type="text" :maxlength="500"></v-textarea>
                             <v-select :label="$t('practice_sub_category')"
                                       :items="practiceSubCategories"
                                       item-text="name" item-value="_links.self.href"
                                       v-model="selectedPracticeSubCategory"
-                                      prepend-icon="person" name="practiceSubCategory">
+                                      prepend-icon="person" name="practiceSubCategory" autocomplete>
+                            </v-select>
+                            <v-select :label="$t('reference')"
+                                      :items="references"
+                                      item-text="reference" item-value="_links.self.href"
+                                      v-model="selectedReference"
+                                      prepend-icon="person" name="reference" autocomplete>
                             </v-select>
                             <v-alert :value="validationError" color="error" v-html="error"></v-alert>
                         </v-form>
@@ -43,16 +49,19 @@
                     description: '',
                     _links: '',
                     practiceCategory: '',
-                    practiceSubCategory: ''
+                    practiceSubCategory: '',
+                    reference: '',
                 },
                 editPractice: {
                     name: '',
                     description: '',
                     _links: '',
                     practiceCategory: '',
-                    practiceSubCategory: ''
+                    practiceSubCategory: '',
+                    reference: '',
                 },
                 selectedPracticeSubCategory: '',
+                selectedReference: '',
                 error: null,
                 validationError: false,
                 // check if value exists or return required message
@@ -60,9 +69,12 @@
             }
         },
         computed: {
-          practiceSubCategories() {
-              return this.$store.state.practiceSubCategories;
-          }
+            references() {
+                return this.$store.state.references;
+            },
+            practiceSubCategories() {
+                return this.$store.state.practiceSubCategories;
+            }
         },
         mounted() {
             let practice = this.$store.state.selectedPractice;
@@ -74,9 +86,11 @@
                     description: this.practice.description,
                     _links: this.practice._links,
                     practiceSubCategory: this.practice.practiceSubCategory,
-                    practiceCategory: this.practice.practiceCategory
+                    practiceCategory: this.practice.practiceCategory,
+                    reference: this.practice.reference
                 };
                 this.selectedPracticeSubCategory = this.practice.practiceSubCategory._links.self.href;
+                this.selectedReference = this.practice.reference._links.self.href;
             } else {
                 console.log('selected practice not found');
                 this.navigateTo('/practice/');
@@ -96,10 +110,12 @@
                             practice: {
                                 name: this.editPractice.name,
                                 description: this.editPractice.description,
-                                practiceSubCategory: this.getSelectedPracticeSubCategory()._links.self.href
+                                practiceSubCategory: this.getSelectedPracticeSubCategory()._links.self.href,
+                                reference: this.selectedReference === '' ? '' : this.getSelectedReference()._links.self.href
                             }
                         };
                         this.$store.dispatch('editPractice', data).then(_ => {
+                            this.editPractice.reference = this.selectedReference === '' ? '' : this.getSelectedReference();
                             this.editPractice.practiceSubCategory = this.getSelectedPracticeSubCategory();
                             this.editPractice.practiceCategory = practiceCat;
                             this.$store.commit('setSelectedPractice', this.editPractice);
@@ -118,6 +134,9 @@
             },
             getSelectedPracticeSubCategory() {
               return util.getSelectedPracticeSubCategory(this.selectedPracticeSubCategory);
+            },
+            getSelectedReference() {
+              return util.getSelectedReference(this.selectedReference);
             },
             async getPracticeCategory() {
                 let practiceCat;

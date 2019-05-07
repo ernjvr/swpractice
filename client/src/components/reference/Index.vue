@@ -1,18 +1,16 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-layout column>
         <v-flex xs8>
-            <panel :title="$t('practice_sub_category')">
+            <panel :title="$t('reference')">
                 <v-btn slot="action" class="indigo accent-2" light medium absolute
-                       right middle fab @click="navigateTo({
-                                name: 'practice-sub-category.create'
-                            })">
+                       right middle fab @click="navigateTo({name: 'reference.create'})">
                     <v-icon>add</v-icon>
                 </v-btn>
                 <v-card-title>
                     <v-spacer></v-spacer>
                     <v-text-field v-model="search" append-icon="search" :label="$t('search')" single-line hide-details></v-text-field>
                 </v-card-title>
-                <v-data-table :headers="headers" :items="practiceSubCategories" item-key="name" :pagination.sync="pagination"
+                <v-data-table :headers="headers" :items="references" item-key="reference" :pagination.sync="pagination"
                               :search="search" class="elevation-1">
                     <template slot="headers" slot-scope="props">
                         <tr>
@@ -25,13 +23,14 @@
                         </tr>
                     </template>
                     <template v-slot:items="props">
-                        <td>{{ props.item.name }}</td>
-                        <td>{{ props.item.description }}</td>
-                        <td>{{ props.item.practiceCategory.name }}</td>
+                        <td>{{ props.item.author }}</td>
+                        <td class="text-xs-right">{{ props.item.year }}</td>
+                        <td>{{ props.item.reference }}</td>
+                        <td>{{ props.item.referenceType.name }}</td>
                         <td>
                             <v-btn color="indigo" dark @click="navigateToView({
-                                name: 'practice-sub-category.show',
-                                params: {id: props.item.name}
+                                name: 'reference.show',
+                                params: {id: props.item._links.self.href}
                             })">{{ $t('view')}}</v-btn>
                         </td>
                     </template>
@@ -54,29 +53,30 @@
         },
         data() {
             return {
-                practiceSubCategories: [],
-                headers: constants.practice_sub_category_headers,
+                references: [],
+                headers: constants.reference_headers,
                 pagination: util.pagination,
                 search: ''
             }
         },
         async mounted() {
-            await api.get(constants.practice_sub_category_url)
+            await api.get(constants.reference_url)
                 .then(response => {
-                    this.practiceSubCategories = response.data._embedded.practiceSubCategories.map(subCategory => ({
-                        name: subCategory.name,
-                        description: subCategory.description,
-                        _links: subCategory._links,
-                        practiceCategory: ''
+                    this.references = response.data._embedded.references.map(reference => ({
+                        author: reference.author,
+                        year: reference.year === 0 ? 'n.d': reference.year,
+                        reference: reference.reference,
+                        _links: reference._links,
+                        referenceType: ''
                     }));
                 }, error => {
-                    console.log('practice-sub-category get error: ' + error);
+                    console.log('reference get error: ' + error);
                 })
                 .then(response => {
                     console.log(response);
                 });
-            this.resolvePracticeCategoryForEachPracticeSubCategory();
-            this.initPracticeCategories();
+            this.resolveReferenceTypeForEachReference();
+            this.initReferenceTypes();
         },
         methods: {
             changeSort: util.changeSort,
@@ -84,40 +84,40 @@
                 this.$router.push(route);
             },
             navigateToView(route) {
-                let subCategory = this.$store.state.practiceSubCategories.find(subCategory => { return subCategory.name === route.params.id});
-                this.$store.dispatch('setSelectedPracticeSubCategory', subCategory).then(_ => {
+                let reference = this.$store.state.references.find(reference => { return reference._links.self.href === route.params.id});
+                this.$store.dispatch('setSelectedReference', reference).then(_ => {
                     this.$router.push(route);
                     } , error => {
-                    console.log('setSelectedSubCategory error: ' + error);
+                    console.log('setSelectedReference error: ' + error);
                 });
             },
-            async resolvePracticeCategoryForEachPracticeSubCategory() {
-                let practiceCategories = [];
-                for(let i = 0; i < this.practiceSubCategories.length; i++) {
-                    let subCategory = this.practiceSubCategories[i];
-                    practiceCategories.push(api.get(subCategory._links.practiceCategory.href));
+            async resolveReferenceTypeForEachReference() {
+                let referenceTypes = [];
+
+                for(let i = 0; i < this.references.length; i++) {
+                    let reference = this.references[i];
+                    referenceTypes.push(api.get(reference._links.referenceType.href));
                 }
 
-                let result = await axios.all(practiceCategories);
-                console.log('get practice category for each practice sub category result: ');
-                console.log(result);
+                let result = await axios.all(referenceTypes);
+
                 for(let i = 0; i < result.length; i++) {
                     let res = result[i];
-                    let subCategory = this.practiceSubCategories[i];
-                    subCategory['practiceCategory'] = {
+                    let reference = this.references[i];
+                    reference['referenceType'] = {
                         name: res.data.name,
                         _links: res.data._links
                     };
-                    this.practiceSubCategories[i] = subCategory;
+                    this.references[i] = reference;
                 }
-                this.$store.commit('addPracticeSubCategories', this.practiceSubCategories);
+                this.$store.commit('addReferences', this.references);
             },
-            async initPracticeCategories() {
-                this.$store.dispatch('getAllPracticeCategories').then(response => {
-                    console.log('received data from store getAllPracticeCategories: ' + response);
+            async initReferenceTypes() {
+                this.$store.dispatch('getAllReferenceTypes').then(response => {
+                    console.log('received data from store getAllReferenceTypes: ' + response);
                     console.log(response);
                 }, error => {
-                    console.log('received error from store getAllPracticeCategories: ' + error);
+                    console.log('received error from store getAllReferenceTypes: ' + error);
                 });
             }
         },
