@@ -15,6 +15,11 @@ import ContextDimensionCreate from './components/context-dimension/Create.vue';
 import ContextDimensionShow from './components/context-dimension/Show.vue';
 import ContextDimensionEdit from './components/context-dimension/Edit.vue';
 
+import ContextValueIndex from './components/context-value/Index.vue';
+import ContextValueCreate from './components/context-value/Create.vue';
+import ContextValueShow from './components/context-value/Show.vue';
+import ContextValueEdit from './components/context-value/Edit.vue';
+
 import PracticeCategoryIndex from './components/pratice-category/Index.vue';
 import PracticeCategoryCreate from './components/pratice-category/Create.vue';
 import PracticeCategoryShow from './components/pratice-category/Show.vue';
@@ -100,6 +105,28 @@ export default [
         path: '/context-dimension/:id/edit',
         name: 'context-dimension.edit',
         component: ContextDimensionEdit,
+        props: true
+    },
+    {
+        path: '/context-value',
+        name: 'context-value.index',
+        component: ContextValueIndex
+    },
+    {
+        path: '/context-value/:id',
+        name: 'context-value.show',
+        component: ContextValueShow,
+        props: true
+    },
+    {
+        path: '/context-value/create',
+        name: 'context-value.create',
+        component: ContextValueCreate
+    },
+    {
+        path: '/context-value/:id/edit',
+        name: 'context-value.edit',
+        component: ContextValueEdit,
         props: true
     },
     {

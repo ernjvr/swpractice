@@ -8,6 +8,8 @@ import PracticeSubCategoryActions from './actions/practice/PracticeSubCategoryAc
 import PracticeActions from './actions/practice/PracticeActions';
 import ContextDimensionMutations from "./mutations/context/ContextDimensionMutations";
 import ContextDimensionActions from "./actions/context/ContextDimensionActions";
+import ContextValueMutations from "./mutations/context/ContextValueMutations";
+import ContextValueActions from "./actions/context/ContextValueActions";
 import ReferenceTypeMutations from "./mutations/reference/ReferenceTypeMutations";
 import ReferenceTypeActions from "./actions/reference/ReferenceTypeActions";
 import ReferenceMutations from "./mutations/reference/ReferenceMutations";
@@ -21,6 +23,7 @@ export default new Vuex.Store({
         references: [],
         referenceTypes: [],
         contextDimensions: [],
+        contextValues: [],
         practiceCategories: [],
         practiceSubCategories: [],
         practices: [],
@@ -66,6 +69,18 @@ export default new Vuex.Store({
         },
         removeContextDimension(state, dimension) {
             ContextDimensionMutations.removeContextDimension(state, dimension);
+        },
+        addContextValues(state, values) {
+            ContextValueMutations.addContextValues(state, values);
+        },
+        addContextValue(state, value) {
+            ContextValueMutations.addContextValue(state, value);
+        },
+        editContextValue(state, value) {
+            ContextValueMutations.editContextValue(state, value);
+        },
+        removeContextValue(state, value) {
+            ContextValueMutations.removeContextValue(state, value);
         },
         addPracticeCategories(state, categories) {
             PracticeCategoryMutations.addPracticeCategories(state, categories);
@@ -140,6 +155,15 @@ export default new Vuex.Store({
         },
         getAllContextDimensions({ commit }) {
             return ContextDimensionActions.getAllContextDimensions({ commit });
+        },
+        addContextValue({ commit }, value) {
+            return ContextValueActions.addContextValue({ commit }, value);
+        },
+        editContextValue({ commit }, data) {
+            return ContextValueActions.editContextValue({ commit }, data);
+        },
+        getAllContextValues({ commit }) {
+            return ContextValueActions.getAllContextValues({ commit });
         },
         addPracticeCategory({ commit }, category) {
             return PracticeCategoryActions.addPracticeCategory({ commit }, category);

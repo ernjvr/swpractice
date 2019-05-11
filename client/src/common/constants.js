@@ -93,6 +93,26 @@ export default {
             value: 'view'
         },
     ],
+    context_value_headers: [
+        {
+            text: il8n.tc('value'),
+            align: 'left',
+            sortable: false,
+            value: 'value'
+        },
+        {
+            text: il8n.tc('description'),
+            align: 'left',
+            sortable: false,
+            value: 'description'
+        },
+        {
+            text: il8n.tc('action'),
+            align: 'left',
+            sortable: false,
+            value: 'view'
+        },
+    ],
     reference_headers: [
         {
             text: il8n.tc('author'),
@@ -143,6 +163,7 @@ export default {
     practice_category_url: 'practice-categories',
     practice_sub_category_url: 'practice-sub-categories',
     context_dimension_url: 'context-dimensions',
+    context_value_url: 'context-values',
     reference_type_url: 'reference-types',
     reference_url: 'references',
 }

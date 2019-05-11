@@ -32,6 +32,11 @@ public class Constants {
     public static final String CONTEXT_DIMENSION_PATH = "/context-dimensions";
     public static final String CONTEXT_DIMENSION_FIELD_NAME = "name";
 
+    public static final String CONTEXT_VALUE_FIELD_VALUE_REQUIRED_MESSAGE = "{context.value.value.required}";
+    public static final String CONTEXT_VALUE_FIELD_DESCRIPTION_REQUIRED_MESSAGE = "{context.value.description.required}";
+    public static final String CONTEXT_VALUE_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{context.value.description.length}";
+    public static final String CONTEXT_VALUE_PATH = "/context-values";
+
     public static final String REFERENCE_TYPE_FIND_BY_NAME = "ReferenceType.find_by_name";
     public static final String REFERENCE_TYPE_FIND_BY_NAME_QUERY = "select t from ReferenceType t where lower(t.name) = lower(:name)";
     public static final String REFERENCE_TYPE_FIELD_NAME_UNIQUE_MESSAGE = "{reference.type.name.unique}";

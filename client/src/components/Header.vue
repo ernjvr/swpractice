@@ -54,7 +54,8 @@
                 { title: il8n.tc('reference_type'), name: 'reference-type.index' }
             ],
             context_items: [
-                { title: il8n.tc('context_dimension'), name: 'context-dimension.index' }
+                { title: il8n.tc('context_dimension'), name: 'context-dimension.index' },
+                { title: il8n.tc('context_value'), name: 'context-value.index' }
             ]
         }),
         methods: {
