@@ -1,4 +1,4 @@
-package org.swpractice.repository.practice;
+package org.swpractice.repository.reference;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.swpractice.SWPracticeApplication;
-import org.swpractice.model.practice.PracticeCategory;
+import org.swpractice.model.reference.ReferenceType;
 
 import java.util.Optional;
 
@@ -18,17 +18,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SWPracticeApplication.class)
-public class PracticeCategoryRepositoryTest {
+public class ReferenceTypeRepositoryTest {
 
     @Autowired
-    PracticeCategoryRepository categoryRepository;
+    ReferenceTypeRepository typeRepository;
 
-    private PracticeCategory practiceCategory = new PracticeCategory();;
+    private ReferenceType referenceType = new ReferenceType();;
 
     @BeforeEach
     void reset() {
-        practiceCategory.setId(null);
-        practiceCategory.setName(null);
+        referenceType.setId(null);
+        referenceType.setName(null);
     }
 
     @Test
@@ -36,8 +36,8 @@ public class PracticeCategoryRepositoryTest {
      * Do not allow delete of record in parent table that will cause orphan records in child tables of the database.
      */
     void dataIntegrityViolationExceptionThrownWhenDelete() {
-        Optional<PracticeCategory> result = categoryRepository.findById(1001L);
-        assertThrows(DataIntegrityViolationException.class, () -> result.ifPresent(subCategory -> categoryRepository.delete(subCategory)));
+        Optional<ReferenceType> result = typeRepository.findById(5002L);
+        assertThrows(DataIntegrityViolationException.class, () -> result.ifPresent(type -> typeRepository.delete(type)));
     }
 
     @Test
@@ -45,9 +45,9 @@ public class PracticeCategoryRepositoryTest {
      * Allow delete of record in parent table that will NOT cause orphan records in child tables of the database.
      */
     void dataIntegrityViolationExceptionNotThrownWhenDelete() {
-        practiceCategory.setName("xxx");
-        PracticeCategory saved = categoryRepository.save(practiceCategory);
-        assertDoesNotThrow(() -> categoryRepository.delete(saved));
+        referenceType.setName("xxx");
+        ReferenceType saved = typeRepository.save(referenceType);
+        assertDoesNotThrow(() -> typeRepository.delete(saved));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class PracticeCategoryRepositoryTest {
      * Do not allow duplicate entries for unique columns.
      */
     void constraintViolationExceptionThrownWhenSaveDuplicateName() {
-        practiceCategory.setName("Define");
+        referenceType.setName("Book");
         expectConstraintViolationExceptionOnSave();
     }
 
@@ -64,8 +64,8 @@ public class PracticeCategoryRepositoryTest {
      * Allow non-duplicate entries for unique columns.
      */
     void constraintViolationExceptionNotThrownWhenSaveNonDuplicateName() {
-        practiceCategory.setName("yyy");
-        assertDoesNotThrow(() -> categoryRepository.save(practiceCategory));
+        referenceType.setName("yyy");
+        assertDoesNotThrow(() -> typeRepository.save(referenceType));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class PracticeCategoryRepositoryTest {
      * Do not allow entries that exceed maximum allowed length.
      */
     void constraintViolationExceptionThrownWhenSaveNameWithLengthExceed() {
-        practiceCategory.setName("12345678901234567890123456789012345678901234567890a");
+        referenceType.setName("1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890a");
         expectConstraintViolationExceptionOnSave();
     }
 
@@ -82,8 +82,8 @@ public class PracticeCategoryRepositoryTest {
      * Allow entries that do not exceed maximum allowed length.
      */
     void constraintViolationExceptionNotThrownWhenSaveNameWithLengthNotExceed() {
-        practiceCategory.setName("12345678901234567890123456789012345678901234567890");
-        assertDoesNotThrow(() -> categoryRepository.save(practiceCategory));
+        referenceType.setName("1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
+        assertDoesNotThrow(() -> typeRepository.save(referenceType));
     }
 
     @Test
@@ -91,7 +91,7 @@ public class PracticeCategoryRepositoryTest {
      * Do not allow empty values.
      */
     void constraintViolationExceptionThrownWhenSaveNameWithEmptyValue() {
-        practiceCategory.setName("");
+        referenceType.setName("");
         expectConstraintViolationExceptionOnSave();
     }
 
@@ -100,13 +100,13 @@ public class PracticeCategoryRepositoryTest {
      * Do not allow space-only values.
      */
     void constraintViolationExceptionThrownWhenSaveNameWithSpaceValues() {
-        practiceCategory.setName("   ");
+        referenceType.setName("   ");
         expectConstraintViolationExceptionOnSave();
     }
 
     private void expectConstraintViolationExceptionOnSave() {
         try {
-            categoryRepository.save(practiceCategory);
+            typeRepository.save(referenceType);
         } catch (Exception e) {
             assertEquals(javax.validation.ConstraintViolationException.class, getRootCause(e).getClass());
             return;

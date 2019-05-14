@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -29,6 +30,7 @@ public class PracticeCategory implements Identifier {
     private Long id;
 
     @NotNull(message = PRACTICE_CATEGORY_FIELD_NAME_REQUIRED_MESSAGE)
+    @NotBlank
     @Size(min = 1, max = 50, message = PRACTICE_CATEGORY_FIELD_NAME_LENGTH_MESSAGE)
     @Column(unique = true)
     @Unique(service = PracticeCategoryValidationService.class,

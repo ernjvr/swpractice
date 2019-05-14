@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.ManyToOne;
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -29,6 +30,7 @@ public class Practice implements Identifier {
     private Long id;
 
     @NotNull(message = PRACTICE_FIELD_NAME_REQUIRED_MESSAGE)
+    @NotBlank
     @Size(min = 1, max = 100, message = PRACTICE_FIELD_NAME_LENGTH_MESSAGE)
     @Column(unique = true)
     @Unique(service = PracticeValidationService.class,

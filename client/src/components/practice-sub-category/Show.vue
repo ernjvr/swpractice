@@ -29,17 +29,28 @@
             <template slot="text">{{ $t('confirm_delete_text')}}</template>
             <template slot="confirmButton">{{ $t('delete')}}</template>
         </confirm-dialog>
+        <info-dialog :info-visibility="infoDialog.infoVisibility"
+                     :info-type="infoDialog.infoType"
+                     @infoAccept="infoDialog.infoVisibility=false">
+            <template slot="title">{{ infoDialog.title }}</template>
+            <template slot="text">{{ infoDialog.text }}</template>
+            <template slot="detail">{{ infoDialog.detail }}</template>
+            <template slot="confirmButton">{{ $t('close')}}</template>
+        </info-dialog>
     </v-container>
 </template>
 
 <script>
     import api from '../../services/api';
     import Panel from "@/components/Panel";
-    import ConfirmDialog from '@/components/ConfirmDialog'
+    import ConfirmDialog from '@/components/ConfirmDialog';
+    import InfoDialog from '@/components/InformationDialog';
+
     export default {
         components: {
             Panel,
-            ConfirmDialog
+            ConfirmDialog,
+            InfoDialog
         },
         data() {
             return {
@@ -48,6 +59,13 @@
                     description: '',
                     _links: '',
                     practiceCategory: ''
+                },
+                infoDialog: {
+                    title: '',
+                    text: '',
+                    detail: '',
+                    infoType: '',
+                    infoVisibility: false,
                 },
                 deleteConfirmationVisibility: false
             }
@@ -74,6 +92,19 @@
                         this.navigateTo('/practice-sub-category/');
                     }).catch(e => {
                     console.log(href + ' delete error: ' + e);
+
+                    if (e.response.data.toLowerCase().includes('integrity violation')) {
+                        this.infoDialog.title = this.$t('error_delete_title');
+                        this.infoDialog.text = this.$t('error_delete_practice_sub_category_text');
+                        this.infoDialog.detail = this.$t('error_delete_practice_sub_category_detail');
+                    } else {
+                        this.infoDialog.title = this.$t('error_delete_title');
+                        this.infoDialog.text = this.$t('error_unknown_text');
+                        this.infoDialog.detail = this.$t('error_unknown_detail');
+                    }
+                    this.deleteConfirmationVisibility = false;
+                    this.infoDialog.infoType = 'error';
+                    this.infoDialog.infoVisibility = true;
                 });
             }
         }

@@ -6,6 +6,7 @@ import org.swpractice.model.Identifier;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -24,6 +25,7 @@ public class ContextValue implements Identifier {
     private int value;
 
     @NotNull(message = CONTEXT_VALUE_FIELD_DESCRIPTION_REQUIRED_MESSAGE)
+    @NotBlank
     @Size(min = 1, max = 500, message = CONTEXT_VALUE_FIELD_DESCRIPTION_LENGTH_MESSAGE)
     private String description;
 

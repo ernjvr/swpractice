@@ -11,12 +11,12 @@
                                           :label="$t('year')" :mask="yearMask"></v-text-field>
                             <v-textarea v-model="data.reference" v-on:keyup="keyEvent" prepend-icon="person" name="reference"
                                           :label="$t('reference')" type="text" required :rules="required" :maxlength="2500"></v-textarea>
-                            <v-select :label="$t('reference_type')"
+                            <v-autocomplete :label="$t('reference_type')"
                                       :items="referenceTypes"
                                       item-text="name" item-value="_links.self.href"
                                       v-model="selectedReferenceType"
-                                      prepend-icon="person" name="referenceType" required :rules="required" autocomplete>
-                            </v-select>
+                                      prepend-icon="person" name="referenceType" required :rules="required">
+                            </v-autocomplete>
                             <v-alert :value="validationError" color="error" v-html="error"></v-alert>
                         </v-form>
                     </v-card-text>

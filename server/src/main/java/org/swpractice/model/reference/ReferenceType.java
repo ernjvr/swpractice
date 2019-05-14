@@ -6,6 +6,7 @@ import org.swpractice.validation.constraint.annotation.Unique;
 import org.swpractice.validation.service.reference.ReferenceTypeValidationService;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -21,6 +22,7 @@ public class ReferenceType implements Identifier {
     private Long id;
 
     @NotNull(message = REFERENCE_TYPE_FIELD_NAME_REQUIRED_MESSAGE)
+    @NotBlank
     @Size(min = 1, max = 100, message = REFERENCE_TYPE_FIELD_NAME_LENGTH_MESSAGE)
     @Column(unique = true)
     @Unique(service = ReferenceTypeValidationService.class,

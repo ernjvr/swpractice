@@ -5,10 +5,7 @@ import org.swpractice.model.Identifier;
 import org.swpractice.model.practice.Practice;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.List;
 
 import static org.swpractice.util.Constants.*;
@@ -30,6 +27,7 @@ public class Reference implements Identifier {
     private int year;
 
     @NotNull(message = REFERENCE_FIELD_REFERENCE_REQUIRED_MESSAGE)
+    @NotBlank
     @Size(max = 2500, message = REFERENCE_FIELD_DESCRIPTION_LENGTH_MESSAGE)
     private String reference;
 

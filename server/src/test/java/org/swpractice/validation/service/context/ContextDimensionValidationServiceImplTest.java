@@ -1,4 +1,4 @@
-package org.swpractice.validation.service.practice;
+package org.swpractice.validation.service.context;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,17 +13,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SWPracticeApplication.class)
-class PracticeValidationServiceImplTest {
+class ContextDimensionValidationServiceImplTest {
 
     @Autowired
-    PracticeValidationServiceImpl service;
+    ContextDimensionValidationServiceImpl service;
 
     @Test
     /**
      * True when the column value exists in the database.
      */
     void columnValueExistsExpectTrue() {
-        boolean exists = service.columnValueExists("name", "Planning Game");
+        boolean exists = service.columnValueExists("name", "people");
         assertTrue(exists);
     }
 

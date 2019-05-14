@@ -39,9 +39,31 @@
   "cancel": "Cancel",
   "action": "Action",
   "save": "Save",
+  "close": "Close",
   "confirm_delete_title": "Confirm Delete",
   "confirm_delete_text": "Are you sure you want to delete?",
+
+  "error_unknown_text": "Sorry, an unexpected error occurred.",
+  "error_unknown_detail": "Please try again later or contact your administrator.",
+  "error_delete_title": "Cannot Delete",
+  "error_delete_reference_text": "Practice depends on this Reference.",
+  "error_delete_reference_detail": "Please remove the Practice dependencies before deleting this Reference.",
+  "error_delete_reference_type_text": "Reference depends on this Reference Type.",
+  "error_delete_reference_type_detail": "Please remove the Reference dependencies before deleting this Reference Type.",
+  "error_delete_context_value_text": "Context depends on this Context Value.",
+  "error_delete_context_value_detail": "Please remove the Context dependencies before deleting this Context Value.",
+  "error_delete_context_dimension_text": "Context depends on this Context Dimension.",
+  "error_delete_context_dimension_detail": "Please remove the Context dependencies before deleting this Context Dimension.",
+  "error_delete_practice_text": "Evidence Item depends on this Practice.",
+  "error_delete_practice_detail": "Please remove the Evidence Item dependencies before deleting this Practice.",
+  "error_delete_practice_category_text": "Practice Sub Category depends on this Practice Category.",
+  "error_delete_practice_category_detail": "Please remove the Practice Sub Category dependencies before deleting this Practice Category.",
+  "error_delete_practice_sub_category_text": "Practice depends on this Practice Sub Category.",
+  "error_delete_practice_sub_category_detail": "Please remove the Practice dependencies before deleting this Practice Sub Category.",
+
   "no_slot_content": "No slot content defined",
   "field_required": "This field is required",
-  "search": "Search"
+  "search": "Search",
+  "integrity_violation_cannot_delete": "Cannot Delete. Reference depends on this information. Please remove any dependencies before deleting this information.",
+  "integrity_violation_cannot_delete_reference_type": "Cannot Delete. Reference depends on this Reference Type. Please remove the Reference dependencies before deleting this Reference Type."
 }

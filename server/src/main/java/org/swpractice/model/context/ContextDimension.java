@@ -6,6 +6,7 @@ import org.swpractice.validation.constraint.annotation.Unique;
 import org.swpractice.validation.service.context.ContextDimensionValidationService;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -22,6 +23,7 @@ public class ContextDimension implements Identifier {
 
 
     @NotNull(message = CONTEXT_DIMENSION_FIELD_NAME_REQUIRED_MESSAGE)
+    @NotBlank
     @Size(min = 1, max = 100, message = CONTEXT_DIMENSION_FIELD_NAME_LENGTH_MESSAGE)
     @Column(unique = true)
     @Unique(service = ContextDimensionValidationService.class,

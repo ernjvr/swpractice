@@ -13,17 +13,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SWPracticeApplication.class)
-class PracticeValidationServiceImplTest {
+class PracticeSubCategoryValidationServiceImplTest {
 
     @Autowired
-    PracticeValidationServiceImpl service;
+    PracticeSubCategoryValidationServiceImpl service;
 
     @Test
     /**
      * True when the column value exists in the database.
      */
     void columnValueExistsExpectTrue() {
-        boolean exists = service.columnValueExists("name", "Planning Game");
+        boolean exists = service.columnValueExists("name", "Roadmap");
         assertTrue(exists);
     }
 
