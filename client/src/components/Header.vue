@@ -1,6 +1,8 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-toolbar fixed class="indigo" dark>
-        <v-toolbar-title class="mr-4" dark @click="navigateTo({ name: 'home' })">{{ $t('home') }}</v-toolbar-title>
+        <v-toolbar-title dark @click="navigateTo({ name: 'home' })">
+            <v-icon class="mr-4" large dark>home</v-icon>
+        </v-toolbar-title>
 
         <v-toolbar-items>
             <v-menu open-on-hover transition="slide-y-transition" bottom>

@@ -2,22 +2,23 @@
     <v-layout column>
         <v-flex xs8>
             <panel :title="$t('practice')">
-                <v-btn slot="action" class="indigo accent-2" light medium absolute
-                       right middle fab @click="navigateTo({
+                <v-btn slot="action" class="primary accent-2" light medium absolute
+                       right middle @click="navigateTo({
                                 name: 'practice.create'
                             })">
-                    <v-icon>add</v-icon>
+                    <v-icon color="white">add</v-icon>{{ $t('add')}}
                 </v-btn>
                 <v-card-title>
                     <v-spacer></v-spacer>
                     <v-text-field v-model="search" append-icon="search" :label="$t('search')" single-line hide-details></v-text-field>
                 </v-card-title>
                 <v-data-table :headers="headers" :items="practices" item-key="name" :pagination.sync="pagination"
-                              :search="search" class="elevation-1">
+                              :search="search" class="elevation-1" :loading="loading">
                     <template slot="headers" slot-scope="props">
                         <tr>
                             <th v-for="header in props.headers" :key="header.text"
-                                :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+                                :class="['black--text text-md-left body-2 font-weight-black column sortable',
+                                pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
                                 @click="changeSort(header.value)">
                                 <v-icon small>arrow_upward</v-icon>
                                 {{ header.text }}
@@ -59,7 +60,8 @@
                 practices: [],
                 headers: constants.practice_headers,
                 pagination: util.pagination,
-                search: ''
+                search: '',
+                loading: true
             }
         },
         async mounted() {
@@ -73,6 +75,7 @@
                         practiceCategory: '',
                         reference: '',
                     }));
+                    this.loading = false;
                 }, error => {
                     console.log('practice get error: ' + error);
                 })

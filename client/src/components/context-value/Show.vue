@@ -13,12 +13,16 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
+                        <v-btn color="indigo" dark @click="navigateTo({name: 'context-value.index'})">
+                            <v-icon dark left>arrow_back</v-icon>{{ $t('return')}}
+                        </v-btn>
                         <v-btn color="indigo" dark @click="navigateTo({
-                                name: 'context-value.edit',
-                                params: {id: value._links.self.href}
-                            })">{{ $t('edit')}}</v-btn>
-                        <v-btn color="indigo" dark @click="deleteConfirmationVisibility=true">{{ $t('delete')}}</v-btn>
-                        <v-btn color="indigo" dark @click="navigateTo({name: 'context-value.index'})">{{ $t('return')}}</v-btn>
+                        name: 'context-value.edit',
+                        params: {id: value._links.self.href}
+                        })"><v-icon dark left>edit</v-icon>{{ $t('edit')}}</v-btn>
+                        <v-btn color="indigo" dark @click="deleteConfirmationVisibility=true">
+                            <v-icon dark left>delete</v-icon>{{ $t('delete')}}
+                        </v-btn>
                     </v-card-actions>
                 </panel>
             </v-flex>
@@ -44,8 +48,8 @@
 <script>
     import api from '../../services/api';
     import Panel from "@/components/Panel";
-    import ConfirmDialog from '@/components/ConfirmDialog';
-    import InfoDialog from '@/components/InformationDialog';
+    import ConfirmDialog from '@/components/dialog/ConfirmDialog';
+    import InfoDialog from '@/components/dialog/InformationDialog';
 
     export default {
         components: {

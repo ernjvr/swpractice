@@ -20,8 +20,10 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="indigo" dark @click="edit">{{ $t('save') }}</v-btn>
-                        <v-btn color="indigo" dark @click="navigateTo({name: 'practice-sub-category.show'})">{{ $t('cancel') }}</v-btn>
+                        <v-btn color="indigo" dark @click="edit"><v-icon dark left>save</v-icon>{{ $t('save') }}</v-btn>
+                        <v-btn color="indigo" dark @click="navigateTo({name: 'practice-sub-category.show'})">
+                            <v-icon dark left>cancel</v-icon>{{ $t('cancel') }}
+                        </v-btn>
                     </v-card-actions>
                 </panel>
             </v-flex>

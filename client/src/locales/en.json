@@ -34,7 +34,7 @@
   "add": "Add",
   "edit": "Edit",
   "delete": "Delete",
-  "return": "Return",
+  "return": "Back",
   "view": "View",
   "cancel": "Cancel",
   "action": "Action",
@@ -63,7 +63,5 @@
 
   "no_slot_content": "No slot content defined",
   "field_required": "This field is required",
-  "search": "Search",
-  "integrity_violation_cannot_delete": "Cannot Delete. Reference depends on this information. Please remove any dependencies before deleting this information.",
-  "integrity_violation_cannot_delete_reference_type": "Cannot Delete. Reference depends on this Reference Type. Please remove the Reference dependencies before deleting this Reference Type."
+  "search": "Search"
 }
