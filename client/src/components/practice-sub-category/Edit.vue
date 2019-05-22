@@ -1,21 +1,20 @@
 <template>
-    <v-container fluid grid-list-xl>
-        <v-layout row>
-            <v-flex xs6>
+    <v-container>
+        <v-layout>
+            <v-flex xs12>
                 <panel :title="$t('edit_practice_sub_category')">
                     <v-card-text>
                         <v-form ref="form">
-                            <v-text-field v-model="editPracticeSubCategory.name" v-on:keyup="keyEvent" prepend-icon="person" name="name"
+                            <v-text-field v-model="practiceSubCategory.name" prepend-icon="person" name="name" autofocus
                                           :label="$t('name')" type="text" required :rules="required" :maxlength="100"></v-text-field>
-                            <v-textarea v-model="editPracticeSubCategory.description" v-on:keyup="keyEvent" prepend-icon="person" name="description"
+                            <v-textarea v-model="practiceSubCategory.description"  prepend-icon="person" name="description"
                                           :label="$t('description')" type="text" :maxlength="500"></v-textarea>
-                            <v-select :label="$t('practice_category')"
+                            <v-autocomplete :label="$t('practice_category')"
                                       :items="practiceCategories"
                                       item-text="name" item-value="_links.self.href"
                                       v-model="selectedPracticeCategory"
-                                      prepend-icon="person" name="practiceCategory" autocomplete>
-                            </v-select>
-                            <v-alert :value="validationError" color="error" v-html="error"></v-alert>
+                                      prepend-icon="person" name="practiceCategory">
+                            </v-autocomplete>
                         </v-form>
                     </v-card-text>
                     <v-card-actions>
@@ -28,15 +27,28 @@
                 </panel>
             </v-flex>
         </v-layout>
+        <info-dialog :info-visibility="infoDialog.infoVisibility"
+                     :info-type="infoDialog.infoType"
+                     @infoAccept="accept({name: 'practice-sub-category.index'})">
+            <template slot="title">{{ infoDialog.title }}</template>
+            <template slot="text">{{ infoDialog.text }}</template>
+            <template slot="detail">{{ infoDialog.detail }}</template>
+            <template slot="confirmButton">{{ $t('close')}}</template>
+        </info-dialog>
     </v-container>
 </template>
 
 <script>
     import Panel from '@/components/Panel';
-    import util from '../../common/util';
-    import { il8n } from '../../il8n';
+    import util from '@/common/util';
+    import { il8n } from '@/il8n';
+    import InfoDialog from '@/components/dialog/InformationDialog';
 
     export default {
+        components: {
+            Panel,
+            InfoDialog
+        },
         data() {
             return {
                 practiceSubCategory: {
@@ -45,15 +57,9 @@
                     _links: '',
                     practiceCategory: ''
                 },
-                editPracticeSubCategory: {
-                    name: '',
-                    description: '',
-                    _links: '',
-                    practiceCategory: ''
-                },
                 selectedPracticeCategory: '',
-                error: null,
-                validationError: false,
+                infoDialog: util.infoDialog,
+                navigateToIndexPage: false,
                 // check if value exists or return required message
                 required: [(v) => !!v || il8n.tc('field_required')]
             }
@@ -67,68 +73,55 @@
             let practiceSubCategory = this.$store.state.selectedPracticeSubCategory;
 
             if(practiceSubCategory.name) {
-                this.practiceSubCategory = practiceSubCategory;
-                this.editPracticeSubCategory = {
-                    name: this.practiceSubCategory.name,
-                    description: this.practiceSubCategory.description,
-                    _links: this.practiceSubCategory._links,
-                    practiceCategory: this.practiceSubCategory.practiceCategory
+                // avoid modifying store object directly by copying values into new object
+                this.practiceSubCategory = {
+                    name: practiceSubCategory.name,
+                    description: practiceSubCategory.description,
+                    _links: practiceSubCategory._links,
+                    practiceCategory: practiceSubCategory.practiceCategory
                 };
                 this.selectedPracticeCategory = this.practiceSubCategory.practiceCategory._links.self.href;
             } else {
                 console.log('selected practice sub category not found');
-                this.navigateTo('/practice-sub-category/');
+                this.navigateTo({name: 'practice-sub-category.index'});
             }
         },
         methods: {
+            navigateTo: util.navigateTo,
+            accept: util.acceptInfoDialog,
+            displayEditError: util.displayEditError,
             async edit() {
                 try {
                     if (this.$refs.form.validate()) {
                         let data = {
                             href: this.practiceSubCategory._links.self.href,
                             practiceSubCategory: {
-                                name: this.editPracticeSubCategory.name,
-                                description: this.editPracticeSubCategory.description,
+                                name: this.practiceSubCategory.name,
+                                description: this.practiceSubCategory.description,
                                 practiceCategory: this.getSelectedPracticeCategory()._links.self.href
                             }
                         };
-                        console.log('dispatching to editPracticeSubCategory data:');
-                        console.log(data);
                         this.$store.dispatch('editPracticeSubCategory', data).then(response => {
-                            console.log('received data from store editPracticeSubCategory: ');
-                            console.log(response);
-                            this.editPracticeSubCategory.practiceCategory = this.getSelectedPracticeCategory();
-                            console.log('updated practice category of editPracticeSubCategory:');
-                            console.log(this.editPracticeSubCategory);
-                            this.$store.commit('setSelectedPracticeSubCategory', this.editPracticeSubCategory);
-                            this.$store.commit('editPracticeSubCategory', this.editPracticeSubCategory);
+                            console.log('received data from store editPracticeSubCategory: ' + response);
+                            this.practiceSubCategory.practiceCategory = this.getSelectedPracticeCategory();
+                            this.$store.commit('setSelectedPracticeSubCategory', this.practiceSubCategory);
+                            this.$store.commit('editPracticeSubCategory', this.practiceSubCategory);
                             this.navigateTo({name: 'practice-sub-category.show'});
                         }, error => {
                             console.log('received error from store editPracticeSubCategory: ' + error);
-                            this.error = error;
-                            this.validationError = true;
+                            this.displayEditError(error, 'error_not_found_practice_sub_category_text',
+                                'error_not_found_practice_sub_category_detail');
                         });
                     }
                 } catch (e) {
-                    this.error = e.response.data.error;
-                    this.validationError = true;
+                    util.displayInfoDialog('error', this.$t('error_delete_title'), e.response.data.error,
+                        this.$t('error_unknown_detail'));
                 }
             },
             getSelectedPracticeCategory() {
               return util.getSelectedPracticeCategory(this.selectedPracticeCategory);
             },
-            keyEvent() {
-                if (this.validationError) {
-                    this.validationError = false;
-                }
-            },
-            navigateTo(route) {
-                this.$router.push(route);
-            },
         },
-        components: {
-            Panel
-        }
     }
 </script>
 

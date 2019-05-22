@@ -3,7 +3,7 @@
     <v-app>
       <app-header/>
       <v-content class="v-content">
-        <v-container>
+        <v-container grid-list-md>
           <router-view></router-view>
         </v-container>
       </v-content>
@@ -24,6 +24,6 @@ export default {
 
 <style>
   .v-content {
-    margin-top: 100px;
+    margin-top: 70px;
   }
 </style>

@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import GlobalMutations from './mutations/global/GlobalMutations';
+import GlobalActions from './actions/global/GlobalActions';
 import PracticeCategoryMutations from './mutations/practice/PracticeCategoryMutations';
 import PracticeSubCategoryMutations from './mutations/practice/PracticeSubCategoryMutations';
 import PracticeMutations from './mutations/practice/PracticeMutations';
@@ -28,7 +30,12 @@ export default new Vuex.Store({
         practiceSubCategories: [],
         practices: [],
         selectedPractice: {},
-        selectedReference: {}
+        selectedPracticeCategory: {},
+        selectedPracticeSubCategory: {},
+        selectedReference: {},
+        selectedReferenceType: {},
+        selectedContextValue: {},
+        displayDialog: false
     },
     mutations: {
         addReferences(state, references) {
@@ -58,6 +65,9 @@ export default new Vuex.Store({
         removeReferenceType(state, type) {
             ReferenceTypeMutations.removeReferenceType(state, type);
         },
+        setSelectedReferenceType(state, type) {
+            ReferenceTypeMutations.setSelectedReferenceType(state, type);
+        },
         addContextDimensions(state, dimensions) {
             ContextDimensionMutations.addContextDimensions(state, dimensions);
         },
@@ -82,6 +92,9 @@ export default new Vuex.Store({
         removeContextValue(state, value) {
             ContextValueMutations.removeContextValue(state, value);
         },
+        setSelectedContextValue(state, value) {
+            ContextValueMutations.setSelectedContextValue(state, value);
+        },
         addPracticeCategories(state, categories) {
             PracticeCategoryMutations.addPracticeCategories(state, categories);
         },
@@ -93,6 +106,9 @@ export default new Vuex.Store({
         },
         removePracticeCategory(state, category) {
             PracticeCategoryMutations.removePracticeCategory(state, category);
+        },
+        setSelectedPracticeCategory(state, category) {
+            PracticeCategoryMutations.setSelectedPracticeCategory(state, category);
         },
         addPracticeSubCategories(state, subcategories) {
             PracticeSubCategoryMutations.addPracticeSubCategories(state, subcategories);
@@ -108,6 +124,9 @@ export default new Vuex.Store({
         },
         setSelectedPracticeSubCategory(state, practice) {
             PracticeSubCategoryMutations.setSelectedPracticeSubCategory(state, practice);
+        },
+        displayDialog(state, display) {
+            GlobalMutations.displayDialog(state, display);
         },
         addPractices(state, practices) {
             PracticeMutations.addPractices(state, practices);
@@ -141,6 +160,9 @@ export default new Vuex.Store({
         addReferenceType({ commit }, type) {
             return ReferenceTypeActions.addReferenceType({ commit }, type);
         },
+        setSelectedReferenceType({ commit }, type) {
+            ReferenceTypeActions.setSelectedReferenceType({ commit }, type);
+        },
         editReferenceType({ commit }, data) {
             return ReferenceTypeActions.editReferenceType({ commit }, data);
         },
@@ -159,6 +181,9 @@ export default new Vuex.Store({
         addContextValue({ commit }, value) {
             return ContextValueActions.addContextValue({ commit }, value);
         },
+        setSelectedContextValue({ commit }, value) {
+            return ContextValueActions.setSelectedContextValue({ commit }, value);
+        },
         editContextValue({ commit }, data) {
             return ContextValueActions.editContextValue({ commit }, data);
         },
@@ -174,6 +199,9 @@ export default new Vuex.Store({
         getAllPracticeCategories({ commit }) {
             return PracticeCategoryActions.getAllPracticeCategories({ commit });
         },
+        setSelectedPracticeCategory({ commit }, category) {
+            PracticeCategoryActions.setSelectedPracticeCategory({ commit }, category);
+        },
         addPracticeSubCategory({ commit }, category) {
             return PracticeSubCategoryActions.addPracticeSubCategory({ commit }, category);
         },
@@ -188,6 +216,9 @@ export default new Vuex.Store({
         },
         setSelectedPracticeSubCategory({ commit }, practice) {
             PracticeSubCategoryActions.setSelectedPracticeSubCategory({ commit }, practice);
+        },
+        displayDialog({ commit }, display) {
+            GlobalActions.displayDialog({ commit }, display);
         },
         addPractice({ commit }, practice) {
             return PracticeActions.addPractice({ commit }, practice);

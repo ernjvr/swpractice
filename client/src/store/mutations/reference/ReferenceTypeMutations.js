@@ -4,7 +4,12 @@ export default {
         state.referenceTypes = types;
     },
     addReferenceType(state, type) {
-        state.referenceTypes.push(type);
+        state.referenceTypes.unshift(type);
+    },
+    setSelectedReferenceType(state, type) {
+        console.log('mutation: setSelectedReferenceType');
+        console.log(type);
+        state.selectedReferenceType = type;
     },
     editReferenceType(state, type) {
         let index = state.referenceTypes.map(tp => tp._links.self.href).indexOf(type._links.self.href);

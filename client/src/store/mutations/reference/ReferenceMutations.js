@@ -4,7 +4,7 @@ export default {
         state.references = references;
     },
     addReference(state, reference) {
-        state.references.push(reference);
+        state.references.unshift(reference);
     },
     setSelectedReference(state, reference) {
         console.log('mutation: setSelectedReference');

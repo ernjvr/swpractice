@@ -1,27 +1,26 @@
 <template>
-    <v-container fluid grid-list-xl>
-        <v-layout row>
-            <v-flex xs6>
+    <v-container>
+        <v-layout>
+            <v-flex xs12>
                 <panel :title="$t('edit_practice')">
                     <v-card-text>
                         <v-form ref="form">
-                            <v-text-field v-model="editPractice.name" v-on:keyup="keyEvent" prepend-icon="person" name="name"
+                            <v-text-field v-model="practice.name" prepend-icon="person" name="name" autofocus
                                           :label="$t('name')" type="text" required :rules="required" :maxlength="100"></v-text-field>
-                            <v-textarea v-model="editPractice.description" v-on:keyup="keyEvent" prepend-icon="person" name="description"
+                            <v-textarea v-model="practice.description" prepend-icon="person" name="description"
                                           :label="$t('description')" type="text" :maxlength="500"></v-textarea>
-                            <v-select :label="$t('practice_sub_category')"
+                            <v-autocomplete :label="$t('practice_sub_category')"
                                       :items="practiceSubCategories"
                                       item-text="name" item-value="_links.self.href"
                                       v-model="selectedPracticeSubCategory"
-                                      prepend-icon="person" name="practiceSubCategory" autocomplete>
-                            </v-select>
-                            <v-select :label="$t('reference')"
+                                      prepend-icon="person" name="practiceSubCategory">
+                            </v-autocomplete>
+                            <v-autocomplete :label="$t('reference')"
                                       :items="references"
                                       item-text="reference" item-value="_links.self.href"
                                       v-model="selectedReference"
-                                      prepend-icon="person" name="reference" autocomplete>
-                            </v-select>
-                            <v-alert :value="validationError" color="error" v-html="error"></v-alert>
+                                      prepend-icon="person" name="reference">
+                            </v-autocomplete>
                         </v-form>
                     </v-card-text>
                     <v-card-actions>
@@ -34,16 +33,28 @@
                 </panel>
             </v-flex>
         </v-layout>
+        <info-dialog :info-visibility="infoDialog.infoVisibility"
+                     :info-type="infoDialog.infoType"
+                     @infoAccept="accept({name: 'practice.index'})">
+            <template slot="title">{{ infoDialog.title }}</template>
+            <template slot="text">{{ infoDialog.text }}</template>
+            <template slot="detail">{{ infoDialog.detail }}</template>
+            <template slot="confirmButton">{{ $t('close')}}</template>
+        </info-dialog>
     </v-container>
 </template>
 
 <script>
     import Panel from '@/components/Panel';
-    import util from '../../common/util';
-    import api from '../../services/api';
-    import { il8n } from '../../il8n';
+    import util from '@/common/util';
+    import {il8n} from '@/il8n';
+    import InfoDialog from '@/components/dialog/InformationDialog';
 
     export default {
+        components: {
+            Panel,
+            InfoDialog
+        },
         data() {
             return {
                 practice: {
@@ -54,18 +65,10 @@
                     practiceSubCategory: '',
                     reference: '',
                 },
-                editPractice: {
-                    name: '',
-                    description: '',
-                    _links: '',
-                    practiceCategory: '',
-                    practiceSubCategory: '',
-                    reference: '',
-                },
                 selectedPracticeSubCategory: '',
                 selectedReference: '',
-                error: null,
-                validationError: false,
+                infoDialog: util.infoDialog,
+                navigateToIndexPage: false,
                 // check if value exists or return required message
                 required: [(v) => !!v || il8n.tc('field_required')]
             }
@@ -82,56 +85,54 @@
             let practice = this.$store.state.selectedPractice;
 
             if(practice.name) {
-                this.practice = practice;
-                this.editPractice = {
-                    name: this.practice.name,
-                    description: this.practice.description,
-                    _links: this.practice._links,
-                    practiceSubCategory: this.practice.practiceSubCategory,
-                    practiceCategory: this.practice.practiceCategory,
-                    reference: this.practice.reference
+                // avoid modifying store object directly by copying values into new object
+                this.practice = {
+                    name: practice.name,
+                    description: practice.description,
+                    _links: practice._links,
+                    practiceSubCategory: practice.practiceSubCategory,
+                    practiceCategory: practice.practiceCategory,
+                    reference: practice.reference
                 };
                 this.selectedPracticeSubCategory = this.practice.practiceSubCategory._links.self.href;
-                this.selectedReference = this.practice.reference._links.self.href;
+                this.selectedReference = this.practice.reference  === '' ? '' : this.practice.reference._links.self.href;
             } else {
                 console.log('selected practice not found');
-                this.navigateTo('/practice/');
+                this.navigateTo({name: 'practice.index'});
             }
         },
         methods: {
+            navigateTo: util.navigateTo,
+            accept: util.acceptInfoDialog,
+            displayEditError: util.displayEditError,
             async edit() {
                 try {
                     if (this.$refs.form.validate()) {
-                        let practiceCat;
-                        await this.getPracticeCategory().then(response => {
-                            practiceCat = response;
-                        });
-
                         let data = {
                             href: this.practice._links.self.href,
                             practice: {
-                                name: this.editPractice.name,
-                                description: this.editPractice.description,
+                                name: this.practice.name,
+                                description: this.practice.description,
                                 practiceSubCategory: this.getSelectedPracticeSubCategory()._links.self.href,
                                 reference: this.selectedReference === '' ? '' : this.getSelectedReference()._links.self.href
                             }
                         };
                         this.$store.dispatch('editPractice', data).then(_ => {
-                            this.editPractice.reference = this.selectedReference === '' ? '' : this.getSelectedReference();
-                            this.editPractice.practiceSubCategory = this.getSelectedPracticeSubCategory();
-                            this.editPractice.practiceCategory = practiceCat;
-                            this.$store.commit('setSelectedPractice', this.editPractice);
-                            this.$store.commit('editPractice', this.editPractice);
+                            this.practice.reference = this.selectedReference === '' ? '' : this.getSelectedReference();
+                            this.practice.practiceSubCategory = this.getSelectedPracticeSubCategory();
+                            this.practice.practiceCategory = this.getPracticeCategory();
+                            this.$store.commit('setSelectedPractice', this.practice);
+                            this.$store.commit('editPractice', this.practice);
                             this.navigateTo({name: 'practice.show'});
                         }, error => {
                             console.log('received error from store editPractice: ' + error);
-                            this.error = error;
-                            this.validationError = true;
+                            this.displayEditError(error, 'error_not_found_practice_text',
+                                'error_not_found_practice_detail');
                         });
                     }
                 } catch (e) {
-                    this.error = e.response.data.error;
-                    this.validationError = true;
+                    util.displayInfoDialog('error', this.$t('error_delete_title'), e.response.data.error,
+                        this.$t('error_unknown_detail'));
                 }
             },
             getSelectedPracticeSubCategory() {
@@ -140,37 +141,11 @@
             getSelectedReference() {
               return util.getSelectedReference(this.selectedReference);
             },
-            async getPracticeCategory() {
-                let practiceCat;
-                let practiceSubCat;
-                let href = this.selectedPracticeSubCategory;
-
-                await api.get(href)
-                    .then(response => {
-                        practiceSubCat = response.data;
-                    }).catch(e => {
-                        console.log(href + ' get error: ' + e);
-                    });
-                await api.get(practiceSubCat._links.practiceCategory.href)
-                    .then(response => {
-                        practiceCat = response.data;
-                    }).catch(e => {
-                        console.log(href + ' get error: ' + e);
-                    });
-                return practiceCat;
-            },
-            keyEvent() {
-                if (this.validationError) {
-                    this.validationError = false;
-                }
-            },
-            navigateTo(route) {
-                this.$router.push(route);
+            getPracticeCategory() {
+                let practiceSubCat = this.getSelectedPracticeSubCategory();
+                return util.getSelectedPracticeCategory(practiceSubCat.practiceCategory._links.self.href);
             },
         },
-        components: {
-            Panel
-        }
     }
 </script>
 

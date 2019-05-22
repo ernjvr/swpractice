@@ -2,6 +2,8 @@ package org.swpractice.model.context;
 
 import lombok.Data;
 import org.swpractice.model.Identifier;
+import org.swpractice.model.annotation.Strip;
+import org.swpractice.model.annotation.listener.StripListener;
 import org.swpractice.validation.constraint.annotation.Unique;
 import org.swpractice.validation.service.context.ContextDimensionValidationService;
 
@@ -14,6 +16,7 @@ import static org.swpractice.util.Constants.*;
 
 @Data
 @Entity
+@EntityListeners(StripListener.class)
 @NamedQuery(name = CONTEXT_DIMENSION_FIND_BY_NAME, query = CONTEXT_DIMENSION_FIND_BY_NAME_QUERY)
 public class ContextDimension implements Identifier {
 
@@ -23,6 +26,7 @@ public class ContextDimension implements Identifier {
 
 
     @NotNull(message = CONTEXT_DIMENSION_FIELD_NAME_REQUIRED_MESSAGE)
+    @Strip
     @NotBlank
     @Size(min = 1, max = 100, message = CONTEXT_DIMENSION_FIELD_NAME_LENGTH_MESSAGE)
     @Column(unique = true)

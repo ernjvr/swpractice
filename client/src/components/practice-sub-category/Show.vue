@@ -1,16 +1,16 @@
 <template>
-    <v-container fluid grid-list-xl>
-        <v-layout row>
-            <v-flex xs6>
+    <v-container>
+        <v-layout>
+            <v-flex xs12>
                 <panel :title="$t('practice_sub_category')">
                     <v-card-text>
                         <v-form ref="form">
                             <v-text-field v-model="practiceSubCategory.name" readonly prepend-icon="person" name="name"
                                           :label="$t('name')" type="text"></v-text-field>
-                            <v-textarea v-model="practiceSubCategory.description" readonly prepend-icon="person" name="description"
-                                          :label="$t('description')" type="text"></v-textarea>
-                            <v-text-field v-model="practiceSubCategory.practiceCategory.name" readonly prepend-icon="person" name="practiceCategory"
-                                          :label="$t('practice_category')" type="text"></v-text-field>
+                            <v-textarea v-model="practiceSubCategory.description" readonly prepend-icon="person"
+                                        name="description" :label="$t('description')" type="text"></v-textarea>
+                            <v-text-field v-model="practiceSubCategory.practiceCategory.name" readonly prepend-icon="person"
+                                          name="practiceCategory" :label="$t('practice_category')" type="text"></v-text-field>
                         </v-form>
                     </v-card-text>
                     <v-card-actions>
@@ -37,7 +37,7 @@
         </confirm-dialog>
         <info-dialog :info-visibility="infoDialog.infoVisibility"
                      :info-type="infoDialog.infoType"
-                     @infoAccept="infoDialog.infoVisibility=false">
+                     @infoAccept="accept({name: 'practice-sub-category.index'})">
             <template slot="title">{{ infoDialog.title }}</template>
             <template slot="text">{{ infoDialog.text }}</template>
             <template slot="detail">{{ infoDialog.detail }}</template>
@@ -47,7 +47,8 @@
 </template>
 
 <script>
-    import api from '../../services/api';
+    import api from '@/services/api';
+    import util from '@/common/util';
     import Panel from "@/components/Panel";
     import ConfirmDialog from '@/components/dialog/ConfirmDialog';
     import InfoDialog from '@/components/dialog/InformationDialog';
@@ -66,53 +67,39 @@
                     _links: '',
                     practiceCategory: ''
                 },
-                infoDialog: {
-                    title: '',
-                    text: '',
-                    detail: '',
-                    infoType: '',
-                    infoVisibility: false,
-                },
+                infoDialog: util.infoDialog,
+                navigateToIndexPage: false,
                 deleteConfirmationVisibility: false
             }
         },
-    mounted() {
+        mounted() {
             let practiceSubCategory = this.$store.state.selectedPracticeSubCategory;
 
             if(practiceSubCategory.name) {
                 this.practiceSubCategory = practiceSubCategory;
             } else {
                 console.log('selected practice sub category not found');
-                this.navigateTo('/practice-sub-category/');
+                this.navigateTo({name: 'practice-sub-category.index'});
             }
         },
         methods: {
-            navigateTo(route) {
-                this.$router.push(route);
-            },
+            navigateTo: util.navigateTo,
+            accept: util.acceptInfoDialog,
+            displayDeleteError: util.displayDeleteError,
             async deletePracticeSubCategory() {
                 let href = this.practiceSubCategory._links.self.href;
                 api.delete(href)
                     .then(response => {
                         console.log(href + ' delete success: ' + response);
-                        this.navigateTo('/practice-sub-category/');
+                        this.navigateTo({name: 'practice-sub-category.index'});
                     }).catch(e => {
-                    console.log(href + ' delete error: ' + e);
-
-                    if (e.response.data.toLowerCase().includes('integrity violation')) {
-                        this.infoDialog.title = this.$t('error_delete_title');
-                        this.infoDialog.text = this.$t('error_delete_practice_sub_category_text');
-                        this.infoDialog.detail = this.$t('error_delete_practice_sub_category_detail');
-                    } else {
-                        this.infoDialog.title = this.$t('error_delete_title');
-                        this.infoDialog.text = this.$t('error_unknown_text');
-                        this.infoDialog.detail = this.$t('error_unknown_detail');
-                    }
+                    console.log(href + ' delete error: ' + e.response.data);
+                    this.displayDeleteError(e, 'error_delete_practice_sub_category_text',
+                        'error_delete_practice_sub_category_detail',
+                        'error_not_found_practice_sub_category_text', 'error_not_found_practice_sub_category_detail');
                     this.deleteConfirmationVisibility = false;
-                    this.infoDialog.infoType = 'error';
-                    this.infoDialog.infoVisibility = true;
                 });
-            }
+            },
         }
     }
 </script>

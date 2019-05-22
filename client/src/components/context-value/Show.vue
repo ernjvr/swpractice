@@ -1,7 +1,7 @@
 <template>
-    <v-container fluid grid-list-xl>
-        <v-layout row>
-            <v-flex xs6>
+    <v-container>
+        <v-layout>
+            <v-flex xs12>
                 <panel :title="$t('context_value')">
                     <v-card-text>
                         <v-form ref="form">
@@ -36,7 +36,7 @@
         </confirm-dialog>
         <info-dialog :info-visibility="infoDialog.infoVisibility"
                      :info-type="infoDialog.infoType"
-                     @infoAccept="infoDialog.infoVisibility=false">
+                     @infoAccept="accept({name: 'context-value.index'})">
             <template slot="title">{{ infoDialog.title }}</template>
             <template slot="text">{{ infoDialog.text }}</template>
             <template slot="detail">{{ infoDialog.detail }}</template>
@@ -46,7 +46,8 @@
 </template>
 
 <script>
-    import api from '../../services/api';
+    import api from '@/services/api';
+    import util from '@/common/util';
     import Panel from "@/components/Panel";
     import ConfirmDialog from '@/components/dialog/ConfirmDialog';
     import InfoDialog from '@/components/dialog/InformationDialog';
@@ -60,30 +61,25 @@
         data() {
             return {
                 value: {},
-                infoDialog: {
-                    title: '',
-                    text: '',
-                    detail: '',
-                    infoType: '',
-                    infoVisibility: false,
-                },
+                infoDialog: util.infoDialog,
+                navigateToIndexPage: false,
                 deleteConfirmationVisibility: false
             }
         },
-        async mounted() {
-            let href = this.$route.params.id;
-            api.get(href)
-                .then(response => {
-                    console.log(href + ' get success: ' + response.data);
-                    this.value = response.data;
-                }).catch(e => {
-                console.log(href + ' get error: ' + e);
-            });
+        mounted() {
+            let value = this.$store.state.selectedContextValue;
+
+            if(value._links) {
+                this.value = value;
+            } else {
+                console.log('selected context value not found');
+                this.navigateTo({name: 'context-value.index'});
+            }
         },
         methods: {
-            navigateTo(route) {
-                this.$router.push(route);
-            },
+            navigateTo: util.navigateTo,
+            accept: util.acceptInfoDialog,
+            displayDeleteError: util.displayDeleteError,
             async deleteValue() {
                 let href = this.value._links.self.href;
                 api.delete(href)
@@ -92,19 +88,9 @@
                         this.navigateTo({name: 'context-value.index'});
                     }).catch(e => {
                     console.log(href + ' delete error: ' + e);
-
-                    if (e.response.data.toLowerCase().includes('integrity violation')) {
-                        this.infoDialog.title = this.$t('error_delete_title');
-                        this.infoDialog.text = this.$t('error_delete_context_value_text');
-                        this.infoDialog.detail = this.$t('error_delete_context_value_detail');
-                    } else {
-                        this.infoDialog.title = this.$t('error_delete_title');
-                        this.infoDialog.text = this.$t('error_unknown_text');
-                        this.infoDialog.detail = this.$t('error_unknown_detail');
-                    }
+                    this.displayDeleteError(e, 'error_delete_context_value_text', 'error_delete_context_value_detail',
+                        'error_not_found_context_value_text', 'error_not_found_context_value_detail');
                     this.deleteConfirmationVisibility = false;
-                    this.infoDialog.infoType = 'error';
-                    this.infoDialog.infoVisibility = true;
                 });
             }
         }

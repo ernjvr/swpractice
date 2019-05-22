@@ -10,7 +10,7 @@
                 </v-btn>
                 <v-card-title>
                     <v-spacer></v-spacer>
-                    <v-text-field v-model="search" append-icon="search" :label="$t('search')" single-line hide-details></v-text-field>
+                    <v-text-field v-model="search" append-icon="search" :label="$t('search')" single-line hide-details autofocus></v-text-field>
                 </v-card-title>
                 <v-data-table :headers="headers" :items="dimensions" item-key="name" :pagination.sync="pagination"
                               :search="search" class="elevation-1" :loading="loading">

@@ -4,7 +4,7 @@ export default {
         state.practices = practices;
     },
     addPractice(state, practice) {
-        state.practices.push(practice);
+        state.practices.unshift(practice);
     },
     setSelectedPractice(state, practice) {
         console.log('mutation: setSelectedPractice');

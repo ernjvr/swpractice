@@ -1,7 +1,7 @@
 <template>
-    <v-container fluid grid-list-xl>
-        <v-layout row>
-            <v-flex xs6>
+    <v-container>
+        <v-layout>
+            <v-flex xs12>
                 <panel :title="$t('context_dimension')">
                     <v-card-text>
                         <v-form ref="form">
@@ -45,6 +45,7 @@
 
 <script>
     import api from '../../services/api';
+    import util from '@/common/util';
     import Panel from "@/components/Panel";
     import ConfirmDialog from '@/components/dialog/ConfirmDialog';
     import InfoDialog from '@/components/dialog/InformationDialog';
@@ -58,13 +59,7 @@
         data() {
             return {
                 dimension: {},
-                infoDialog: {
-                    title: '',
-                    text: '',
-                    detail: '',
-                    infoType: '',
-                    infoVisibility: false,
-                },
+                infoDialog: util.infoDialog,
                 deleteConfirmationVisibility: false
             }
         },

@@ -1,6 +1,6 @@
 <template>
     <v-layout>
-        <v-flex xs4>
+        <v-flex xs12>
             <panel :title="$t('add_context_dimension')">
                 <v-card-text>
                     <v-form ref="form">

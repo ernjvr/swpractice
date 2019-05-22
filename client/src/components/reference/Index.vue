@@ -1,14 +1,17 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-layout column>
-        <v-flex xs8>
+        <v-dialog v-model="displayDialog" persistent max-width="600px">
+            <create></create>
+        </v-dialog>
+        <v-flex md6,xs6>
             <panel :title="$t('reference')">
                 <v-btn slot="action" class="primary accent-2" light medium absolute
-                       right middle @click="navigateTo({name: 'reference.create'})">
+                       right middle @click="showDialog(true)">
                     <v-icon color="white">add</v-icon>{{ $t('add')}}
                 </v-btn>
                 <v-card-title>
                     <v-spacer></v-spacer>
-                    <v-text-field v-model="search" append-icon="search" :label="$t('search')" single-line hide-details></v-text-field>
+                    <v-text-field v-model="search" append-icon="search" :label="$t('search')" single-line hide-details autofocus></v-text-field>
                 </v-card-title>
                 <v-data-table :headers="headers" :items="references" item-key="reference" :pagination.sync="pagination"
                               :search="search" class="elevation-1" :loading="loading">
@@ -36,6 +39,9 @@
                         </td>
                     </template>
                 </v-data-table>
+                <div class="text-xs-center pt-2">
+                    <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+                </div>
             </panel>
         </v-flex>
     </v-layout>
@@ -43,82 +49,59 @@
 
 <script>
     import Panel from "@/components/Panel";
-    import api from '../../services/api'
-    import axios from 'axios';
-    import constants from '../../common/constants';
-    import util from '../../common/util';
+    import constants from '@/common/constants';
+    import util from '@/common/util';
+    import Create from "./Create";
 
     export default {
         components: {
-            Panel
+            Panel,
+            Create
         },
         data() {
             return {
-                references: [],
                 headers: constants.reference_headers,
                 pagination: util.pagination,
                 search: '',
                 loading: true
             }
         },
-        async mounted() {
-            await api.get(constants.reference_url)
-                .then(response => {
-                    this.references = response.data._embedded.references.map(reference => ({
-                        author: reference.author,
-                        year: reference.year === 0 ? 'n.d': reference.year,
-                        reference: reference.reference,
-                        _links: reference._links,
-                        referenceType: ''
-                    }));
-                    this.loading = false;
-                }, error => {
-                    console.log('reference get error: ' + error);
-                })
-                .then(response => {
-                    console.log(response);
-                });
-            this.resolveReferenceTypeForEachReference();
+        computed: {
+            pages () {
+                return util.pages(this.pagination);
+            },
+            references() {
+                return this.$store.state.references;
+            },
+            displayDialog() {
+                return this.$store.state.displayDialog;
+            }
+        },
+        mounted() {
+            this.$store.dispatch('getAllReferences').then(response => {
+                console.log('received data from store getAllReferences: ' + response);
+                this.pagination.totalItems = response.length;
+                this.loading = false;
+            }, error => {
+                console.log('received error from store getAllReferences: ' + error);
+            });
             this.initReferenceTypes();
         },
         methods: {
             changeSort: util.changeSort,
-            navigateTo(route) {
-                this.$router.push(route);
-            },
+            navigateTo: util.navigateTo,
+            showDialog: util.showDialog,
             navigateToView(route) {
                 let reference = this.$store.state.references.find(reference => { return reference._links.self.href === route.params.id});
                 this.$store.dispatch('setSelectedReference', reference).then(_ => {
-                    this.$router.push(route);
+                    this.navigateTo(route);
                     } , error => {
                     console.log('setSelectedReference error: ' + error);
                 });
             },
-            async resolveReferenceTypeForEachReference() {
-                let referenceTypes = [];
-
-                for(let i = 0; i < this.references.length; i++) {
-                    let reference = this.references[i];
-                    referenceTypes.push(api.get(reference._links.referenceType.href));
-                }
-
-                let result = await axios.all(referenceTypes);
-
-                for(let i = 0; i < result.length; i++) {
-                    let res = result[i];
-                    let reference = this.references[i];
-                    reference['referenceType'] = {
-                        name: res.data.name,
-                        _links: res.data._links
-                    };
-                    this.references[i] = reference;
-                }
-                this.$store.commit('addReferences', this.references);
-            },
             async initReferenceTypes() {
                 this.$store.dispatch('getAllReferenceTypes').then(response => {
                     console.log('received data from store getAllReferenceTypes: ' + response);
-                    console.log(response);
                 }, error => {
                     console.log('received error from store getAllReferenceTypes: ' + error);
                 });

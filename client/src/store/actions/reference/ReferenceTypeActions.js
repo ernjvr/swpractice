@@ -16,9 +16,14 @@ export default {
                 });
         });
     },
+    setSelectedReferenceType({ commit }, data) {
+        console.log('actions: setSelectedReferenceType');
+        console.log(data);
+        commit('setSelectedReferenceType', data);
+    },
     editReferenceType({ commit }, data) {
         return new Promise((resolve, reject) => {
-            api.put(data.href, data.type)
+            api.patch(data.href, data.type)
                 .then(response => {
                     let type = response.data;
                     console.log(data.href + ' put success: ' + type);

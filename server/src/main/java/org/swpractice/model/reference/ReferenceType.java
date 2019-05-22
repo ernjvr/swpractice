@@ -2,6 +2,8 @@ package org.swpractice.model.reference;
 
 import lombok.Data;
 import org.swpractice.model.Identifier;
+import org.swpractice.model.annotation.Strip;
+import org.swpractice.model.annotation.listener.StripListener;
 import org.swpractice.validation.constraint.annotation.Unique;
 import org.swpractice.validation.service.reference.ReferenceTypeValidationService;
 
@@ -14,6 +16,7 @@ import static org.swpractice.util.Constants.*;
 
 @Data
 @Entity
+@EntityListeners(StripListener.class)
 @NamedQuery(name = REFERENCE_TYPE_FIND_BY_NAME, query = REFERENCE_TYPE_FIND_BY_NAME_QUERY)
 public class ReferenceType implements Identifier {
 
@@ -22,6 +25,7 @@ public class ReferenceType implements Identifier {
     private Long id;
 
     @NotNull(message = REFERENCE_TYPE_FIELD_NAME_REQUIRED_MESSAGE)
+    @Strip
     @NotBlank
     @Size(min = 1, max = 100, message = REFERENCE_TYPE_FIELD_NAME_LENGTH_MESSAGE)
     @Column(unique = true)

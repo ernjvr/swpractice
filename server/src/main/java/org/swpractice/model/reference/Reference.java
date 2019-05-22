@@ -2,6 +2,8 @@ package org.swpractice.model.reference;
 
 import lombok.Data;
 import org.swpractice.model.Identifier;
+import org.swpractice.model.annotation.Strip;
+import org.swpractice.model.annotation.listener.StripListener;
 import org.swpractice.model.practice.Practice;
 
 import javax.persistence.*;
@@ -12,12 +14,14 @@ import static org.swpractice.util.Constants.*;
 
 @Data
 @Entity
+@EntityListeners(StripListener.class)
 public class Reference implements Identifier {
 
     @Id
     @GeneratedValue
     private Long id;
 
+    @Strip
     @Size(max = 100, message = REFERENCE_FIELD_AUTHOR_LENGTH_MESSAGE)
     private String author;
 
@@ -27,6 +31,7 @@ public class Reference implements Identifier {
     private int year;
 
     @NotNull(message = REFERENCE_FIELD_REFERENCE_REQUIRED_MESSAGE)
+    @Strip
     @NotBlank
     @Size(max = 2500, message = REFERENCE_FIELD_DESCRIPTION_LENGTH_MESSAGE)
     private String reference;

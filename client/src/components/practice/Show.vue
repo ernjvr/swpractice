@@ -1,7 +1,7 @@
 <template>
-    <v-container fluid grid-list-xl>
-        <v-layout row>
-            <v-flex xs6>
+    <v-container>
+        <v-layout>
+            <v-flex xs12>
                 <panel :title="$t('practice')">
                     <v-card-text>
                         <v-form ref="form">
@@ -41,7 +41,7 @@
         </confirm-dialog>
         <info-dialog :info-visibility="infoDialog.infoVisibility"
                      :info-type="infoDialog.infoType"
-                     @infoAccept="infoDialog.infoVisibility=false">
+                     @infoAccept="accept({name: 'practice.index'})">
             <template slot="title">{{ infoDialog.title }}</template>
             <template slot="text">{{ infoDialog.text }}</template>
             <template slot="detail">{{ infoDialog.detail }}</template>
@@ -51,7 +51,8 @@
 </template>
 
 <script>
-    import api from '../../services/api';
+    import api from '@/services/api';
+    import util from '@/common/util';
     import Panel from "@/components/Panel";
     import ConfirmDialog from '@/components/dialog/ConfirmDialog';
     import InfoDialog from '@/components/dialog/InformationDialog';
@@ -72,13 +73,8 @@
                     practiceSubCategory: '',
                     reference: '',
                 },
-                infoDialog: {
-                    title: '',
-                    text: '',
-                    detail: '',
-                    infoType: '',
-                    infoVisibility: false,
-                },
+                infoDialog: util.infoDialog,
+                navigateToIndexPage: false,
                 deleteConfirmationVisibility: false
             }
         },
@@ -89,34 +85,24 @@
                 this.practice = practice;
             } else {
                 console.log('selected practice not found');
-                this.navigateTo('/practice/');
+                this.navigateTo({name: 'practice.index'});
             }
         },
         methods: {
-            navigateTo(route) {
-                this.$router.push(route);
-            },
+            navigateTo: util.navigateTo,
+            accept: util.acceptInfoDialog,
+            displayDeleteError: util.displayDeleteError,
             async deletePractice() {
                 let href = this.practice._links.self.href;
                 api.delete(href)
                     .then(response => {
                         console.log(href + ' delete success: ' + response);
-                        this.navigateTo('/practice/');
+                        this.navigateTo({name: 'practice.index'});
                     }).catch(e => {
                     console.log(href + ' delete error: ' + e);
-
-                    if (e.response.data.toLowerCase().includes('integrity violation')) {
-                        this.infoDialog.title = this.$t('error_delete_title');
-                        this.infoDialog.text = this.$t('error_delete_practice_text');
-                        this.infoDialog.detail = this.$t('error_delete_practice_detail');
-                    } else {
-                        this.infoDialog.title = this.$t('error_delete_title');
-                        this.infoDialog.text = this.$t('error_unknown_text');
-                        this.infoDialog.detail = this.$t('error_unknown_detail');
-                    }
+                    this.displayDeleteError(e, 'error_delete_practice_text', 'error_delete_practice_detail',
+                        'error_not_found_practice_text', 'error_not_found_practice_detail');
                     this.deleteConfirmationVisibility = false;
-                    this.infoDialog.infoType = 'error';
-                    this.infoDialog.infoVisibility = true;
                 });
             }
         }

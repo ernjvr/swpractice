@@ -4,7 +4,12 @@ export default {
         state.practiceCategories = categories;
     },
     addPracticeCategory(state, category) {
-        state.practiceCategories.push(category);
+        state.practiceCategories.unshift(category);
+    },
+    setSelectedPracticeCategory(state, category) {
+        console.log('mutation: setSelectedPracticeCategory');
+        console.log(category);
+        state.selectedPracticeCategory = category;
     },
     editPracticeCategory(state, category) {
         let index = state.practiceCategories.map(cat => cat._links.self.href).indexOf(category._links.self.href);

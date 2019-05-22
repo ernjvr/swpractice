@@ -16,9 +16,14 @@ export default {
                 });
         });
     },
+    setSelectedContextValue({ commit }, data) {
+        console.log('actions: setSelectedContextValue');
+        console.log(data);
+        commit('setSelectedContextValue', data);
+    },
     editContextValue({ commit }, data) {
         return new Promise((resolve, reject) => {
-            api.put(data.href, data.value)
+            api.patch(data.href, data.value)
                 .then(response => {
                     let value = response.data;
                     console.log(data.href + ' put success: ' + value);

@@ -16,9 +16,14 @@ export default {
                 });
         });
     },
+    setSelectedPracticeCategory({ commit }, data) {
+        console.log('actions: setSelectedPracticeCategory');
+        console.log(data);
+        commit('setSelectedPracticeCategory', data);
+    },
     editPracticeCategory({ commit }, data) {
         return new Promise((resolve, reject) => {
-            api.put(data.href, data.category)
+            api.patch(data.href, data.category)
                 .then(response => {
                     let category = response.data;
                     console.log('practice-category put success: ' + category);

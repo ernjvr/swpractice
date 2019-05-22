@@ -4,7 +4,7 @@ export default {
         state.contextDimensions = dimensions;
     },
     addContextDimension(state, dimension) {
-        state.contextDimensions.push(dimension);
+        state.contextDimensions.unshift(dimension);
     },
     editContextDimension(state, dimension) {
         let index = state.contextDimensions.map(dim => dim._links.self.href).indexOf(dimension._links.self.href);

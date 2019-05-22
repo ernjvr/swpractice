@@ -4,7 +4,12 @@ export default {
         state.contextValues = values;
     },
     addContextValue(state, value) {
-        state.contextValues.push(value);
+        state.contextValues.unshift(value);
+    },
+    setSelectedContextValue(state, value) {
+        console.log('mutation: setSelectedContextValue');
+        console.log(value);
+        state.selectedContextValue = value;
     },
     editContextValue(state, value) {
         let index = state.contextValues.map(val => val._links.self.href).indexOf(value._links.self.href);

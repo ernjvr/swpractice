@@ -1,16 +1,17 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-layout column>
-        <v-flex xs8>
+        <v-dialog v-model="displayDialog" persistent max-width="600px">
+            <create></create>
+        </v-dialog>
+        <v-flex md6,xs6>
             <panel :title="$t('practice')">
                 <v-btn slot="action" class="primary accent-2" light medium absolute
-                       right middle @click="navigateTo({
-                                name: 'practice.create'
-                            })">
+                       right middle @click="showDialog(true)">
                     <v-icon color="white">add</v-icon>{{ $t('add')}}
                 </v-btn>
                 <v-card-title>
                     <v-spacer></v-spacer>
-                    <v-text-field v-model="search" append-icon="search" :label="$t('search')" single-line hide-details></v-text-field>
+                    <v-text-field v-model="search" append-icon="search" :label="$t('search')" single-line hide-details autofocus></v-text-field>
                 </v-card-title>
                 <v-data-table :headers="headers" :items="practices" item-key="name" :pagination.sync="pagination"
                               :search="search" class="elevation-1" :loading="loading">
@@ -39,6 +40,9 @@
                         </td>
                     </template>
                 </v-data-table>
+                <div class="text-xs-center pt-2">
+                    <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+                </div>
             </panel>
         </v-flex>
     </v-layout>
@@ -46,52 +50,50 @@
 
 <script>
     import Panel from "@/components/Panel";
-    import api from '../../services/api'
-    import axios from 'axios';
-    import constants from '../../common/constants';
-    import util from '../../common/util';
+    import constants from '@/common/constants';
+    import util from '@/common/util';
+    import Create from "./Create";
 
     export default {
         components: {
-            Panel
+            Panel,
+            Create
         },
         data() {
             return {
-                practices: [],
                 headers: constants.practice_headers,
                 pagination: util.pagination,
                 search: '',
                 loading: true
             }
         },
-        async mounted() {
-            await api.get(constants.practice_url)
-                .then(response => {
-                    this.practices = response.data._embedded.practices.map(practice => ({
-                        name: practice.name,
-                        description: practice.description,
-                        _links: practice._links,
-                        practiceSubCategory: '',
-                        practiceCategory: '',
-                        reference: '',
-                    }));
-                    this.loading = false;
-                }, error => {
-                    console.log('practice get error: ' + error);
-                })
-                .then(response => {
-                    console.log(response);
-                });
-            this.resolveCategoryForEachPractice();
+        computed: {
+            pages () {
+                return util.pages(this.pagination);
+            },
+            practices() {
+                return this.$store.state.practices;
+            },
+            displayDialog() {
+                return this.$store.state.displayDialog;
+            }
+        },
+        mounted() {
+            this.$store.dispatch('getAllPractices').then(response => {
+                console.log('received data from store getAllPractices: ' + response);
+                this.pagination.totalItems = response.length;
+                this.loading = false;
+            }, error => {
+                console.log('received error from store getAllPractices: ' + error);
+            });
             this.initPracticeCategories();
             this.initPracticeSubCategories();
             this.initReferences();
         },
         methods: {
             changeSort: util.changeSort,
-            navigateTo(route) {
-                this.$router.push(route);
-            },
+            navigateTo: util.navigateTo,
+            showDialog: util.showDialog,
             navigateToView(route) {
                 let practice = this.$store.state.practices.find(practice => { return practice.name === route.params.id});
                 this.$store.dispatch('setSelectedPractice', practice).then(_ => {
@@ -99,41 +101,6 @@
                 }, error => {
                     console.log('setSelectedPractice error: ' + error);
                 });
-            },
-            async resolveCategoryForEachPractice() {
-                let practiceSubCategories = [];
-                let practiceCategories = [];
-
-                for(let i = 0; i < this.practices.length; i++) {
-                    let practice = this.practices[i];
-                    practiceSubCategories.push(api.get(practice._links.practiceSubCategory.href));
-                    this.resolveReference(practice._links.reference.href, practice, i);
-                }
-                let subCatResult = await axios.all(practiceSubCategories);
-
-                for(let i = 0; i < subCatResult.length; i++) {
-                    let res = subCatResult[i];
-                    practiceCategories.push(api.get(res.data._links.practiceCategory.href));
-                }
-                let catResult = await axios.all(practiceCategories);
-
-                for(let i = 0; i < subCatResult.length; i++) {
-                    let subCatRes = subCatResult[i];
-                    let catRes = catResult[i];
-                    let practice = this.practices[i];
-                    let practiceSubCategory = {
-                        name: subCatRes.data.name,
-                        _links: subCatRes.data._links
-                    };
-                    let practiceCategory = {
-                        name: catRes.data.name,
-                        _links: catRes.data._links
-                    };
-                    practice['practiceSubCategory'] = practiceSubCategory;
-                    practice['practiceCategory'] = practiceCategory;
-                    this.practices[i] = practice;
-                }
-                this.$store.commit('addPractices', this.practices);
             },
             async initPracticeCategories() {
                 this.$store.dispatch('getAllPracticeCategories').then(response => {
@@ -145,10 +112,10 @@
             },
             async initPracticeSubCategories() {
                 this.$store.dispatch('getAllPracticeSubCategories').then(response => {
-                    console.log('received data from store getAllPracticeCategories: ' + response);
+                    console.log('received data from store getAllPracticeSubCategories: ' + response);
                     console.log(response);
                 }, error => {
-                    console.log('received error from store getAllPracticeCategories: ' + error);
+                    console.log('received error from store getAllPracticeSubCategories: ' + error);
                 });
             },
             async initReferences() {
@@ -159,23 +126,6 @@
                     console.log('received error from store getAllReferences: ' + error);
                 });
             },
-            async resolveReference(url, practice, index) {
-                await api.get(url)
-                    .then(response => {
-                        practice['reference'] = {
-                            reference: response.data.reference,
-                            _links: response.data._links
-                        };
-                    }, error => {
-                        // since practices may optionally have a reference ignore 404 but log anything else
-                        if (!error.toString().includes('404')) {
-                            console.log('reference get error: ' + error);
-                        }
-                    })
-                    .then(response => {
-                        console.log(response);
-                    });
-            }
         },
     }
 </script>

@@ -1,10 +1,10 @@
 <template>
     <v-layout>
-        <v-flex xs4>
+        <v-flex xs12>
             <panel :title="$t('edit_context_dimension')">
                 <v-card-text>
                     <v-form ref="form">
-                        <v-text-field v-model="dimension.name" v-on:keyup="keyEvent" prepend-icon="person" name="name"
+                        <v-text-field v-model="dimension.name" v-on:keyup="keyEvent" prepend-icon="person" name="name" autofocus
                                       :label="$t('name')" type="text" required :rules="required" :maxlength="100"></v-text-field>
                         <v-alert :value="validationError" color="error" v-html="error"></v-alert>
                     </v-form>

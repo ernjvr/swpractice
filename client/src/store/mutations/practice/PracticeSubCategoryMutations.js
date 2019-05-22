@@ -4,7 +4,7 @@ export default {
         state.practiceSubCategories = subcategories;
     },
     addPracticeSubCategory(state, subcategory) {
-        state.practiceSubCategories.push(subcategory);
+        state.practiceSubCategories.unshift(subcategory);
     },
     setSelectedPracticeSubCategory(state, subcategory) {
         console.log('mutation: setSelectedPracticeSubCategory');
@@ -28,5 +28,5 @@ export default {
         } else {
             console.log('removePracticeSubCategory: category not found in store: ' + subcategory);
         }
-    }
+    },
 }

@@ -1,14 +1,17 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
     <v-layout column>
-        <v-flex xs8>
+        <v-dialog v-model="displayDialog" persistent max-width="600px">
+            <create></create>
+        </v-dialog>
+        <v-flex md6,xs6>
             <panel :title="$t('reference_type')">
                 <v-btn slot="action" class="primary accent-2" light medium absolute
-                       right middle @click="navigateTo({name: 'reference-type.create'})">
+                       right middle @click="showDialog(true)">
                     <v-icon color="white">add</v-icon>{{ $t('add')}}
                 </v-btn>
                 <v-card-title>
                     <v-spacer></v-spacer>
-                    <v-text-field v-model="search" append-icon="search" :label="$t('search')" single-line hide-details></v-text-field>
+                    <v-text-field v-model="search" append-icon="search" :label="$t('search')" single-line hide-details autofocus></v-text-field>
                 </v-card-title>
                 <v-data-table :headers="headers" :items="types" item-key="name" :pagination.sync="pagination"
                               :search="search" class="elevation-1" :loading="loading">
@@ -26,13 +29,16 @@
                     <template v-slot:items="props">
                         <td>{{ props.item.name }}</td>
                         <td>
-                            <v-btn color="indigo" dark @click="navigateTo({
+                            <v-btn color="indigo" dark @click="navigateToView({
                                 name: 'reference-type.show',
-                                params: {id: props.item._links.self.href}
+                                params: {id: props.item.name}
                             })">{{ $t('view')}}</v-btn>
                         </td>
                     </template>
                 </v-data-table>
+                <div class="text-xs-center pt-2">
+                    <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+                </div>
             </panel>
         </v-flex>
     </v-layout>
@@ -40,12 +46,22 @@
 
 <script>
     import Panel from "@/components/Panel";
-    import constants from '../../common/constants';
-    import util from '../../common/util';
+    import constants from '@/common/constants';
+    import util from '@/common/util';
+    import Create from "./Create";
 
     export default {
         components: {
-            Panel
+            Panel,
+            Create
+        },
+        computed: {
+            pages () {
+                return util.pages(this.pagination);
+            },
+            displayDialog() {
+                return this.$store.state.displayDialog;
+            }
         },
         data() {
             return {
@@ -60,6 +76,7 @@
             this.$store.dispatch('getAllReferenceTypes').then(response => {
                 console.log('received data from store getAllReferenceTypes: ' + response);
                 this.types = response;
+                this.pagination.totalItems = response.length;
                 this.loading = false;
             }, error => {
                 console.log('received error from store getAllReferenceTypes: ' + error);
@@ -67,9 +84,16 @@
         },
         methods: {
             changeSort: util.changeSort,
-            navigateTo(route) {
-                this.$router.push(route);
-            }
+            navigateTo: util.navigateTo,
+            showDialog: util.showDialog,
+            navigateToView(route) {
+                let type = this.types.find(type => { return type.name === route.params.id});
+                this.$store.dispatch('setSelectedReferenceType', type).then(_ => {
+                    this.navigateTo(route);
+                } , error => {
+                    console.log('setSelectedReferenceType error: ' + error);
+                });
+            },
         }
     }
 </script>
