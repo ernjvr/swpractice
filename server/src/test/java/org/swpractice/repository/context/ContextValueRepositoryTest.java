@@ -50,6 +50,26 @@ public class ContextValueRepositoryTest {
     
     @Test
     /**
+     * Allow entries that do not exceed maximum allowed length.
+     */
+    void constraintViolationExceptionNotThrownWhenSaveValueWithMaxSizeNotExceed() {
+        contextValue.setValue(2_147_483_647);
+        contextValue.setDescription("abc");
+        assertDoesNotThrow(() -> valueRepository.save(contextValue));
+    }
+
+    @Test
+    /**
+     * Allow entries that do not exceed maximum allowed length.
+     */
+    void constraintViolationExceptionNotThrownWhenSaveValueWithMinSizeNotExceed() {
+        contextValue.setValue(-2_147_483_648);
+        contextValue.setDescription("abc");
+        assertDoesNotThrow(() -> valueRepository.save(contextValue));
+    }
+
+    @Test
+    /**
      * Do not allow entries that exceed maximum allowed length.
      */
     void constraintViolationExceptionThrownWhenSaveDescriptionWithLengthExceed() {

@@ -9,9 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 import static org.swpractice.util.Constants.*;
 
@@ -25,7 +23,8 @@ public class ContextValue implements Identifier {
     private Long id;
 
     @NotNull(message = CONTEXT_VALUE_FIELD_VALUE_REQUIRED_MESSAGE)
-    // index this column
+    @Min(value = -2_147_483_648, message = CONTEXT_VALUE_FIELD_YEAR_MIN_MESSAGE)
+    @Max(value = 2_147_483_647, message = CONTEXT_VALUE_FIELD_YEAR_MAX_MESSAGE)
     private int value;
 
     @NotNull(message = CONTEXT_VALUE_FIELD_DESCRIPTION_REQUIRED_MESSAGE)
