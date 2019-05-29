@@ -30,7 +30,7 @@
                         <td>{{ props.item.author }}</td>
                         <td>{{ props.item.year }}</td>
                         <td>{{ props.item.reference }}</td>
-                        <td>{{ props.item.referenceType.name }}</td>
+                        <td>{{ props.item.referenceSourceType.name }}</td>
                         <td>
                             <v-btn color="indigo" dark @click="navigateToView({
                                 name: 'reference.show',
@@ -100,10 +100,10 @@
                 });
             },
             async initReferenceTypes() {
-                this.$store.dispatch('getAllReferenceTypes').then(response => {
-                    console.log('received data from store getAllReferenceTypes: ' + response);
+                this.$store.dispatch('getAllReferenceSourceTypes').then(response => {
+                    console.log('received data from store getAllReferenceSourceTypes: ' + response);
                 }, error => {
-                    console.log('received error from store getAllReferenceTypes: ' + error);
+                    console.log('received error from store getAllReferenceSourceTypes: ' + error);
                 });
             }
         },

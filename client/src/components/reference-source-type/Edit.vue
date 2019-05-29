@@ -2,7 +2,7 @@
     <v-container>
         <v-layout>
             <v-flex xs12>
-                <panel :title="$t('edit_reference_type')">
+                <panel :title="$t('edit_reference_source_type')">
                     <v-card-text>
                         <v-form ref="form">
                             <v-text-field v-model="type.name" prepend-icon="person" name="name" autofocus
@@ -12,7 +12,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="indigo" dark @click="edit"><v-icon dark left>save</v-icon>{{ $t('save') }}</v-btn>
-                        <v-btn color="indigo" dark @click="navigateTo({name: 'reference-type.show'})">
+                        <v-btn color="indigo" dark @click="navigateTo({name: 'reference-source-type.show'})">
                             <v-icon dark left>cancel</v-icon>{{ $t('cancel') }}
                         </v-btn>
                     </v-card-actions>
@@ -21,7 +21,7 @@
         </v-layout>
         <info-dialog :info-visibility="infoDialog.infoVisibility"
                      :info-type="infoDialog.infoType"
-                     @infoAccept="accept({name: 'reference-type.index'})">
+                     @infoAccept="accept({name: 'reference-source-type.index'})">
             <template slot="title">{{ infoDialog.title }}</template>
             <template slot="text">{{ infoDialog.text }}</template>
             <template slot="detail">{{ infoDialog.detail }}</template>
@@ -51,7 +51,7 @@
             }
         },
         async mounted() {
-            let reference = this.$store.state.selectedReferenceType;
+            let reference = this.$store.state.selectedReferenceSourceType;
 
             if(reference.name) {
                 // avoid modifying store object directly by copying values into new object
@@ -61,7 +61,7 @@
                 };
             } else {
                 console.log('selected reference type not found');
-                this.navigateTo({name: 'reference-type.index'});
+                this.navigateTo({name: 'reference-source-type.index'});
             }
         },
         methods: {
@@ -77,14 +77,14 @@
                                 name: this.type.name
                             }
                         };
-                        this.$store.dispatch('editReferenceType', data).then(response => {
-                            console.log('received data from store editReferenceType: ' + response);
-                            this.$store.commit('setSelectedReferenceType', this.type);
-                            this.navigateTo({name: 'reference-type.show'});
+                        this.$store.dispatch('editReferenceSourceType', data).then(response => {
+                            console.log('received data from store editReferenceSourceType: ' + response);
+                            this.$store.commit('setSelectedReferenceSourceType', this.type);
+                            this.navigateTo({name: 'reference-source-type.show'});
                         }, error => {
-                            console.log('received error from store editReferenceType: ' + error);
-                            this.displayEditError(error, 'error_not_found_reference_type_text',
-                                'error_not_found_reference_type_detail');
+                            console.log('received error from store editReferenceSourceType: ' + error);
+                            this.displayEditError(error, 'error_not_found_reference_source_type_text',
+                                'error_not_found_reference_source_type_detail');
                         });
                     }
                 } catch (e) {

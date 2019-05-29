@@ -11,7 +11,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.swpractice.SWPracticeApplication;
 import org.swpractice.model.reference.Reference;
-import org.swpractice.model.reference.ReferenceType;
+import org.swpractice.model.reference.ReferenceSourceType;
 
 import java.util.Optional;
 
@@ -28,18 +28,18 @@ class ReferenceRepositoryTest {
     private ReferenceRepository referenceRepository;
 
     @Autowired
-    private ReferenceTypeRepository referenceTypeRepository;
+    private ReferenceSourceTypeRepository referenceSourceTypeRepository;
 
     private Reference reference;
 
     @BeforeAll
     void setup() {
         var id = 5001L;
-        Optional<ReferenceType> referenceOptional = referenceTypeRepository.findById(id);
+        Optional<ReferenceSourceType> referenceOptional = referenceSourceTypeRepository.findById(id);
 
         if (referenceOptional.isPresent()) {
             reference = new Reference();
-            reference.setReferenceType(referenceOptional.get());
+            reference.setReferenceSourceType(referenceOptional.get());
         } else {
             fail("Expected Reference Type of id " + id);
         }

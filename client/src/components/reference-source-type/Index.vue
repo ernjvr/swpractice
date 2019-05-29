@@ -4,7 +4,7 @@
             <create></create>
         </v-dialog>
         <v-flex md6,xs6>
-            <panel :title="$t('context_value')">
+            <panel :title="$t('reference_source_type')">
                 <v-btn slot="action" class="primary accent-2" light medium absolute
                        right middle @click="showDialog(true)">
                     <v-icon color="white">add</v-icon>{{ $t('add')}}
@@ -13,7 +13,7 @@
                     <v-spacer></v-spacer>
                     <v-text-field v-model="search" append-icon="search" :label="$t('search')" single-line hide-details autofocus></v-text-field>
                 </v-card-title>
-                <v-data-table :headers="headers" :items="values" item-key="description" :pagination.sync="pagination"
+                <v-data-table :headers="headers" :items="types" item-key="name" :pagination.sync="pagination"
                               :search="search" class="elevation-1" :loading="loading">
                     <template slot="headers" slot-scope="props">
                         <tr>
@@ -27,12 +27,11 @@
                         </tr>
                     </template>
                     <template v-slot:items="props">
-                        <td>{{ props.item.value }}</td>
-                        <td>{{ props.item.description }}</td>
+                        <td>{{ props.item.name }}</td>
                         <td>
                             <v-btn color="indigo" dark @click="navigateToView({
-                                name: 'context-value.show',
-                                params: {id: props.item._links.self.href}
+                                name: 'reference-source-type.show',
+                                params: {id: props.item.name}
                             })">{{ $t('view')}}</v-btn>
                         </td>
                     </template>
@@ -56,15 +55,6 @@
             Panel,
             Create
         },
-        data() {
-            return {
-                values: [],
-                headers: constants.context_value_headers,
-                pagination: util.pagination,
-                search: '',
-                loading: true
-            }
-        },
         computed: {
             pages () {
                 return util.pages(this.pagination);
@@ -73,14 +63,23 @@
                 return this.$store.state.displayDialog;
             }
         },
-        mounted() {
-            this.$store.dispatch('getAllContextValues').then(response => {
-                console.log('received data from store getAllContextValues: ' + response);
-                this.values = response;
+        data() {
+            return {
+                types: [],
+                headers: constants.reference_source_type_headers,
+                pagination: util.pagination,
+                search: '',
+                loading: true
+            }
+        },
+        async mounted() {
+            this.$store.dispatch('getAllReferenceSourceTypes').then(response => {
+                console.log('received data from store getAllReferenceSourceTypes: ' + response);
+                this.types = response;
                 this.pagination.totalItems = response.length;
                 this.loading = false;
             }, error => {
-                console.log('received error from store getAllContextValues: ' + error);
+                console.log('received error from store getAllReferenceSourceTypes: ' + error);
             });
         },
         methods: {
@@ -88,11 +87,11 @@
             navigateTo: util.navigateTo,
             showDialog: util.showDialog,
             navigateToView(route) {
-                let value = this.values.find(val => { return val._links.self.href === route.params.id});
-                this.$store.dispatch('setSelectedContextValue', value).then(_ => {
+                let type = this.types.find(type => { return type.name === route.params.id});
+                this.$store.dispatch('setSelectedReferenceSourceType', type).then(_ => {
                     this.navigateTo(route);
                 } , error => {
-                    console.log('setSelectedContextValue error: ' + error);
+                    console.log('setSelectedReferenceSourceType error: ' + error);
                 });
             },
         }

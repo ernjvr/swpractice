@@ -5,20 +5,20 @@ import ReferenceCreate from './components/reference/Create.vue';
 import ReferenceShow from './components/reference/Show.vue';
 import ReferenceEdit from './components/reference/Edit.vue';
 
-import ReferenceTypeIndex from './components/reference-type/Index.vue';
-import ReferenceTypeCreate from './components/reference-type/Create.vue';
-import ReferenceTypeShow from './components/reference-type/Show.vue';
-import ReferenceTypeEdit from './components/reference-type/Edit.vue';
+import ReferenceSourceTypeIndex from './components/reference-source-type/Index.vue';
+import ReferenceSourceTypeCreate from './components/reference-source-type/Create.vue';
+import ReferenceSourceTypeShow from './components/reference-source-type/Show.vue';
+import ReferenceSourceTypeEdit from './components/reference-source-type/Edit.vue';
 
 import ContextDimensionIndex from './components/context-dimension/Index.vue';
 import ContextDimensionCreate from './components/context-dimension/Create.vue';
 import ContextDimensionShow from './components/context-dimension/Show.vue';
 import ContextDimensionEdit from './components/context-dimension/Edit.vue';
 
-import ContextValueIndex from './components/context-value/Index.vue';
-import ContextValueCreate from './components/context-value/Create.vue';
-import ContextValueShow from './components/context-value/Show.vue';
-import ContextValueEdit from './components/context-value/Edit.vue';
+import ContextValueLevelIndex from './components/context-value-level/Index.vue';
+import ContextValueLevelCreate from './components/context-value-level/Create.vue';
+import ContextValueLevelShow from './components/context-value-level/Show.vue';
+import ContextValueLevelEdit from './components/context-value-level/Edit.vue';
 
 import PracticeCategoryIndex from './components/pratice-category/Index.vue';
 import PracticeCategoryCreate from './components/pratice-category/Create.vue';
@@ -64,25 +64,25 @@ export default [
         props: true
     },
     {
-        path: '/reference-type',
-        name: 'reference-type.index',
-        component: ReferenceTypeIndex
+        path: '/reference-source-type',
+        name: 'reference-source-type.index',
+        component: ReferenceSourceTypeIndex
     },
     {
-        path: '/reference-type/:id',
-        name: 'reference-type.show',
-        component: ReferenceTypeShow,
+        path: '/reference-source-type/:id',
+        name: 'reference-source-type.show',
+        component: ReferenceSourceTypeShow,
         props: true
     },
     {
-        path: '/reference-type/create',
-        name: 'reference-type.create',
-        component: ReferenceTypeCreate
+        path: '/reference-source-type/create',
+        name: 'reference-source-type.create',
+        component: ReferenceSourceTypeCreate
     },
     {
-        path: '/reference-type/:id/edit',
-        name: 'reference-type.edit',
-        component: ReferenceTypeEdit,
+        path: '/reference-source-type/:id/edit',
+        name: 'reference-source-type.edit',
+        component: ReferenceSourceTypeEdit,
         props: true
     },
     {
@@ -108,25 +108,25 @@ export default [
         props: true
     },
     {
-        path: '/context-value',
-        name: 'context-value.index',
-        component: ContextValueIndex
+        path: '/context-value-level',
+        name: 'context-value-level.index',
+        component: ContextValueLevelIndex
     },
     {
-        path: '/context-value/:id',
-        name: 'context-value.show',
-        component: ContextValueShow,
+        path: '/context-value-level/:id',
+        name: 'context-value-level.show',
+        component: ContextValueLevelShow,
         props: true
     },
     {
-        path: '/context-value/create',
-        name: 'context-value.create',
-        component: ContextValueCreate
+        path: '/context-value-level/create',
+        name: 'context-value-level.create',
+        component: ContextValueLevelCreate
     },
     {
-        path: '/context-value/:id/edit',
-        name: 'context-value.edit',
-        component: ContextValueEdit,
+        path: '/context-value-level/:id/edit',
+        name: 'context-value-level.edit',
+        component: ContextValueLevelEdit,
         props: true
     },
     {

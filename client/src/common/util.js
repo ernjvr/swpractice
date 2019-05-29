@@ -11,9 +11,9 @@ export default {
         console.log(reference);
         return reference;
     },
-    getSelectedReferenceType(selectedReferenceType) {
-        let type = store.state.referenceTypes.find(type => { return type._links.self.href === selectedReferenceType});
-        console.log('util getSelectedReferenceType');
+    getSelectedReferenceSourceType(selectedReferenceType) {
+        let type = store.state.referenceSourceTypes.find(type => { return type._links.self.href === selectedReferenceType});
+        console.log('util getSelectedReferenceSourceType');
         console.log(type);
         return type;
     },

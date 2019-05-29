@@ -32,29 +32,60 @@ public class Constants {
     public static final String CONTEXT_DIMENSION_PATH = "/context-dimensions";
     public static final String CONTEXT_DIMENSION_FIELD_NAME = "name";
 
-    public static final String CONTEXT_VALUE_FIELD_VALUE_REQUIRED_MESSAGE = "{context.value.value.required}";
-    public static final String CONTEXT_VALUE_FIELD_DESCRIPTION_REQUIRED_MESSAGE = "{context.value.description.required}";
-    public static final String CONTEXT_VALUE_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{context.value.description.length}";
-    public static final String CONTEXT_VALUE_FIELD_YEAR_MIN_MESSAGE = "{context.value.min}";
-    public static final String CONTEXT_VALUE_FIELD_YEAR_MAX_MESSAGE = "{context.value.max}";
-    public static final String CONTEXT_VALUE_PATH = "/context-values";
 
-    public static final String REFERENCE_TYPE_FIND_BY_NAME = "ReferenceType.find_by_name";
-    public static final String REFERENCE_TYPE_FIND_BY_NAME_QUERY = "select t from ReferenceType t where lower(trim(t.name)) = lower(trim(:name))";
-    public static final String REFERENCE_TYPE_FIELD_NAME_UNIQUE_MESSAGE = "{reference.type.name.unique}";
-    public static final String REFERENCE_TYPE_FIELD_NAME_REQUIRED_MESSAGE = "{reference.type.name.required}";
-    public static final String REFERENCE_TYPE_FIELD_NAME_LENGTH_MESSAGE = "{reference.type.name.length}";
-    public static final String REFERENCE_TYPE_PATH = "/reference-types";
-    public static final String REFERENCE_TYPE_FIELD_NAME = "name";
+    public static final String CONTEXT_ENTITY_FIELD_CONTEXT_ENTITY_CATEGORY_REQUIRED_MESSAGE = "{context.entity.context-entity-category.required}";
+    public static final String CONTEXT_ENTITY_FIELD_CAPABILITY_REQUIRED_MESSAGE = "{context.entity.capability.required}";
+    public static final String CONTEXT_ENTITY_FIELD_MOTIVATION_REQUIRED_MESSAGE = "{context.entity.motivation.required}";
+    public static final String CONTEXT_ENTITY_FIELD_EMPOWERMENT_REQUIRED_MESSAGE = "{context.entity.empowerment.required}";
+    public static final String CONTEXT_ENTITY_FIELD_CULTURAL_COHESION_REQUIRED_MESSAGE = "{context.entity.cultural.cohesion.required}";
+    public static final String CONTEXT_ENTITY_FIELD_PHYSICAL_DISTANCE_REQUIRED_MESSAGE = "{context.entity.physical.distance.required}";
+    public static final String CONTEXT_ENTITY_FIELD_TEMPORAL_DISTANCE_REQUIRED_MESSAGE = "{context.entity.temporal.distance.required}";
 
-    public static final String PRACTICE_CATEGORY = "practiceCategory";
-    public static final String PRACTICE_CATEGORY_FIND_BY_NAME = "PracticeCategory.find_by_name";
-    public static final String PRACTICE_CATEGORY_FIND_BY_NAME_QUERY = "select p from PracticeCategory p where lower(trim(p.name)) = lower(trim(:name))";
-    public static final String PRACTICE_CATEGORY_FIELD_NAME_UNIQUE_MESSAGE = "{practice.category.name.unique}";
-    public static final String PRACTICE_CATEGORY_FIELD_NAME_REQUIRED_MESSAGE = "{practice.category.name.required}";
-    public static final String PRACTICE_CATEGORY_FIELD_NAME_LENGTH_MESSAGE = "{practice.category.name.length}";
-    public static final String PRACTICE_CATEGORY_PATH = "/practice-categories";
-    public static final String PRACTICE_CATEGORY_FIELD_NAME = "name";
+    public static final String CONTEXT_ENTITY_TYPE = "contextEntityType";
+    public static final String CONTEXT_ENTITY_CAPABILITY = "capability";
+    public static final String CONTEXT_ENTITY_MOTIVATION = "motivation";
+    public static final String CONTEXT_ENTITY_EMPOWERMENT = "empowerment";
+    public static final String CONTEXT_ENTITY_CULTURAL_COHESION = "culturalCohesion";
+    public static final String CONTEXT_ENTITY_PHYSICAL_DISTANCE = "physicalDistance";
+    public static final String CONTEXT_ENTITY_TEMPORAL_DISTANCE = "temporalDistance";
+    public static final String CONTEXT_ENTITY_TYPE_FIND_BY_NAME = "ContextEntityType.find_by_name";
+    public static final String CONTEXT_ENTITY_TYPE_FIND_BY_NAME_QUERY = "select c from ContextEntityType c where lower(trim(c.name)) = lower(trim(:name))";
+    public static final String CONTEXT_ENTITY_TYPE_FIELD_NAME_UNIQUE_MESSAGE = "{context.entity.category.name.unique}";
+    public static final String CONTEXT_ENTITY_TYPE_FIELD_NAME_REQUIRED_MESSAGE = "{context.entity.category.name.required}";
+    public static final String CONTEXT_ENTITY_TYPE_FIELD_NAME_LENGTH_MESSAGE = "{context.entity.category.name.length}";
+    public static final String CONTEXT_ENTITY_TYPE_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{context.entity.category.description.length}";
+    public static final String CONTEXT_ENTITY_TYPE_PATH = "/context-entity-types";
+    public static final String CONTEXT_ENTITY_TYPE_FIELD_NAME = "name";
+
+    public static final String CONTEXT_ENTITY_PATH = "/context-entities";
+    public static final String CONTEXT_INTERFACE_PATH = "/context-interfaces";
+
+    public static final String CONTEXT_INTERFACE_ENTITY1 = "entity1";
+    public static final String CONTEXT_INTERFACE_ENTITY2 = "entity2";
+    public static final String CONTEXT_INTERFACE_CULTURAL_COHESION = "culturalCohesion";
+    public static final String CONTEXT_INTERFACE_AVAILABILITY = "availability";
+    public static final String CONTEXT_INTERFACE_PHYSICAL_DISTANCE = "physicalDistance";
+    public static final String CONTEXT_INTERFACE_TEMPORAL_DISTANCE = "temporalDistance";
+    public static final String CONTEXT_INTERFACE_FIELD_CONTEXT_ENTITY1_REQUIRED_MESSAGE = "{context.interface.context-entity1.required}";
+    public static final String CONTEXT_INTERFACE_FIELD_CONTEXT_ENTITY2_REQUIRED_MESSAGE = "{context.interface.context-entity2.required}";
+    public static final String CONTEXT_INTERFACE_FIELD_CULTURAL_COHESION_REQUIRED_MESSAGE = "{context.interface.cultural.cohesion.required}";
+    public static final String CONTEXT_INTERFACE_FIELD_AVAILABILITY_REQUIRED_MESSAGE = "{context.interface.availability.required}";
+    public static final String CONTEXT_INTERFACE_FIELD_PHYSICAL_DISTANCE_REQUIRED_MESSAGE = "{context.interface.physical.distance.required}";
+    public static final String CONTEXT_INTERFACE_FIELD_TEMPORAL_DISTANCE_REQUIRED_MESSAGE = "{context.interface.temporal.distance.required}";
+
+    public static final String CONTEXT_VALUE_DISTANCE_FIELD_VALUE_REQUIRED_MESSAGE = "{context.value.distance.value.required}";
+    public static final String CONTEXT_VALUE_DISTANCE_FIELD_DESCRIPTION_REQUIRED_MESSAGE = "{context.value.distance.description.required}";
+    public static final String CONTEXT_VALUE_DISTANCE_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{context.value.distance.description.length}";
+    public static final String CONTEXT_VALUE_DISTANCE_FIELD_VALUE_MIN_MESSAGE = "{context.value.distance.value.min}";
+    public static final String CONTEXT_VALUE_DISTANCE_FIELD_VALUE_MAX_MESSAGE = "{context.value.distance.value.max}";
+    public static final String CONTEXT_VALUE_DISTANCE_PATH = "/context-value-distances";
+
+    public static final String CONTEXT_VALUE_LEVEL_FIELD_VALUE_REQUIRED_MESSAGE = "{context.value.level.value.required}";
+    public static final String CONTEXT_VALUE_LEVEL_FIELD_DESCRIPTION_REQUIRED_MESSAGE = "{context.value.level.description.required}";
+    public static final String CONTEXT_VALUE_LEVEL_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{context.value.level.description.length}";
+    public static final String CONTEXT_VALUE_LEVEL_FIELD_VALUE_MIN_MESSAGE = "{context.value.level.value.min}";
+    public static final String CONTEXT_VALUE_LEVEL_FIELD_VALUE_MAX_MESSAGE = "{context.value.level.value.max}";
+    public static final String CONTEXT_VALUE_LEVEL_PATH = "/context-value-levels";
 
     public static final String PRACTICE_FIND_BY_NAME = "Practice.find_by_name";
     public static final String PRACTICE_FIND_BY_NAME_QUERY = "select p from Practice p where lower(trim(p.name)) = lower(trim(:name))";
@@ -65,6 +96,15 @@ public class Constants {
     public static final String PRACTICE_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{practice.description.length}";
     public static final String PRACTICE_PATH = "/practices";
     public static final String PRACTICE_FIELD_NAME = "name";
+
+    public static final String PRACTICE_CATEGORY = "practiceCategory";
+    public static final String PRACTICE_CATEGORY_FIND_BY_NAME = "PracticeCategory.find_by_name";
+    public static final String PRACTICE_CATEGORY_FIND_BY_NAME_QUERY = "select p from PracticeCategory p where lower(trim(p.name)) = lower(trim(:name))";
+    public static final String PRACTICE_CATEGORY_FIELD_NAME_UNIQUE_MESSAGE = "{practice.category.name.unique}";
+    public static final String PRACTICE_CATEGORY_FIELD_NAME_REQUIRED_MESSAGE = "{practice.category.name.required}";
+    public static final String PRACTICE_CATEGORY_FIELD_NAME_LENGTH_MESSAGE = "{practice.category.name.length}";
+    public static final String PRACTICE_CATEGORY_PATH = "/practice-categories";
+    public static final String PRACTICE_CATEGORY_FIELD_NAME = "name";
 
     public static final String PRACTICE_SUB_CATEGORY = "practiceSubCategory";
     public static final String PRACTICE_SUB_CATEGORY_FIND_BY_NAME = "PracticeSubCategory.find_by_name";
@@ -85,4 +125,13 @@ public class Constants {
     public static final String REFERENCE_FIELD_YEAR_MAX_MESSAGE = "{reference.year.max}";
     public static final String REFERENCE_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{reference.description.length}";
     public static final String REFERENCE_PATH = "/references";
+
+    public static final String REFERENCE_SOURCE_TYPE = "referenceSourceType";
+    public static final String REFERENCE_SOURCE_TYPE_FIND_BY_NAME = "ReferenceSourceType.find_by_name";
+    public static final String REFERENCE_SOURCE_TYPE_FIND_BY_NAME_QUERY = "select t from ReferenceSourceType t where lower(trim(t.name)) = lower(trim(:name))";
+    public static final String REFERENCE_SOURCE_TYPE_FIELD_NAME_UNIQUE_MESSAGE = "{reference.source.type.name.unique}";
+    public static final String REFERENCE_SOURCE_TYPE_FIELD_NAME_REQUIRED_MESSAGE = "{reference.source.type.name.required}";
+    public static final String REFERENCE_SOURCE_TYPE_FIELD_NAME_LENGTH_MESSAGE = "{reference.source.type.name.length}";
+    public static final String REFERENCE_SOURCE_TYPE_PATH = "/reference-source-types";
+    public static final String REFERENCE_SOURCE_TYPE_FIELD_NAME = "name";
 }

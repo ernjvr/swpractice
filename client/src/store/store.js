@@ -11,9 +11,9 @@ import PracticeActions from './actions/practice/PracticeActions';
 import ContextDimensionMutations from "./mutations/context/ContextDimensionMutations";
 import ContextDimensionActions from "./actions/context/ContextDimensionActions";
 import ContextValueMutations from "./mutations/context/ContextValueMutations";
-import ContextValueActions from "./actions/context/ContextValueActions";
-import ReferenceTypeMutations from "./mutations/reference/ReferenceTypeMutations";
-import ReferenceTypeActions from "./actions/reference/ReferenceTypeActions";
+import ContextValueLevelActions from "./actions/context/ContextValueLevelActions";
+import ReferenceSourceTypeMutations from "./mutations/reference/ReferenceSourceTypeMutations";
+import ReferenceSourceTypeActions from "./actions/reference/ReferenceSourceTypeActions";
 import ReferenceMutations from "./mutations/reference/ReferenceMutations";
 import ReferenceActions from "./actions/reference/ReferenceActions";
 
@@ -23,9 +23,9 @@ export default new Vuex.Store({
     strict: true,
     state: {
         references: [],
-        referenceTypes: [],
+        referenceSourceTypes: [],
         contextDimensions: [],
-        contextValues: [],
+        contextValueLevels: [],
         practiceCategories: [],
         practiceSubCategories: [],
         practices: [],
@@ -33,8 +33,8 @@ export default new Vuex.Store({
         selectedPracticeCategory: {},
         selectedPracticeSubCategory: {},
         selectedReference: {},
-        selectedReferenceType: {},
-        selectedContextValue: {},
+        selectedReferenceSourceType: {},
+        selectedContextValueLevel: {},
         displayDialog: false
     },
     mutations: {
@@ -53,20 +53,20 @@ export default new Vuex.Store({
         setSelectedReference(state, reference) {
            ReferenceMutations.setSelectedReference(state, reference);
         },
-        addReferenceTypes(state, types) {
-            ReferenceTypeMutations.addReferenceTypes(state, types);
+        addReferenceSourceTypes(state, types) {
+            ReferenceSourceTypeMutations.addReferenceSourceTypes(state, types);
         },
-        addReferenceType(state, type) {
-            ReferenceTypeMutations.addReferenceType(state, type);
+        addReferenceSourceType(state, type) {
+            ReferenceSourceTypeMutations.addReferenceSourceType(state, type);
         },
-        editReferenceType(state, type) {
-            ReferenceTypeMutations.editReferenceType(state, type);
+        editReferenceSourceType(state, type) {
+            ReferenceSourceTypeMutations.editReferenceSourceType(state, type);
         },
-        removeReferenceType(state, type) {
-            ReferenceTypeMutations.removeReferenceType(state, type);
+        removeReferenceSourceType(state, type) {
+            ReferenceSourceTypeMutations.removeReferenceSourceType(state, type);
         },
-        setSelectedReferenceType(state, type) {
-            ReferenceTypeMutations.setSelectedReferenceType(state, type);
+        setSelectedReferenceSourceType(state, type) {
+            ReferenceSourceTypeMutations.setSelectedReferenceSourceType(state, type);
         },
         addContextDimensions(state, dimensions) {
             ContextDimensionMutations.addContextDimensions(state, dimensions);
@@ -80,20 +80,20 @@ export default new Vuex.Store({
         removeContextDimension(state, dimension) {
             ContextDimensionMutations.removeContextDimension(state, dimension);
         },
-        addContextValues(state, values) {
-            ContextValueMutations.addContextValues(state, values);
+        addContextValueLevels(state, values) {
+            ContextValueMutations.addContextValueLevels(state, values);
         },
-        addContextValue(state, value) {
-            ContextValueMutations.addContextValue(state, value);
+        addContextValueLevel(state, value) {
+            ContextValueMutations.addContextValueLevel(state, value);
         },
-        editContextValue(state, value) {
-            ContextValueMutations.editContextValue(state, value);
+        editContextValueLevel(state, value) {
+            ContextValueMutations.editContextValueLevel(state, value);
         },
-        removeContextValue(state, value) {
-            ContextValueMutations.removeContextValue(state, value);
+        removeContextValueLevel(state, value) {
+            ContextValueMutations.removeContextValueLevel(state, value);
         },
-        setSelectedContextValue(state, value) {
-            ContextValueMutations.setSelectedContextValue(state, value);
+        setSelectedContextValueLevel(state, value) {
+            ContextValueMutations.setSelectedContextValueLevel(state, value);
         },
         addPracticeCategories(state, categories) {
             PracticeCategoryMutations.addPracticeCategories(state, categories);
@@ -157,17 +157,17 @@ export default new Vuex.Store({
         getAllReferences({ commit }) {
             return ReferenceActions.getAllReferences({ commit });
         },
-        addReferenceType({ commit }, type) {
-            return ReferenceTypeActions.addReferenceType({ commit }, type);
+        addReferenceSourceType({commit}, type) {
+            return ReferenceSourceTypeActions.addReferenceSourceType({commit}, type);
         },
-        setSelectedReferenceType({ commit }, type) {
-            ReferenceTypeActions.setSelectedReferenceType({ commit }, type);
+        setSelectedReferenceSourceType({commit}, type) {
+            ReferenceSourceTypeActions.setSelectedReferenceSourceType({commit}, type);
         },
-        editReferenceType({ commit }, data) {
-            return ReferenceTypeActions.editReferenceType({ commit }, data);
+        editReferenceSourceType({commit}, data) {
+            return ReferenceSourceTypeActions.editReferenceSourceType({commit}, data);
         },
-        getAllReferenceTypes({ commit }) {
-            return ReferenceTypeActions.getAllReferenceTypes({ commit });
+        getAllReferenceSourceTypes({commit}) {
+            return ReferenceSourceTypeActions.getAllReferenceSourceTypes({commit});
         },
         addContextDimension({ commit }, dimension) {
             return ContextDimensionActions.addContextDimension({ commit }, dimension);
@@ -178,17 +178,17 @@ export default new Vuex.Store({
         getAllContextDimensions({ commit }) {
             return ContextDimensionActions.getAllContextDimensions({ commit });
         },
-        addContextValue({ commit }, value) {
-            return ContextValueActions.addContextValue({ commit }, value);
+        addContextValueLevel({commit}, value) {
+            return ContextValueLevelActions.addContextValueLevel({ commit }, value);
         },
-        setSelectedContextValue({ commit }, value) {
-            return ContextValueActions.setSelectedContextValue({ commit }, value);
+        setSelectedContextValueLevel({commit}, value) {
+            return ContextValueLevelActions.setSelectedContextValueLevel({commit}, value);
         },
-        editContextValue({ commit }, data) {
-            return ContextValueActions.editContextValue({ commit }, data);
+        editContextValueLevel({commit}, data) {
+            return ContextValueLevelActions.editContextValueLevel({commit}, data);
         },
-        getAllContextValues({ commit }) {
-            return ContextValueActions.getAllContextValues({ commit });
+        getAllContextValueLevels({commit}) {
+            return ContextValueLevelActions.getAllContextValueLevels({commit});
         },
         addPracticeCategory({ commit }, category) {
             return PracticeCategoryActions.addPracticeCategory({ commit }, category);

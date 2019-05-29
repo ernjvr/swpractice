@@ -4,7 +4,7 @@
             <create></create>
         </v-dialog>
         <v-flex md6,xs6>
-            <panel :title="$t('reference_type')">
+            <panel :title="$t('context_value_level')">
                 <v-btn slot="action" class="primary accent-2" light medium absolute
                        right middle @click="showDialog(true)">
                     <v-icon color="white">add</v-icon>{{ $t('add')}}
@@ -13,7 +13,7 @@
                     <v-spacer></v-spacer>
                     <v-text-field v-model="search" append-icon="search" :label="$t('search')" single-line hide-details autofocus></v-text-field>
                 </v-card-title>
-                <v-data-table :headers="headers" :items="types" item-key="name" :pagination.sync="pagination"
+                <v-data-table :headers="headers" :items="values" item-key="description" :pagination.sync="pagination"
                               :search="search" class="elevation-1" :loading="loading">
                     <template slot="headers" slot-scope="props">
                         <tr>
@@ -27,11 +27,12 @@
                         </tr>
                     </template>
                     <template v-slot:items="props">
-                        <td>{{ props.item.name }}</td>
+                        <td>{{ props.item.value }}</td>
+                        <td>{{ props.item.description }}</td>
                         <td>
                             <v-btn color="indigo" dark @click="navigateToView({
-                                name: 'reference-type.show',
-                                params: {id: props.item.name}
+                                name: 'context-value-level.show',
+                                params: {id: props.item._links.self.href}
                             })">{{ $t('view')}}</v-btn>
                         </td>
                     </template>
@@ -55,6 +56,15 @@
             Panel,
             Create
         },
+        data() {
+            return {
+                values: [],
+                headers: constants.context_value_level_headers,
+                pagination: util.pagination,
+                search: '',
+                loading: true
+            }
+        },
         computed: {
             pages () {
                 return util.pages(this.pagination);
@@ -63,23 +73,14 @@
                 return this.$store.state.displayDialog;
             }
         },
-        data() {
-            return {
-                types: [],
-                headers: constants.reference_type_headers,
-                pagination: util.pagination,
-                search: '',
-                loading: true
-            }
-        },
-        async mounted() {
-            this.$store.dispatch('getAllReferenceTypes').then(response => {
-                console.log('received data from store getAllReferenceTypes: ' + response);
-                this.types = response;
+        mounted() {
+            this.$store.dispatch('getAllContextValueLevels').then(response => {
+                console.log('received data from store getAllContextValueLevels: ' + response);
+                this.values = response;
                 this.pagination.totalItems = response.length;
                 this.loading = false;
             }, error => {
-                console.log('received error from store getAllReferenceTypes: ' + error);
+                console.log('received error from store getAllContextValueLevels: ' + error);
             });
         },
         methods: {
@@ -87,11 +88,11 @@
             navigateTo: util.navigateTo,
             showDialog: util.showDialog,
             navigateToView(route) {
-                let type = this.types.find(type => { return type.name === route.params.id});
-                this.$store.dispatch('setSelectedReferenceType', type).then(_ => {
+                let value = this.values.find(val => { return val._links.self.href === route.params.id});
+                this.$store.dispatch('setSelectedContextValueLevel', value).then(_ => {
                     this.navigateTo(route);
                 } , error => {
-                    console.log('setSelectedReferenceType error: ' + error);
+                    console.log('setSelectedContextValueLevel error: ' + error);
                 });
             },
         }

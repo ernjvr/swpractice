@@ -13,10 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SWPracticeApplication.class)
-class ReferenceTypeValidationServiceImplTest {
+class ReferenceSourceTypeValidationServiceImplTest {
 
     @Autowired
-    ReferenceTypeValidationServiceImpl service;
+    ReferenceSourceTypeValidationServiceImpl service;
 
     @Test
     /**

@@ -5,18 +5,18 @@ import axios from 'axios';
 export default {
     addReference({ commit }, data) {
         // extract ui-formatted category
-        let referenceType = data.referenceType;
+        let referenceSourceType = data.referenceSourceType;
 
-        // update data.referenceType with format restful api expects
-        data.referenceType = referenceType._links.self.href;
+        // update data.referenceSourceType with format restful api expects
+        data.referenceSourceType = referenceSourceType._links.self.href;
 
         return new Promise((resolve, reject) => {
             api.post(constants.reference_url, data)
                 .then(response => {
                     let reference = response.data;
                     console.log(constants.reference_url + ' post success: ' + reference);
-                    // update reference.referenceType with format ui expects
-                    reference['referenceType'] = referenceType;
+                    // update reference.referenceSourceType with format ui expects
+                    reference['referenceSourceType'] = referenceSourceType;
                     commit('addReference', reference);
                     resolve(reference);
                 }, error => {
@@ -53,10 +53,10 @@ export default {
                         year: reference.year === 0 ? 'n.d': reference.year,
                         reference: reference.reference,
                         _links: reference._links,
-                        referenceType: ''
+                        referenceSourceType: ''
                     }));
                     console.log(constants.reference_url + ' get success' + response.data._embedded.references);
-                    this.resolveReferenceTypeForEachReference({ commit }, references);
+                    this.resolveReferenceSourceTypeForEachReference({ commit }, references);
                     resolve(references);
                 }, error => {
                     console.log(constants.reference_url + ' get error: ' + error);
@@ -64,20 +64,20 @@ export default {
                 });
         });
     },
-    async resolveReferenceTypeForEachReference({ commit }, references) {
-        let referenceTypes = [];
+    async resolveReferenceSourceTypeForEachReference({ commit }, references) {
+        let referenceSourceTypes = [];
 
         for(let i = 0; i < references.length; i++) {
             let reference = references[i];
-            referenceTypes.push(api.get(reference._links.referenceType.href));
+            referenceSourceTypes.push(api.get(reference._links.referenceSourceType.href));
         }
 
-        let result = await axios.all(referenceTypes);
+        let result = await axios.all(referenceSourceTypes);
 
         for(let i = 0; i < result.length; i++) {
             let res = result[i];
             let reference = references[i];
-            reference['referenceType'] = {
+            reference['referenceSourceType'] = {
                 name: res.data.name,
                 _links: res.data._links
             };

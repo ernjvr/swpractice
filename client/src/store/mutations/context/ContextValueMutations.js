@@ -1,32 +1,32 @@
 export default {
-    addContextValues(state, values) {
-        console.log('mutation: addContextValues');
-        state.contextValues = values;
+    addContextValueLevels(state, values) {
+        console.log('mutation: addContextValueLevels');
+        state.contextValueLevels = values;
     },
-    addContextValue(state, value) {
-        state.contextValues.unshift(value);
+    addContextValueLevel(state, value) {
+        state.contextValueLevels.unshift(value);
     },
-    setSelectedContextValue(state, value) {
-        console.log('mutation: setSelectedContextValue');
+    setSelectedContextValueLevel(state, value) {
+        console.log('mutation: setSelectedContextValueLevel');
         console.log(value);
-        state.selectedContextValue = value;
+        state.selectedContextValueLevel = value;
     },
-    editContextValue(state, value) {
-        let index = state.contextValues.map(val => val._links.self.href).indexOf(value._links.self.href);
-        console.log('editContextValue: index of value: ' + index);
+    editContextValueLevel(state, value) {
+        let index = state.contextValueLevels.map(val => val._links.self.href).indexOf(value._links.self.href);
+        console.log('editContextValueLevel: index of value: ' + index);
         if (index > -1) {
-            state.contextValues[index] = value;
+            state.contextValueLevels[index] = value;
         } else {
-            console.log('editContextValue: value not found in store: ' + value);
+            console.log('editContextValueLevel: value not found in store: ' + value);
         }
     },
-    removeContextValue(state, value) {
-        let index = state.contextValues.map(val => val._links.self.href).indexOf(value._links.self.href);
-        console.log('removeContextValue: index of value: ' + index);
+    removeContextValueLevel(state, value) {
+        let index = state.contextValueLevels.map(val => val._links.self.href).indexOf(value._links.self.href);
+        console.log('removeContextValueLevel: index of value: ' + index);
         if (index > -1) {
-            state.contextValues.splice(index, 1);
+            state.contextValueLevels.splice(index, 1);
         } else {
-            console.log('removeContextValue: value not found in store: ' + value);
+            console.log('removeContextValueLevel: value not found in store: ' + value);
         }
     }
 }

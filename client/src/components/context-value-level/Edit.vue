@@ -2,7 +2,7 @@
     <v-container>
         <v-layout>
             <v-flex xs12>
-                <panel :title="$t('edit_context_value')">
+                <panel :title="$t('edit_context_value_level')">
                     <v-card-text>
                         <v-form ref="form">
                             <v-text-field v-model="value.value" prepend-icon="person" name="value" :label="$t('value')"
@@ -14,7 +14,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn color="indigo" dark @click="edit"><v-icon dark left>save</v-icon>{{ $t('save') }}</v-btn>
-                        <v-btn color="indigo" dark @click="navigateTo({name: 'context-value.show'})">
+                        <v-btn color="indigo" dark @click="navigateTo({name: 'context-value-level.show'})">
                             <v-icon dark left>cancel</v-icon>{{ $t('cancel') }}
                         </v-btn>
                     </v-card-actions>
@@ -23,7 +23,7 @@
         </v-layout>
         <info-dialog :info-visibility="infoDialog.infoVisibility"
                      :info-type="infoDialog.infoType"
-                     @infoAccept="accept({name: 'context-value.index'})">
+                     @infoAccept="accept({name: 'context-value-level.index'})">
             <template slot="title">{{ infoDialog.title }}</template>
             <template slot="text">{{ infoDialog.text }}</template>
             <template slot="detail">{{ infoDialog.detail }}</template>
@@ -54,7 +54,7 @@
             }
         },
         async mounted() {
-            let value = this.$store.state.selectedContextValue;
+            let value = this.$store.state.selectedContextValueLevel;
 
             if(value._links) {
                 // avoid modifying store object directly by copying values into new object
@@ -65,7 +65,7 @@
                 };
             } else {
                 console.log('selected context value not found');
-                this.navigateTo({name: 'context-value.index'});
+                this.navigateTo({name: 'context-value-level.index'});
             }
         },
         methods: {
@@ -82,14 +82,14 @@
                                 description: this.value.description
                             }
                         };
-                        this.$store.dispatch('editContextValue', data).then(response => {
-                            console.log('received data from store editContextValue: ' + response);
-                            this.$store.commit('setSelectedContextValue', this.value);
-                            this.navigateTo({name: 'context-value.show'});
+                        this.$store.dispatch('editContextValueLevel', data).then(response => {
+                            console.log('received data from store editContextValueLevel: ' + response);
+                            this.$store.commit('setSelectedContextValueLevel', this.value);
+                            this.navigateTo({name: 'context-value-level.show'});
                         }, error => {
-                            console.log('received error from store editContextValue: ' + error);
-                            this.displayEditError(error, 'error_not_found_context_value_text',
-                                'error_not_found_context_value_detail');
+                            console.log('received error from store editContextValueLevel: ' + error);
+                            this.displayEditError(error, 'error_not_found_context_value_level_text',
+                                'error_not_found_context_value_level_detail');
                         });
                     }
                 } catch (e) {

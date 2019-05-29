@@ -11,8 +11,8 @@
                                           :label="$t('year')" type="year"></v-text-field>
                             <v-textarea v-model="reference.reference" readonly prepend-icon="person" name="reference"
                                           :label="$t('reference')" type="text"></v-textarea>
-                            <v-text-field v-model="reference.referenceType.name" readonly prepend-icon="person" name="referenceType"
-                                          :label="$t('reference_type')" type="text"></v-text-field>
+                            <v-text-field v-model="reference.referenceSourceType.name" readonly prepend-icon="person" name="referenceType"
+                                          :label="$t('reference_source_type')" type="text"></v-text-field>
                         </v-form>
                     </v-card-text>
                     <v-card-actions>
@@ -68,7 +68,7 @@
                     year: '',
                     reference: '',
                     _links: '',
-                    referenceType: ''
+                    referenceSourceType: ''
                 },
                 infoDialog: util.infoDialog,
                 navigateToIndexPage: false,

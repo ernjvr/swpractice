@@ -5,7 +5,7 @@ import org.swpractice.model.Identifier;
 import org.swpractice.model.annotation.Strip;
 import org.swpractice.model.annotation.listener.StripListener;
 import org.swpractice.validation.constraint.annotation.Unique;
-import org.swpractice.validation.service.reference.ReferenceTypeValidationService;
+import org.swpractice.validation.service.reference.ReferenceSourceTypeValidationService;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -17,21 +17,21 @@ import static org.swpractice.util.Constants.*;
 @Data
 @Entity
 @EntityListeners(StripListener.class)
-@NamedQuery(name = REFERENCE_TYPE_FIND_BY_NAME, query = REFERENCE_TYPE_FIND_BY_NAME_QUERY)
-public class ReferenceType implements Identifier {
+@NamedQuery(name = REFERENCE_SOURCE_TYPE_FIND_BY_NAME, query = REFERENCE_SOURCE_TYPE_FIND_BY_NAME_QUERY)
+public class ReferenceSourceType implements Identifier {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @NotNull(message = REFERENCE_TYPE_FIELD_NAME_REQUIRED_MESSAGE)
+    @NotNull(message = REFERENCE_SOURCE_TYPE_FIELD_NAME_REQUIRED_MESSAGE)
     @Strip
     @NotBlank
-    @Size(min = 1, max = 100, message = REFERENCE_TYPE_FIELD_NAME_LENGTH_MESSAGE)
+    @Size(min = 1, max = 100, message = REFERENCE_SOURCE_TYPE_FIELD_NAME_LENGTH_MESSAGE)
     @Column(unique = true)
-    @Unique(service = ReferenceTypeValidationService.class,
-            fieldName = REFERENCE_TYPE_FIELD_NAME,
-            message = REFERENCE_TYPE_FIELD_NAME_UNIQUE_MESSAGE)
+    @Unique(service = ReferenceSourceTypeValidationService.class,
+            fieldName = REFERENCE_SOURCE_TYPE_FIELD_NAME,
+            message = REFERENCE_SOURCE_TYPE_FIELD_NAME_UNIQUE_MESSAGE)
     // index this column
     private String name;
 

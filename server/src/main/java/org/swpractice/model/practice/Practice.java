@@ -8,7 +8,6 @@ import org.swpractice.model.reference.Reference;
 import org.swpractice.validation.constraint.annotation.Unique;
 import org.swpractice.validation.service.practice.PracticeValidationService;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -43,9 +42,11 @@ public class Practice implements Identifier {
 
     @NotNull(message = PRACTICE_FIELD_PRACTICE_SUB_CATEGORY_REQUIRED_MESSAGE)
     @ManyToOne
+    @JoinColumn(name = PRACTICE_SUB_CATEGORY)
     private PracticeSubCategory practiceSubCategory;
 
     @ManyToOne
+    @JoinColumn(name = REFERENCE)
     private Reference reference;
 
     @Override

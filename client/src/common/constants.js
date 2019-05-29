@@ -93,7 +93,7 @@ export default {
             value: 'view'
         },
     ],
-    context_value_headers: [
+    context_value_level_headers: [
         {
             text: il8n.tc('value'),
             align: 'left',
@@ -133,10 +133,10 @@ export default {
             value: 'reference'
         },
         {
-            text: il8n.tc('reference_type'),
+            text: il8n.tc('reference_source_type'),
             align: 'left',
             sortable: false,
-            value: 'referenceType.name'
+            value: 'referenceSourceType.name'
         },
         {
             text: il8n.tc('action'),
@@ -145,7 +145,7 @@ export default {
             value: 'view'
         },
     ],
-    reference_type_headers: [
+    reference_source_type_headers: [
         {
             text: il8n.tc('name'),
             align: 'left',
@@ -163,7 +163,7 @@ export default {
     practice_category_url: 'practice-categories',
     practice_sub_category_url: 'practice-sub-categories',
     context_dimension_url: 'context-dimensions',
-    context_value_url: 'context-values',
-    reference_type_url: 'reference-types',
+    context_value_level_url: 'context-value-levels',
+    reference_source_type_url: 'reference-source-types',
     reference_url: 'references',
 }

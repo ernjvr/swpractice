@@ -11,11 +11,11 @@
                                           :label="$t('year')" :mask="yearMask"></v-text-field>
                             <v-textarea v-model="reference.reference" prepend-icon="person" name="reference"
                                           :label="$t('reference')" type="text" required :rules="required" :maxlength="2500"></v-textarea>
-                            <v-autocomplete :label="$t('reference_type')"
-                                      :items="referenceTypes"
+                            <v-autocomplete :label="$t('reference_source_type')"
+                                      :items="referenceSourceTypes"
                                       item-text="name" item-value="_links.self.href"
-                                      v-model="selectedReferenceType"
-                                      prepend-icon="person" name="referenceType">
+                                      v-model="selectedReferenceSourceType"
+                                      prepend-icon="person" name="referenceSourceType">
                             </v-autocomplete>
                         </v-form>
                     </v-card-text>
@@ -58,9 +58,9 @@
                     year: '',
                     reference: '',
                     _links: '',
-                    referenceType: ''
+                    referenceSourceType: ''
                 },
-                selectedReferenceType: '',
+                selectedReferenceSourceType: '',
                 yearMask: '####',
                 infoDialog: util.infoDialog,
                 navigateToIndexPage: false,
@@ -68,8 +68,8 @@
             }
         },
         computed: {
-          referenceTypes() {
-              return this.$store.state.referenceTypes;
+          referenceSourceTypes() {
+              return this.$store.state.referenceSourceTypes;
           }
         },
         mounted() {
@@ -82,9 +82,9 @@
                     year: reference.year,
                     reference: reference.reference,
                     _links: reference._links,
-                    referenceType: reference.referenceType
+                    referenceSourceType: reference.referenceSourceType
                 };
-                this.selectedReferenceType = this.reference.referenceType._links.self.href;
+                this.selectedReferenceSourceType = this.reference.referenceSourceType._links.self.href;
             } else {
                 console.log('selected reference not found');
                 this.navigateTo({name: 'reference.index'});
@@ -103,12 +103,12 @@
                                 author: this.reference.author,
                                 year: this.reference.year,
                                 reference: this.reference.reference,
-                                referenceType: this.getSelectedReferenceType()._links.self.href
+                                referenceSourceType: this.getSelectedReferenceSourceType()._links.self.href
                             }
                         };
                         this.$store.dispatch('editReference', data).then(response => {
                             console.log('received data from store editReference: ' + response);
-                            this.reference.referenceType = this.getSelectedReferenceType();
+                            this.reference.referenceSourceType = this.getSelectedReferenceSourceType();
                             this.$store.commit('setSelectedReference', this.reference);
                             this.$store.commit('editReference', this.reference);
                             this.navigateTo({name: 'reference.show'});
@@ -123,8 +123,8 @@
                         this.$t('error_unknown_detail'));
                 }
             },
-            getSelectedReferenceType() {
-              return util.getSelectedReferenceType(this.selectedReferenceType);
+            getSelectedReferenceSourceType() {
+              return util.getSelectedReferenceSourceType(this.selectedReferenceSourceType);
             },
         },
     }

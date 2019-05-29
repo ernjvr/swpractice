@@ -1,17 +1,17 @@
 <template>
-    <panel :title="$t('add_reference_type')">
+    <panel :title="$t('add_context_value_level')">
         <v-card-text>
             <v-form ref="form">
-                <v-text-field v-model="data.name" prepend-icon="person" name="name" :label="$t('name')" autofocus
-                              v-on:keyup.enter="create" type="text" required :rules="required" :maxlength="100"></v-text-field>
+                <v-text-field v-model="data.value" prepend-icon="person" name="value" :label="$t('value')" autofocus
+                              v-on:keyup.enter="create" type="text" required :rules="required" :mask="valueMask"></v-text-field>
+                <v-textarea v-model="data.description" prepend-icon="person" name="description"
+                            :label="$t('description')" type="text" required :rules="required" :maxlength="500"></v-textarea>
             </v-form>
         </v-card-text>
         <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="indigo" dark @click="create"><v-icon dark left>add</v-icon>{{ $t('add') }}</v-btn>
-            <v-btn color="indigo" dark @click="close">
-                <v-icon dark left>cancel</v-icon>{{ $t('cancel') }}
-            </v-btn>
+            <v-btn color="indigo" dark @click="close"><v-icon dark left>cancel</v-icon>{{ $t('cancel') }}</v-btn>
         </v-card-actions>
         <info-dialog :info-visibility="infoDialog.infoVisibility"
                      :info-type="infoDialog.infoType"
@@ -31,7 +31,6 @@
     import InfoDialog from '@/components/dialog/InformationDialog';
 
     export default {
-
         components: {
             Panel,
             InfoDialog
@@ -39,8 +38,10 @@
         data() {
             return {
                 data: {
-                    name: ''
+                    value: '',
+                    description: ''
                 },
+                valueMask: '#########',
                 infoDialog: util.infoDialog,
                 // check if value exists or return required message
                 required: [(v) => !!v || il8n.tc('field_required')]
@@ -52,22 +53,23 @@
             async create() {
                 try {
                     if (this.$refs.form.validate()) {
-                        this.$store.dispatch('addReferenceType', this.data).then(response => {
-                            console.log('received data from store addReferenceType: ' + response);
+                        this.$store.dispatch('addContextValueLevel', this.data).then(response => {
+                            console.log('received data from store addContextValueLevel: ' + response);
                             this.close();
                         }, error => {
-                            console.log('received error from store addReferenceType: ' + error);
+                            console.log('received error from store addContextValueLevel: ' + error);
                             this.displayAddError(error);
                         });
                     }
                 } catch (e) {
-                    console.log('catch error adding reference type: ' + e);
-                    this.error = e;
-                    this.validationError = true;
+                    console.log('catch error adding context value: ' + e);
+                    util.displayInfoDialog('error', this.$t('error_add_title'), this.$t('error_unknown_text'),
+                        this.$t('error_unknown_detail'));
                 }
             },
             close() {
-                this.data.name = '';
+                this.data.value = '';
+                this.data.description = '';
                 this.showDialog(false);
             }
         },

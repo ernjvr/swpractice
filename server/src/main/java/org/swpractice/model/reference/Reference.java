@@ -38,7 +38,8 @@ public class Reference implements Identifier {
 
     @NotNull(message = REFERENCE_FIELD_REFERENCE_TYPE_REQUIRED_MESSAGE)
     @ManyToOne
-    private ReferenceType referenceType;
+    @JoinColumn(name = REFERENCE_SOURCE_TYPE)
+    private ReferenceSourceType referenceSourceType;
 
     @OneToMany(mappedBy = REFERENCE)
     private List<Practice> practice;

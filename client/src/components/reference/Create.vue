@@ -8,11 +8,11 @@
                               :label="$t('year')" :mask="yearMask"></v-text-field>
                 <v-textarea v-model="data.reference" prepend-icon="person" name="reference" :label="$t('reference')"
                             type="text" required :rules="required" :maxlength="2500"></v-textarea>
-                <v-autocomplete :label="$t('reference_type')"
-                          :items="referenceTypes"
+                <v-autocomplete :label="$t('reference_source_type')"
+                          :items="referenceSourceTypes"
                           item-text="name" item-value="_links.self.href"
-                          v-model="selectedReferenceType"
-                          prepend-icon="person" name="referenceType" required :rules="required">
+                          v-model="selectedReferenceSourceType"
+                          prepend-icon="person" name="referenceSourceType" required :rules="required">
                 </v-autocomplete>
             </v-form>
         </v-card-text>
@@ -50,9 +50,9 @@
                     year: '',
                     reference: '',
                     _links: '',
-                    referenceType: ''
+                    referenceSourceType: ''
                 },
-                selectedReferenceType: '',
+                selectedReferenceSourceType: '',
                 yearMask: '####',
                 infoDialog: util.infoDialog,
                 // check if value exists or return required message
@@ -60,8 +60,8 @@
             }
         },
         computed: {
-            referenceTypes(){
-                return this.$store.state.referenceTypes;
+            referenceSourceTypes(){
+                return this.$store.state.referenceSourceTypes;
             }
         },
         methods: {
@@ -70,7 +70,7 @@
             async create() {
                 try {
                     if (this.$refs.form.validate()) {
-                        this.data.referenceType = this.getSelectedReferenceType();
+                        this.data.referenceSourceType = this.getSelectedReferenceSourceType();
                         this.$store.dispatch('addReference', this.data).then(response => {
                             console.log('received data from store addReference: ' + response);
                             this.close();
@@ -86,14 +86,14 @@
                         this.$t('error_unknown_detail'));
                 }
             },
-            getSelectedReferenceType() {
-                return util.getSelectedReferenceType(this.selectedReferenceType);
+            getSelectedReferenceSourceType() {
+                return util.getSelectedReferenceSourceType(this.selectedReferenceSourceType);
             },
             close() {
                 this.data.author = '';
                 this.data.year = '';
                 this.data.reference = '';
-                this.selectedReferenceType = '';
+                this.selectedReferenceSourceType = '';
                 this.showDialog(false);
             }
         },

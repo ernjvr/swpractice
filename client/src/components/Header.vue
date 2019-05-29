@@ -53,11 +53,11 @@
             ],
             reference_items: [
                 { title: il8n.tc('reference'), name: 'reference.index' },
-                { title: il8n.tc('reference_type'), name: 'reference-type.index' }
+                { title: il8n.tc('reference_source_type'), name: 'reference-source-type.index' }
             ],
             context_items: [
                 { title: il8n.tc('context_dimension'), name: 'context-dimension.index' },
-                { title: il8n.tc('context_value'), name: 'context-value.index' }
+                { title: il8n.tc('context_value_level'), name: 'context-value-level.index' }
             ]
         }),
         methods: {

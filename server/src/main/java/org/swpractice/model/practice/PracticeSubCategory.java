@@ -41,6 +41,7 @@ public class PracticeSubCategory implements Identifier {
 
     @NotNull(message = PRACTICE_SUB_CATEGORY_FIELD_PRACTICE_CATEGORY_REQUIRED_MESSAGE)
     @ManyToOne
+    @JoinColumn(name = PRACTICE_CATEGORY)
     private PracticeCategory practiceCategory;
 
     @OneToMany(mappedBy = PRACTICE_SUB_CATEGORY)
