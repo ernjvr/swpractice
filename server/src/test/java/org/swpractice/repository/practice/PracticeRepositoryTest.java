@@ -56,8 +56,9 @@ class PracticeRepositoryTest {
      * Do not allow delete of record in parent table that will cause orphan records in child tables of the database.
      */
     void dataIntegrityViolationExceptionThrownWhenDelete() {
-//        Optional<Practice> result = practiceRepository.findById(3001L);
-//        assertThrows(DataIntegrityViolationException.class, () -> result.ifPresent(practice -> practiceRepository.delete(practice)));
+        // placeholder: feature not implemented yet
+        //Optional<Practice> result = practiceRepository.findById(3001L);
+        //assertThrows(DataIntegrityViolationException.class, () -> result.ifPresent(practice -> practiceRepository.delete(practice)));
     }
 
     @Test

@@ -29,7 +29,7 @@ public class ContextEntityType implements Identifier {
     @NotNull(message = CONTEXT_ENTITY_TYPE_FIELD_NAME_REQUIRED_MESSAGE)
     @Strip
     @NotBlank
-    @Size(min = 1, max = 100, message = CONTEXT_ENTITY_TYPE_FIELD_NAME_LENGTH_MESSAGE)
+    @Size(min = 1, max = 50, message = CONTEXT_ENTITY_TYPE_FIELD_NAME_LENGTH_MESSAGE)
     @Column(unique = true)
     @Unique(service = ContextEntityTypeValidationService.class,
             fieldName = CONTEXT_ENTITY_TYPE_FIELD_NAME,

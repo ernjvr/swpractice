@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.swpractice.SWPracticeApplication;
-import org.swpractice.model.context.ContextValueLevel;
+import org.swpractice.model.context.ContextValueDistance;
 
 import java.util.Optional;
 
@@ -18,18 +18,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SWPracticeApplication.class)
-class ContextValueLevelRepositoryTest {
+class ContextValueDistanceRepositoryTest {
 
     @Autowired
-    ContextValueLevelRepository repository;
+    ContextValueDistanceRepository repository;
 
-    private ContextValueLevel contextValueLevel = new ContextValueLevel();
+    private ContextValueDistance contextValueDistance = new ContextValueDistance();;
 
     @BeforeEach
     void reset() {
-        contextValueLevel.setId(null);
-        contextValueLevel.setValue(0);
-        contextValueLevel.setDescription(null);
+        contextValueDistance.setId(null);
+        contextValueDistance.setValue(0);
+        contextValueDistance.setDescription(null);
     }
 
     @Test
@@ -37,7 +37,7 @@ class ContextValueLevelRepositoryTest {
      * Do not allow delete of record in parent table that will cause orphan records in child tables of the database.
      */
     void dataIntegrityViolationExceptionThrownWhenDelete() {
-        Optional<ContextValueLevel> result = repository.findById(7001L);
+        Optional<ContextValueDistance> result = repository.findById(11001L);
         assertThrows(DataIntegrityViolationException.class, () -> result.ifPresent(value -> repository.delete(value)));
     }
 
@@ -46,8 +46,8 @@ class ContextValueLevelRepositoryTest {
      * Allow delete of record in parent table that will NOT cause orphan records in child tables of the database.
      */
     void dataIntegrityViolationExceptionNotThrownWhenDelete() {
-        contextValueLevel.setDescription("xxx");
-        ContextValueLevel saved = repository.save(contextValueLevel);
+        contextValueDistance.setDescription("xxx");
+        ContextValueDistance saved = repository.save(contextValueDistance);
         assertDoesNotThrow(() -> repository.delete(saved));
     }
     
@@ -56,9 +56,9 @@ class ContextValueLevelRepositoryTest {
      * Allow entries that do not exceed maximum allowed length.
      */
     void constraintViolationExceptionNotThrownWhenSaveValueWithMaxSizeNotExceed() {
-        contextValueLevel.setValue(2_147_483_647);
-        contextValueLevel.setDescription("abc");
-        assertDoesNotThrow(() -> repository.save(contextValueLevel));
+        contextValueDistance.setValue(2_147_483_647);
+        contextValueDistance.setDescription("abc");
+        assertDoesNotThrow(() -> repository.save(contextValueDistance));
     }
 
     @Test
@@ -66,9 +66,9 @@ class ContextValueLevelRepositoryTest {
      * Allow entries that do not exceed maximum allowed length.
      */
     void constraintViolationExceptionNotThrownWhenSaveValueWithMinSizeNotExceed() {
-        contextValueLevel.setValue(-2_147_483_648);
-        contextValueLevel.setDescription("abc");
-        assertDoesNotThrow(() -> repository.save(contextValueLevel));
+        contextValueDistance.setValue(-2_147_483_648);
+        contextValueDistance.setDescription("abc");
+        assertDoesNotThrow(() -> repository.save(contextValueDistance));
     }
 
     @Test
@@ -76,7 +76,7 @@ class ContextValueLevelRepositoryTest {
      * Do not allow entries that exceed maximum allowed length.
      */
     void constraintViolationExceptionThrownWhenSaveDescriptionWithLengthExceed() {
-        contextValueLevel.setDescription("12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890a");
+        contextValueDistance.setDescription("12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890a");
         expectConstraintViolationExceptionOnSave();
     }
 
@@ -85,8 +85,8 @@ class ContextValueLevelRepositoryTest {
      * Allow entries that do not exceed maximum allowed length.
      */
     void constraintViolationExceptionNotThrownWhenSaveDescriptionWithLengthNotExceed() {
-        contextValueLevel.setDescription("12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
-        assertDoesNotThrow(() -> repository.save(contextValueLevel));
+        contextValueDistance.setDescription("12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
+        assertDoesNotThrow(() -> repository.save(contextValueDistance));
     }
 
     @Test
@@ -94,7 +94,7 @@ class ContextValueLevelRepositoryTest {
      * Do not allow empty values.
      */
     void constraintViolationExceptionThrownWhenSaveDescriptionWithEmptyValue() {
-        contextValueLevel.setDescription("");
+        contextValueDistance.setDescription("");
         expectConstraintViolationExceptionOnSave();
     }
 
@@ -103,13 +103,13 @@ class ContextValueLevelRepositoryTest {
      * Do not allow space-only values.
      */
     void constraintViolationExceptionThrownWhenSaveDescriptionWithSpaceValues() {
-        contextValueLevel.setDescription("   ");
+        contextValueDistance.setDescription("   ");
         expectConstraintViolationExceptionOnSave();
     }
 
     private void expectConstraintViolationExceptionOnSave() {
         try {
-            repository.save(contextValueLevel);
+            repository.save(contextValueDistance);
         } catch (Exception e) {
             assertEquals(javax.validation.ConstraintViolationException.class, getRootCause(e).getClass());
             return;

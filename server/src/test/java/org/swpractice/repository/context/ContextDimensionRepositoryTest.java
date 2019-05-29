@@ -12,10 +12,9 @@ import org.swpractice.model.context.ContextDimension;
 import static org.assertj.core.util.Throwables.getRootCause;
 import static org.junit.jupiter.api.Assertions.*;
 
-
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = SWPracticeApplication.class)
-public class ContextDimensionRepositoryTest {
+class ContextDimensionRepositoryTest {
 
     @Autowired
     ContextDimensionRepository dimensionRepository;
@@ -33,8 +32,9 @@ public class ContextDimensionRepositoryTest {
      * Do not allow delete of record in parent table that will cause orphan records in child tables of the database.
      */
     void dataIntegrityViolationExceptionThrownWhenDelete() {
-//        Optional<ContextDimension> result = dimensionRepository.findById(4002L);
-//        assertThrows(DataIntegrityViolationException.class, () -> result.ifPresent(dimension -> dimensionRepository.delete(dimension)));
+        // placeholder: feature not implemented yet
+        //Optional<ContextDimension> result = dimensionRepository.findById(4002L);
+        //assertThrows(DataIntegrityViolationException.class, () -> result.ifPresent(dimension -> dimensionRepository.delete(dimension)));
     }
 
     @Test
