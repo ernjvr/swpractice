@@ -27,7 +27,7 @@ public class Practice implements Identifier {
 
     @NotNull(message = PRACTICE_FIELD_NAME_REQUIRED_MESSAGE)
     @Strip
-    @NotBlank
+    @NotBlank(message = PRACTICE_FIELD_NAME_BLANK_MESSAGE)
     @Size(min = 1, max = 100, message = PRACTICE_FIELD_NAME_LENGTH_MESSAGE)
     @Column(unique = true)
     @Unique(service = PracticeValidationService.class,
@@ -36,8 +36,10 @@ public class Practice implements Identifier {
     // index this column
     private String name;
 
+    @NotNull(message = PRACTICE_FIELD_DESCRIPTION_REQUIRED_MESSAGE)
     @Strip
-    @Size(max = 500, message = PRACTICE_FIELD_DESCRIPTION_LENGTH_MESSAGE)
+    @NotBlank(message = PRACTICE_FIELD_DESCRIPTION_BLANK_MESSAGE)
+    @Size(min = 1, max = 500, message = PRACTICE_FIELD_DESCRIPTION_LENGTH_MESSAGE)
     private String description;
 
     @NotNull(message = PRACTICE_FIELD_PRACTICE_SUB_CATEGORY_REQUIRED_MESSAGE)

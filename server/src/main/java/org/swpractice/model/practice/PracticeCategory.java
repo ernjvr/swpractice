@@ -28,7 +28,7 @@ public class PracticeCategory implements Identifier {
 
     @NotNull(message = PRACTICE_CATEGORY_FIELD_NAME_REQUIRED_MESSAGE)
     @Strip
-    @NotBlank
+    @NotBlank(message = PRACTICE_CATEGORY_FIELD_NAME_BLANK_MESSAGE)
     @Size(min = 1, max = 50, message = PRACTICE_CATEGORY_FIELD_NAME_LENGTH_MESSAGE)
     @Column(unique = true)
     @Unique(service = PracticeCategoryValidationService.class,

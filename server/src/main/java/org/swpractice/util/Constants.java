@@ -48,17 +48,17 @@ public class Constants {
     public static final String CONTEXT_ENTITY_CULTURAL_COHESION = "culturalCohesion";
     public static final String CONTEXT_ENTITY_PHYSICAL_DISTANCE = "physicalDistance";
     public static final String CONTEXT_ENTITY_TEMPORAL_DISTANCE = "temporalDistance";
+    public static final String CONTEXT_ENTITY_PATH = "/context-entities";
+
     public static final String CONTEXT_ENTITY_TYPE_FIND_BY_NAME = "ContextEntityType.find_by_name";
     public static final String CONTEXT_ENTITY_TYPE_FIND_BY_NAME_QUERY = "select c from ContextEntityType c where lower(trim(c.name)) = lower(trim(:name))";
-    public static final String CONTEXT_ENTITY_TYPE_FIELD_NAME_UNIQUE_MESSAGE = "{context.entity.category.name.unique}";
-    public static final String CONTEXT_ENTITY_TYPE_FIELD_NAME_REQUIRED_MESSAGE = "{context.entity.category.name.required}";
-    public static final String CONTEXT_ENTITY_TYPE_FIELD_NAME_LENGTH_MESSAGE = "{context.entity.category.name.length}";
-    public static final String CONTEXT_ENTITY_TYPE_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{context.entity.category.description.length}";
+    public static final String CONTEXT_ENTITY_TYPE_FIELD_NAME_UNIQUE_MESSAGE = "{context.entity.type.name.unique}";
+    public static final String CONTEXT_ENTITY_TYPE_FIELD_NAME_REQUIRED_MESSAGE = "{context.entity.type.name.required}";
+    public static final String CONTEXT_ENTITY_TYPE_FIELD_NAME_BLANK_MESSAGE = "{context.entity.type.name.blank}";
+    public static final String CONTEXT_ENTITY_TYPE_FIELD_NAME_LENGTH_MESSAGE = "{context.entity.type.name.length}";
+    public static final String CONTEXT_ENTITY_TYPE_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{context.entity.type.description.length}";
     public static final String CONTEXT_ENTITY_TYPE_PATH = "/context-entity-types";
     public static final String CONTEXT_ENTITY_TYPE_FIELD_NAME = "name";
-
-    public static final String CONTEXT_ENTITY_PATH = "/context-entities";
-    public static final String CONTEXT_INTERFACE_PATH = "/context-interfaces";
 
     public static final String CONTEXT_INTERFACE_ENTITY1 = "entity1";
     public static final String CONTEXT_INTERFACE_ENTITY2 = "entity2";
@@ -72,9 +72,11 @@ public class Constants {
     public static final String CONTEXT_INTERFACE_FIELD_AVAILABILITY_REQUIRED_MESSAGE = "{context.interface.availability.required}";
     public static final String CONTEXT_INTERFACE_FIELD_PHYSICAL_DISTANCE_REQUIRED_MESSAGE = "{context.interface.physical.distance.required}";
     public static final String CONTEXT_INTERFACE_FIELD_TEMPORAL_DISTANCE_REQUIRED_MESSAGE = "{context.interface.temporal.distance.required}";
+    public static final String CONTEXT_INTERFACE_PATH = "/context-interfaces";
 
     public static final String CONTEXT_VALUE_DISTANCE_FIELD_VALUE_REQUIRED_MESSAGE = "{context.value.distance.value.required}";
     public static final String CONTEXT_VALUE_DISTANCE_FIELD_DESCRIPTION_REQUIRED_MESSAGE = "{context.value.distance.description.required}";
+    public static final String CONTEXT_VALUE_DISTANCE_FIELD_DESCRIPTION_BLANK_MESSAGE = "{context.value.distance.description.blank}";
     public static final String CONTEXT_VALUE_DISTANCE_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{context.value.distance.description.length}";
     public static final String CONTEXT_VALUE_DISTANCE_FIELD_VALUE_MIN_MESSAGE = "{context.value.distance.value.min}";
     public static final String CONTEXT_VALUE_DISTANCE_FIELD_VALUE_MAX_MESSAGE = "{context.value.distance.value.max}";
@@ -82,6 +84,7 @@ public class Constants {
 
     public static final String CONTEXT_VALUE_LEVEL_FIELD_VALUE_REQUIRED_MESSAGE = "{context.value.level.value.required}";
     public static final String CONTEXT_VALUE_LEVEL_FIELD_DESCRIPTION_REQUIRED_MESSAGE = "{context.value.level.description.required}";
+    public static final String CONTEXT_VALUE_LEVEL_FIELD_DESCRIPTION_BLANK_MESSAGE = "{context.value.level.description.blank}";
     public static final String CONTEXT_VALUE_LEVEL_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{context.value.level.description.length}";
     public static final String CONTEXT_VALUE_LEVEL_FIELD_VALUE_MIN_MESSAGE = "{context.value.level.value.min}";
     public static final String CONTEXT_VALUE_LEVEL_FIELD_VALUE_MAX_MESSAGE = "{context.value.level.value.max}";
@@ -91,6 +94,9 @@ public class Constants {
     public static final String PRACTICE_FIND_BY_NAME_QUERY = "select p from Practice p where lower(trim(p.name)) = lower(trim(:name))";
     public static final String PRACTICE_FIELD_NAME_UNIQUE_MESSAGE = "{practice.name.unique}";
     public static final String PRACTICE_FIELD_NAME_REQUIRED_MESSAGE = "{practice.name.required}";
+    public static final String PRACTICE_FIELD_NAME_BLANK_MESSAGE = "{practice.name.blank}";
+    public static final String PRACTICE_FIELD_DESCRIPTION_REQUIRED_MESSAGE = "{practice.description.required}";
+    public static final String PRACTICE_FIELD_DESCRIPTION_BLANK_MESSAGE = "{practice.description.blank}";
     public static final String PRACTICE_FIELD_PRACTICE_SUB_CATEGORY_REQUIRED_MESSAGE = "{practice.practice-sub-category.required}";
     public static final String PRACTICE_FIELD_NAME_LENGTH_MESSAGE = "{practice.name.length}";
     public static final String PRACTICE_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{practice.description.length}";
@@ -102,6 +108,7 @@ public class Constants {
     public static final String PRACTICE_CATEGORY_FIND_BY_NAME_QUERY = "select p from PracticeCategory p where lower(trim(p.name)) = lower(trim(:name))";
     public static final String PRACTICE_CATEGORY_FIELD_NAME_UNIQUE_MESSAGE = "{practice.category.name.unique}";
     public static final String PRACTICE_CATEGORY_FIELD_NAME_REQUIRED_MESSAGE = "{practice.category.name.required}";
+    public static final String PRACTICE_CATEGORY_FIELD_NAME_BLANK_MESSAGE = "{practice.category.name.blank}";
     public static final String PRACTICE_CATEGORY_FIELD_NAME_LENGTH_MESSAGE = "{practice.category.name.length}";
     public static final String PRACTICE_CATEGORY_PATH = "/practice-categories";
     public static final String PRACTICE_CATEGORY_FIELD_NAME = "name";
@@ -111,6 +118,7 @@ public class Constants {
     public static final String PRACTICE_SUB_CATEGORY_FIND_BY_NAME_QUERY = "select p from PracticeSubCategory p where lower(trim(p.name)) = lower(trim(:name))";
     public static final String PRACTICE_SUB_CATEGORY_FIELD_NAME_UNIQUE_MESSAGE = "{practice.sub.category.name.unique}";
     public static final String PRACTICE_SUB_CATEGORY_FIELD_NAME_REQUIRED_MESSAGE = "{practice.sub.category.name.required}";
+    public static final String PRACTICE_SUB_CATEGORY_FIELD_NAME_BLANK_MESSAGE = "{practice.sub.category.name.blank}";
     public static final String PRACTICE_SUB_CATEGORY_FIELD_PRACTICE_CATEGORY_REQUIRED_MESSAGE = "{practice.sub.category.practice-category.required}";
     public static final String PRACTICE_SUB_CATEGORY_FIELD_NAME_LENGTH_MESSAGE = "{practice.sub.category.name.length}";
     public static final String PRACTICE_SUB_CATEGORY_FIELD_DESCRIPTION_LENGTH_MESSAGE = "{practice.sub.category.description.length}";
@@ -131,6 +139,7 @@ public class Constants {
     public static final String REFERENCE_SOURCE_TYPE_FIND_BY_NAME_QUERY = "select t from ReferenceSourceType t where lower(trim(t.name)) = lower(trim(:name))";
     public static final String REFERENCE_SOURCE_TYPE_FIELD_NAME_UNIQUE_MESSAGE = "{reference.source.type.name.unique}";
     public static final String REFERENCE_SOURCE_TYPE_FIELD_NAME_REQUIRED_MESSAGE = "{reference.source.type.name.required}";
+    public static final String REFERENCE_SOURCE_TYPE_FIELD_NAME_BLANK_MESSAGE = "{reference.source.type.name.blank}";
     public static final String REFERENCE_SOURCE_TYPE_FIELD_NAME_LENGTH_MESSAGE = "{reference.source.type.name.length}";
     public static final String REFERENCE_SOURCE_TYPE_PATH = "/reference-source-types";
     public static final String REFERENCE_SOURCE_TYPE_FIELD_NAME = "name";

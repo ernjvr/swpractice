@@ -32,7 +32,7 @@ public class Reference implements Identifier {
 
     @NotNull(message = REFERENCE_FIELD_REFERENCE_REQUIRED_MESSAGE)
     @Strip
-    @NotBlank
+    @NotBlank(message = REFERENCE_FIELD_DESCRIPTION_LENGTH_MESSAGE)
     @Size(max = 2500, message = REFERENCE_FIELD_DESCRIPTION_LENGTH_MESSAGE)
     private String reference;
 

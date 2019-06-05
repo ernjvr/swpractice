@@ -26,7 +26,7 @@ public class ReferenceSourceType implements Identifier {
 
     @NotNull(message = REFERENCE_SOURCE_TYPE_FIELD_NAME_REQUIRED_MESSAGE)
     @Strip
-    @NotBlank
+    @NotBlank(message = REFERENCE_SOURCE_TYPE_FIELD_NAME_BLANK_MESSAGE)
     @Size(min = 1, max = 100, message = REFERENCE_SOURCE_TYPE_FIELD_NAME_LENGTH_MESSAGE)
     @Column(unique = true)
     @Unique(service = ReferenceSourceTypeValidationService.class,

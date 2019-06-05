@@ -64,11 +64,9 @@ public class ContextEntity implements Identifier {
     private ContextValueDistance temporalDistance;
 
     @OneToMany(mappedBy = CONTEXT_INTERFACE_ENTITY1)
-    @JsonManagedReference(value = CONTEXT_INTERFACE_ENTITY1)
     private List<ContextInterface> contextInterface1;
 
     @OneToMany(mappedBy = CONTEXT_INTERFACE_ENTITY1)
-    @JsonManagedReference(value = CONTEXT_INTERFACE_ENTITY1)
     private List<ContextInterface> contextInterface2;
 
     @Override

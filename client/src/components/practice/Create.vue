@@ -5,7 +5,7 @@
                 <v-text-field v-model="data.name" prepend-icon="person" name="name" :label="$t('name')" autofocus
                               v-on:keyup.enter="create" type="text" required :rules="required" :maxlength="100"></v-text-field>
                 <v-textarea v-model="data.description" prepend-icon="person" name="description"
-                              :label="$t('description')" type="text" :maxlength="500"></v-textarea>
+                              :label="$t('description')" type="text" required :rules="required" :maxlength="500"></v-textarea>
                 <v-autocomplete :label="$t('practice_sub_category')"
                           :items="practiceSubCategories"
                           item-text="name" item-value="_links.self.href"

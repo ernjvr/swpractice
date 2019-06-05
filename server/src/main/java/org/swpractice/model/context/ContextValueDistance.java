@@ -1,6 +1,5 @@
 package org.swpractice.model.context;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.swpractice.model.Identifier;
 import org.swpractice.model.annotation.Strip;
@@ -28,24 +27,20 @@ public class ContextValueDistance implements Identifier {
 
     @NotNull(message = CONTEXT_VALUE_DISTANCE_FIELD_DESCRIPTION_REQUIRED_MESSAGE)
     @Strip
-    @NotBlank
+    @NotBlank(message = CONTEXT_VALUE_DISTANCE_FIELD_DESCRIPTION_BLANK_MESSAGE)
     @Size(min = 1, max = 500, message = CONTEXT_VALUE_DISTANCE_FIELD_DESCRIPTION_LENGTH_MESSAGE)
     private String description;
 
     @OneToMany(mappedBy = CONTEXT_ENTITY_PHYSICAL_DISTANCE)
-    @JsonManagedReference(value = CONTEXT_ENTITY_PHYSICAL_DISTANCE)
     private List<ContextEntity> contextEntityPhysicalDistance;
 
     @OneToMany(mappedBy = CONTEXT_ENTITY_TEMPORAL_DISTANCE)
-    @JsonManagedReference(value = CONTEXT_ENTITY_TEMPORAL_DISTANCE)
     private List<ContextEntity> contextEntityTemporalDistance;
 
     @OneToMany(mappedBy = CONTEXT_INTERFACE_PHYSICAL_DISTANCE)
-    @JsonManagedReference(value = CONTEXT_INTERFACE_PHYSICAL_DISTANCE)
     private List<ContextInterface> contextInterfacePhysicalDistance;
 
     @OneToMany(mappedBy = CONTEXT_INTERFACE_TEMPORAL_DISTANCE)
-    @JsonManagedReference(value = CONTEXT_INTERFACE_TEMPORAL_DISTANCE)
     private List<ContextInterface> contextInterfaceTemporalDistance;
 
     @Override

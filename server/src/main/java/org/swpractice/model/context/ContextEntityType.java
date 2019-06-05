@@ -1,6 +1,5 @@
 package org.swpractice.model.context;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.swpractice.model.Identifier;
 import org.swpractice.model.annotation.Strip;
@@ -28,7 +27,7 @@ public class ContextEntityType implements Identifier {
 
     @NotNull(message = CONTEXT_ENTITY_TYPE_FIELD_NAME_REQUIRED_MESSAGE)
     @Strip
-    @NotBlank
+    @NotBlank(message = CONTEXT_ENTITY_TYPE_FIELD_NAME_BLANK_MESSAGE)
     @Size(min = 1, max = 50, message = CONTEXT_ENTITY_TYPE_FIELD_NAME_LENGTH_MESSAGE)
     @Column(unique = true)
     @Unique(service = ContextEntityTypeValidationService.class,
@@ -41,7 +40,6 @@ public class ContextEntityType implements Identifier {
     private String description;
 
     @OneToMany(mappedBy = CONTEXT_ENTITY_TYPE)
-    @JsonManagedReference(value = CONTEXT_ENTITY_TYPE)
     private List<ContextEntity> contextEntity;
 
     @Override
