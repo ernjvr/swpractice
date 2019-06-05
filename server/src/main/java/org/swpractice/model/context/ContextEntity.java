@@ -1,7 +1,6 @@
 package org.swpractice.model.context;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.swpractice.model.Identifier;
 import org.swpractice.model.annotation.listener.StripListener;
